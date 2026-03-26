@@ -1,0 +1,58 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://c7dpl4awfbgcv"]
+
+[ext_resource type="Texture2D" uid="uid://dn2u3mhjpqbc5" path="res://assets/sprites/weapons/pistol/pistola_atirando.png" id="1_474g5"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hoo6e"]
+atlas = ExtResource("1_474g5")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xhhr6"]
+atlas = ExtResource("1_474g5")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dpd0g"]
+atlas = ExtResource("1_474g5")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t3xkg"]
+atlas = ExtResource("1_474g5")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4hvby"]
+atlas = ExtResource("1_474g5")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eqfis"]
+atlas = ExtResource("1_474g5")
+region = Rect2(64, 0, 16, 16)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hoo6e")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xhhr6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dpd0g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t3xkg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4hvby")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eqfis")
+}],
+"loop": false,
+"name": &"shoot",
+"speed": 12.0
+}]

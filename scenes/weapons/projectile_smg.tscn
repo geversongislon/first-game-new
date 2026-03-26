@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://bj6d0kuuhj704"]
+
+[ext_resource type="Script" uid="uid://bjri1uxs2ejen" path="res://scripts/weapons/projectile.gd" id="1_23jat"]
+[ext_resource type="Texture2D" uid="uid://fwlfjghnpx06" path="res://assets/sprites/weapons/bullet-basic.png" id="2_jv5pv"]
+[ext_resource type="Texture2D" uid="uid://3opfggh01ywq" path="res://assets/sprites/ui/luz.png" id="3_oij7l"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2ndhl"]
+size = Vector2(1, 1.4303836)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_oij7l"]
+gravity = Vector3(0, 98, 0)
+turbulence_enabled = true
+
+[node name="projectile_smg" type="Area2D" unique_id=1604825692]
+physics_interpolation_mode = 2
+collision_mask = 3
+script = ExtResource("1_23jat")
+projectile_gravity = 10.0
+impact_color = Color(0.34650004, 0.87202495, 0.99, 1)
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1061524251]
+modulate = Color(0.46590662, 0.93084294, 0.99999994, 1)
+texture = ExtResource("2_jv5pv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1351476907]
+shape = SubResource("RectangleShape2D_2ndhl")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=1903337697]
+visible = false
+amount = 16
+lifetime = 0.15000000000000002
+process_material = SubResource("ParticleProcessMaterial_oij7l")
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=2002676456]
+position = Vector2(9.536743e-07, -4.7683716e-07)
+scale = Vector2(0.07682291, 0.075542584)
+color = Color(4.6205523e-06, 0.8029234, 0.88401765, 1)
+energy = 1.23
+texture = ExtResource("3_oij7l")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

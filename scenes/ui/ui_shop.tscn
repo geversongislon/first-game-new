@@ -1,0 +1,70 @@
+[gd_scene format=3 uid="uid://ccimlugmm1y44"]
+
+[ext_resource type="Script" uid="uid://k2csir1gkcfh" path="res://scripts/ui/ui_shop.gd" id="1_shop"]
+
+[node name="UIShop" type="Control" unique_id=1000000001]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_shop")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1000000002]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.047, 0.047, 0.059, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1000000003]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 8
+
+[node name="TopBar" type="HBoxContainer" parent="VBoxContainer" unique_id=1000000004]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="TitleLabel" type="Label" parent="VBoxContainer/TopBar" unique_id=1000000005]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 8
+text = "LOJA"
+
+[node name="CoinsLabel" type="Label" parent="VBoxContainer/TopBar" unique_id=1000000006]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 0.8, 0, 1)
+theme_override_font_sizes/font_size = 5
+text = "Moedas: 0"
+horizontal_alignment = 2
+
+[node name="BackButton" type="Button" parent="VBoxContainer/TopBar" unique_id=1000000007]
+custom_minimum_size = Vector2(40, 12)
+layout_mode = 2
+theme_override_font_sizes/font_size = 4
+text = "VOLTAR"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer" unique_id=1000000008]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="Grid" type="GridContainer" parent="VBoxContainer/ScrollContainer" unique_id=1000000009]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 8
+columns = 7

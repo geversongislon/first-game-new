@@ -1,0 +1,136 @@
+[gd_scene format=3 uid="uid://dkdbpaon43u7d"]
+
+[ext_resource type="Script" uid="uid://uojgpr08oscy" path="res://scripts/ui/ui_fusion.gd" id="1_fusion"]
+[ext_resource type="PackedScene" uid="uid://c7nan1o2p3q5" path="res://scenes/ui/inventory/drop_slot.tscn" id="2_drop"]
+
+[node name="UIFusion" type="Control" unique_id=2099588324]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_fusion")
+
+[node name="Background" type="ColorRect" parent="." unique_id=1816074359]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.047, 0.047, 0.059, 1)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=2047361199]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginLeft" type="MarginContainer" parent="HBoxContainer" unique_id=1650608761]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="LeftPanel" type="VBoxContainer" parent="HBoxContainer/MarginLeft" unique_id=1163780581]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 5
+
+[node name="InventoryHeader" type="HBoxContainer" parent="HBoxContainer/MarginLeft/LeftPanel" unique_id=1971574438]
+layout_mode = 2
+
+[node name="LabelInventario" type="Label" parent="HBoxContainer/MarginLeft/LeftPanel/InventoryHeader" unique_id=1372665807]
+layout_mode = 2
+theme_override_font_sizes/font_size = 4
+text = "INVENTÁRIO"
+
+[node name="InventoryScroll" type="ScrollContainer" parent="HBoxContainer/MarginLeft/LeftPanel" unique_id=1957982454]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="InventoryGrid" type="GridContainer" parent="HBoxContainer/MarginLeft/LeftPanel/InventoryScroll" unique_id=1399593511]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/h_separation = 2
+theme_override_constants/v_separation = 2
+columns = 4
+
+[node name="MarginRight" type="MarginContainer" parent="HBoxContainer" unique_id=1916755706]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="RightPanel" type="VBoxContainer" parent="HBoxContainer/MarginRight" unique_id=619017984]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Title" type="Label" parent="HBoxContainer/MarginRight/RightPanel" unique_id=758237611]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "FUNDIR CARTAS"
+
+[node name="Subtitle" type="Label" parent="HBoxContainer/MarginRight/RightPanel" unique_id=1765562778]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
+theme_override_font_sizes/font_size = 4
+text = "3 cartas iguais → 1 carta da raridade acima (aleatória)"
+autowrap_mode = 3
+
+[node name="HSeparator" type="HSeparator" parent="HBoxContainer/MarginRight/RightPanel" unique_id=1287003470]
+layout_mode = 2
+
+[node name="ResultLabel" type="Label" parent="HBoxContainer/MarginRight/RightPanel" unique_id=1915487476]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.55, 0.55, 0.55, 1)
+theme_override_font_sizes/font_size = 5
+text = "Coloque 3 cartas iguais"
+horizontal_alignment = 1
+
+[node name="FusionSlots" type="HBoxContainer" parent="HBoxContainer/MarginRight/RightPanel" unique_id=1984011088]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="FusionSlot1" parent="HBoxContainer/MarginRight/RightPanel/FusionSlots" unique_id=926584541 instance=ExtResource("2_drop")]
+layout_mode = 2
+
+[node name="FusionSlot2" parent="HBoxContainer/MarginRight/RightPanel/FusionSlots" unique_id=2130162437 instance=ExtResource("2_drop")]
+layout_mode = 2
+
+[node name="FusionSlot3" parent="HBoxContainer/MarginRight/RightPanel/FusionSlots" unique_id=2116832943 instance=ExtResource("2_drop")]
+layout_mode = 2
+
+[node name="FuseButton" type="Button" parent="HBoxContainer/MarginRight/RightPanel" unique_id=1147553234]
+custom_minimum_size = Vector2(50, 10)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 4
+text = "FUNDIR"
+
+[node name="BackButton" type="Button" parent="HBoxContainer/MarginRight/RightPanel" unique_id=1777830499]
+custom_minimum_size = Vector2(50, 10)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 4
+text = "← VOLTAR"
+
+[connection signal="pressed" from="HBoxContainer/MarginRight/RightPanel/FuseButton" to="." method="_on_fuse_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/MarginRight/RightPanel/BackButton" to="." method="_on_back_button_pressed"]

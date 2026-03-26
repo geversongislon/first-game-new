@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://ddv0p6315owyr"]
+
+[ext_resource type="Script" uid="uid://cy2fugdnugbmc" path="res://scripts/passives/passive_luck_companion.gd" id="1_comp"]
+[ext_resource type="Texture2D" uid="uid://fs1e1sco44gj" path="res://assets/sprites/sorte.png" id="2_hnigq"]
+[ext_resource type="Texture2D" uid="uid://3opfggh01ywq" path="res://assets/sprites/ui/luz.png" id="3_fi7ne"]
+
+[node name="PassiveLuckCompanion" type="Node2D" unique_id=1528654126]
+script = ExtResource("1_comp")
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=1090818082]
+position = Vector2(1.9073486e-06, -1.9073486e-06)
+scale = Vector2(0.23489581, 0.21157737)
+color = Color(0.49061912, 0.9700393, 0, 1)
+energy = 0.85
+texture = ExtResource("3_fi7ne")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=815642919]
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("2_hnigq")

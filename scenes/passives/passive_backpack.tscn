@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://csgnni0f5qgch"]
+
+[ext_resource type="Script" uid="uid://bsaky0b4sbdb4" path="res://scripts/passives/passive_backpack.gd" id="1_backpack"]
+
+[node name="PassiveBackpack" type="Node" unique_id=487631781]
+script = ExtResource("1_backpack")

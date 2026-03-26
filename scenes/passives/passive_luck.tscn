@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://bjc4tfmpnxenr"]
+
+[ext_resource type="Script" uid="uid://cgawlidkirko" path="res://scripts/passives/passive_luck.gd" id="1_luck"]
+
+[node name="PassiveLuck" type="Node" unique_id=292986748]
+script = ExtResource("1_luck")
+card_chance_bonus = 0.1

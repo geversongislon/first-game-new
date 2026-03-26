@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://da4cct5avoodi"]
+
+[ext_resource type="Script" uid="uid://c7i85343qmfol" path="res://scripts/props/light_post.gd" id="0_script"]
+[ext_resource type="Texture2D" uid="uid://b5sy47oe6l4k5" path="res://assets/sprites/poste.png" id="1_1s8r7"]
+[ext_resource type="Texture2D" uid="uid://3opfggh01ywq" path="res://assets/sprites/ui/luz.png" id="1_luz"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_detector"]
+size = Vector2(11, 10)
+
+[node name="LightPost" type="StaticBody2D" unique_id=4788118]
+script = ExtResource("0_script")
+
+[node name="HitDetector" type="Area2D" parent="." unique_id=998877661]
+position = Vector2(-0.5, -20)
+collision_layer = 0
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitDetector" unique_id=776655443]
+shape = SubResource("RectangleShape2D_detector")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=793394597]
+texture_filter = 1
+texture = ExtResource("1_1s8r7")
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=1226773]
+position = Vector2(-1, -26)
+scale = Vector2(0.5234375, 0.6041667)
+color = Color(0.85882354, 0.6431373, 0.3647059, 1)
+energy = 1.5
+blend_mode = 2
+shadow_enabled = true
+texture = ExtResource("1_luz")
+offset = Vector2(1.9104477, 9.931034)
+
+[connection signal="area_entered" from="HitDetector" to="." method="_on_hit_detector_area_entered"]

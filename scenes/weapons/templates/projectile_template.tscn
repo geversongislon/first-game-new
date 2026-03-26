@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://bshfa86ojyun"]
+
+[ext_resource type="Script" uid="uid://cbun0jlerp58h" path="res://scripts/weapons/archetypes/projectile_weapon.gd" id="1_proj"]
+[ext_resource type="PackedScene" uid="uid://bj6d0kuuhj704" path="res://scenes/weapons/projectile_smg.tscn" id="2_bullet"]
+
+[node name="ProjectileTemplate" type="Node" unique_id=1632970201]
+script = ExtResource("1_proj")
+bullet_scene = ExtResource("2_bullet")

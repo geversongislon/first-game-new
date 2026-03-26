@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://cwje57oj1k2ji"]
+
+[ext_resource type="Script" uid="uid://beon8p5t1t6na" path="res://scripts/actives/active_slow.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://3opfggh01ywq" path="res://assets/sprites/ui/luz.png" id="3_light"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0"]
+animations = [{
+"frames": [],
+"loop": false,
+"name": &"life",
+"speed": 8.0
+}]
+
+[node name="ActiveSlow" type="Node2D" unique_id=1802199739]
+script = ExtResource("1_script")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=263231594]
+position = Vector2(0, -5)
+sprite_frames = SubResource("SpriteFrames_0")
+animation = &"life"
+
+[node name="PointLight2D" type="PointLight2D" parent="AnimatedSprite2D" unique_id=1104331635]
+position = Vector2(0, -4)
+scale = Vector2(0.143, 0.143)
+color = Color(0.7, 0.1, 0.9, 1)
+texture = ExtResource("3_light")

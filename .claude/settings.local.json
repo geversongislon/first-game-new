@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(head -30 grep -n \"font_size\\\\|minimum_size\" /Users/geversongislon/first-game-new/scenes/ui/inventory/drop_slot.tscn)",
+      "Bash(head -20 grep -n \"font_size\\\\|minimum_size\" /Users/geversongislon/first-game-new/scenes/ui/inventory/draggable_card.tscn)",
+      "Bash(head -20 grep -n \"font_size\\\\|minimum_size\" /Users/geversongislon/first-game-new/scenes/ui/damage_number.tscn)",
+      "Bash(find /Users/geversongislon/first-game-new/scripts/ui -name \"*.gd\" -exec wc -l {} +)"
+    ]
+  }
+}

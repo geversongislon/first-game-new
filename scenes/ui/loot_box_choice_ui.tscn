@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://ghoitly28dm4"]
+
+[ext_resource type="Script" uid="uid://qsepo88yyeu7" path="res://scripts/ui/loot_box_choice_ui.gd" id="1"]
+
+[node name="LootBoxChoiceUI" type="CanvasLayer" unique_id=830756052]
+layer = 10
+script = ExtResource("1")

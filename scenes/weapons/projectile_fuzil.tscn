@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://6vll4vmviveo"]
+
+[ext_resource type="Script" uid="uid://bjri1uxs2ejen" path="res://scripts/weapons/projectile.gd" id="1_fuzil"]
+[ext_resource type="Texture2D" uid="uid://fwlfjghnpx06" path="res://assets/sprites/weapons/bullet-basic.png" id="2_vwoyh"]
+[ext_resource type="Texture2D" uid="uid://3opfggh01ywq" path="res://assets/sprites/ui/luz.png" id="3_fuzil"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fuzil"]
+size = Vector2(1, 1.4303836)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_fuzil"]
+gravity = Vector3(0, 98, 0)
+turbulence_enabled = true
+
+[node name="projectile_fuzil" type="Area2D" unique_id=1797642909]
+physics_interpolation_mode = 2
+collision_mask = 3
+script = ExtResource("1_fuzil")
+projectile_gravity = 10.0
+impact_color = Color(1, 0.45, 0.1, 1)
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1395812599]
+modulate = Color(0.85, 0.49583337, 0, 1)
+texture = ExtResource("2_vwoyh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=464256139]
+shape = SubResource("RectangleShape2D_fuzil")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=1513258709]
+visible = false
+amount = 16
+lifetime = 0.15
+process_material = SubResource("ParticleProcessMaterial_fuzil")
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=1689485273]
+scale = Vector2(0.07682291, 0.075542584)
+color = Color(0.97901267, 0.52529794, 0, 1)
+energy = 1.2
+texture = ExtResource("3_fuzil")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -1,0 +1,163 @@
+[gd_scene format=3 uid="uid://bqrdv8ewgd6h2"]
+
+[ext_resource type="PackedScene" uid="uid://di8qg0ho8kb82" path="res://scenes/actors/enemy.tscn" id="1_kjh0r"]
+[ext_resource type="PackedScene" uid="uid://dajq6eejldnxi" path="res://scenes/weapons/enemy_projectile.tscn" id="2_217vm"]
+[ext_resource type="Texture2D" uid="uid://bsdccfhyjn81m" path="res://assets/sprites/actors/enemy-sentinela.png" id="2_bcr1k"]
+[ext_resource type="Script" uid="uid://cnj0mvcc2j60n" path="res://scripts/actors/enemy_sentinela.gd" id="2_sxnct"]
+[ext_resource type="Script" uid="uid://c43w7npygftgi" path="res://scripts/attacks/ranged_projectile.gd" id="3_sxnct"]
+[ext_resource type="Texture2D" uid="uid://boio6ku3ioouk" path="res://assets/sprites/actors/enemy-sentinela-eye.png" id="3_v6s23"]
+
+[sub_resource type="Resource" id="Resource_waow3"]
+script = ExtResource("3_sxnct")
+wind_up = 0.7
+cooldown = 0.7
+projectile_scene = ExtResource("2_217vm")
+projectile_speed = 150.0
+burst_count = 3
+burst_pause = 1.5
+metadata/_custom_type_script = "uid://c43w7npygftgi"
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bcr1k"]
+radius = 5.0
+height = 31.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sxnct"]
+atlas = ExtResource("2_bcr1k")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_waow3"]
+atlas = ExtResource("2_bcr1k")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f5poi"]
+atlas = ExtResource("2_bcr1k")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2fw4f"]
+atlas = ExtResource("2_bcr1k")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t0wvc"]
+atlas = ExtResource("2_bcr1k")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_16myt"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sxnct")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_waow3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f5poi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2fw4f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t0wvc")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 3.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"jump",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v6s23"]
+atlas = ExtResource("3_v6s23")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_16myt"]
+atlas = ExtResource("3_v6s23")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u4dxg"]
+atlas = ExtResource("3_v6s23")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wv8ev"]
+atlas = ExtResource("3_v6s23")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tb4yj"]
+atlas = ExtResource("3_v6s23")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_f5poi"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v6s23")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_16myt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u4dxg")
+}],
+"loop": false,
+"name": &"blink",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wv8ev")
+}],
+"loop": true,
+"name": &"damage",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tb4yj")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[node name="Enemy_sentinela" unique_id=123456789 instance=ExtResource("1_kjh0r")]
+script = ExtResource("2_sxnct")
+eye_extra_dist = 5.0
+detect_expand_delay = 1.0
+detect_expand_bonus = 50.0
+full_attack_duration = 3.0
+max_health = 10
+speed = 0.0
+gravity = 0.0
+movement_style = 3
+detection_range = 250.0
+attack_behavior = SubResource("Resource_waow3")
+attack_damage = 10
+attack_range = 120.0
+card_drop_chance = 0.2
+min_gold = 0
+max_gold = 10
+
+[node name="PointLight2D" parent="." index="4" unique_id=302922653]
+visible = true
+position = Vector2(-5.9604645e-08, -6)
+scale = Vector2(0.083333336, 0.06839131)
+energy = 0.51
+
+[node name="CollisionShape2D" parent="." index="8" unique_id=1261329527]
+position = Vector2(1, 0.5)
+scale = Vector2(1, 0.96000093)
+shape = SubResource("CapsuleShape2D_bcr1k")
+
+[node name="Sprite2D" parent="." index="9" unique_id=1001747037]
+sprite_frames = SubResource("SpriteFrames_16myt")
+animation = &"idle"
+frame = 3
+frame_progress = 0.1488073
+
+[node name="eye_enemy" parent="Sprite2D" index="0" unique_id=23796506]
+sprite_frames = SubResource("SpriteFrames_f5poi")
+animation = &"damage"
+autoplay = "idle"

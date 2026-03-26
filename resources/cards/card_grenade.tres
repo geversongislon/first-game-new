@@ -1,0 +1,31 @@
+[gd_resource type="Resource" script_class="CardData" format=3 uid="uid://dha2x1b3h5k7"]
+
+[ext_resource type="Script" uid="uid://l04jvxr7j3mm" path="res://scripts/resources/card_data.gd" id="1_xxx"]
+[ext_resource type="Texture2D" uid="uid://dnq76vgmmap2d" path="res://assets/sprites/ui/hud_icons/pickup_grenade.png" id="2_icon"]
+[ext_resource type="PackedScene" uid="uid://ddw5jmo2w616v" path="res://scenes/weapons/projectile_grenade.tscn" id="4_proj"]
+[ext_resource type="PackedScene" uid="uid://n8v35aad76up" path="res://scenes/weapons/visuals/weapon_grenade.tscn" id="5_visual"]
+
+[resource]
+script = ExtResource("1_xxx")
+id = "card_grenade"
+display_name = "Granada"
+rarity = "Rare"
+description = "BUM! Cuidado com o tempo de explosão."
+full_art = ExtResource("2_icon")
+icon = ExtResource("2_icon")
+weapon_archetype = "Throwable"
+fire_rate = 10.0
+max_ammo = 3
+reload_time = 4.0
+crit_chance = 0.0
+projectile_speed = 10.0
+charge_damage_range = Vector2i(50, 50)
+charge_speed_range = Vector2(50, 550)
+charge_knockback_range = Vector2(600, 600)
+charge_recoil_range = Vector2(100, 200)
+weapon_visual_scene = ExtResource("5_visual")
+custom_projectile_scene = ExtResource("4_proj")
+weapon_id = "grenade"
+sell_price = 60
+drop_weight = 15.0
+upgrade_cost = 120

@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="CardData" format=3 uid="uid://bmdktqsv8msi4"]
+
+[ext_resource type="Texture2D" uid="uid://b7d8nltwnobgo" path="res://assets/sprites/ui/hud_icons/pickup_velocidade.png" id="1_echfs"]
+[ext_resource type="Script" uid="uid://l04jvxr7j3mm" path="res://scripts/resources/card_data.gd" id="1_qp2tp"]
+[ext_resource type="PackedScene" uid="uid://soj5dqv1e155" path="res://scenes/passives/passive_speed.tscn" id="2_7e64c"]
+
+[resource]
+script = ExtResource("1_qp2tp")
+id = "card_speed"
+display_name = "Speed"
+type = "Passive"
+rarity = "Uncommon"
+description = "Aumenta a velocidade de movimento."
+icon = ExtResource("1_echfs")
+passive_scene = ExtResource("2_7e64c")
+speed_multiplier = 0.5
+drop_weight = 30.0
+metadata/_custom_type_script = "uid://l04jvxr7j3mm"

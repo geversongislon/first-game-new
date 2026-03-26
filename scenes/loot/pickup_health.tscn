@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://bkc0krgmjhme8"]
+
+[ext_resource type="Script" uid="uid://dncywhpsadbvm" path="res://scripts/loot/pickup_health.gd" id="1_health"]
+[ext_resource type="Texture2D" uid="uid://3opfggh01ywq" path="res://assets/sprites/ui/luz.png" id="2_luz"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_health"]
+light_mode = 1
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
+size = Vector2(10, 10)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pickup"]
+radius = 18.0
+
+[node name="PickupHealth" type="CharacterBody2D" unique_id=2074038759 groups=["Loot"]]
+collision_layer = 8
+script = ExtResource("1_health")
+heal_amount = 10
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=131879242]
+material = SubResource("CanvasItemMaterial_health")
+offset_left = -3.0
+offset_top = -3.0
+offset_right = 3.0
+offset_bottom = 3.0
+color = Color(0.9, 0.1, 0.1, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1883758888]
+shape = SubResource("RectangleShape2D_body")
+
+[node name="PickupArea" type="Area2D" parent="." unique_id=812973457]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupArea" unique_id=103102017]
+shape = SubResource("CircleShape2D_pickup")
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=1323344472]
+position = Vector2(0, -1)
+scale = Vector2(0.36, 0.36)
+color = Color(1, 0.2, 0.2, 1)
+energy = 0.6
+texture = ExtResource("2_luz")
+
+[connection signal="body_entered" from="PickupArea" to="." method="_on_body_entered"]

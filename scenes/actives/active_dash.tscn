@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://bact1vdash01"]
+
+[ext_resource type="Script" uid="uid://ba32qsafybrqv" path="res://scripts/actives/active_dash.gd" id="1_dash"]
+
+[node name="ActiveDash" type="Node" unique_id=54955902]
+script = ExtResource("1_dash")
+base_speed = 400.0
+boost_speed = 500.0
+invulnerability_duration = 2.0

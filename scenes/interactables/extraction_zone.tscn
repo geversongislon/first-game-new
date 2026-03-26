@@ -1,0 +1,64 @@
+[gd_scene format=3 uid="uid://b2v8w4x6y71a"]
+
+[ext_resource type="Script" uid="uid://cjkjwu4i34x3g" path="res://scripts/interactables/extraction_zone.gd" id="1_xxx"]
+[ext_resource type="Texture2D" uid="uid://3opfggh01ywq" path="res://assets/sprites/ui/luz.png" id="2_tieh6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1"]
+size = Vector2(43, 68)
+
+[node name="ExtractionZone" type="Area2D" unique_id=29094184]
+collision_layer = 0
+collision_mask = 4
+script = ExtResource("1_xxx")
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=215742718]
+position = Vector2(1.0000002, -33)
+scale = Vector2(0.8999977, 0.9134529)
+color = Color(0.89, 0.89, 0.89, 1)
+energy = 3.77
+texture = ExtResource("2_tieh6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1896997054]
+position = Vector2(0.5, -34)
+shape = SubResource("RectangleShape2D_1")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=907716963]
+offset_left = -21.0
+offset_top = -68.0
+offset_right = 11.0
+scale = Vector2(1.3599969, 1)
+
+[node name="Label" type="Label" parent="." unique_id=1645359256]
+offset_left = -23.0
+offset_top = -76.0
+offset_right = 25.0
+offset_bottom = -67.0
+theme_override_font_sizes/font_size = 5
+text = "EXTRAÇÃO"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="InteractionLabel" type="Label" parent="." unique_id=2000000000]
+visible = false
+offset_left = -58.0
+offset_top = -84.0
+offset_right = 57.0
+offset_bottom = -76.0
+pivot_offset = Vector2(59, 4)
+theme_override_font_sizes/font_size = 5
+text = "SEGURE [E] PARA EXTRAIR"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="." unique_id=2000000001]
+visible = false
+offset_left = -16.0
+offset_top = -95.0
+offset_right = 16.0
+offset_bottom = -85.0
+mouse_filter = 2
+max_value = 2.0
+show_percentage = false
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

@@ -1,0 +1,53 @@
+[gd_scene format=3 uid="uid://be6q0ww020s0b"]
+
+[ext_resource type="Script" uid="uid://brm42q876tbsy" path="res://scripts/interactables/chest.gd" id="1_chest"]
+[ext_resource type="Texture2D" uid="uid://c6h438cowniqh" path="res://scenes/interactables/sprite_chest.png" id="2_6vl4s"]
+[ext_resource type="Texture2D" uid="uid://3opfggh01ywq" path="res://assets/sprites/ui/luz.png" id="3_k73g1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_static"]
+size = Vector2(66, 54)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_interact"]
+size = Vector2(132, 81)
+
+[node name="Chest" type="Node2D" unique_id=1711311389]
+script = ExtResource("1_chest")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=346076965]
+position = Vector2(1.0000005, -27)
+scale = Vector2(0.31805557, 0.29420143)
+texture = ExtResource("2_6vl4s")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1718963285]
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=671475561]
+position = Vector2(1, -27)
+shape = SubResource("RectangleShape2D_static")
+
+[node name="InteractArea" type="Area2D" parent="." unique_id=1368347761]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractArea" unique_id=72450616]
+position = Vector2(0, -40.5)
+shape = SubResource("RectangleShape2D_interact")
+
+[node name="InteractLabel" type="Label" parent="." unique_id=1827725642]
+visible = false
+offset_left = -40.0
+offset_top = -44.0
+offset_right = 40.0
+offset_bottom = -28.0
+text = "[E] Abrir"
+horizontal_alignment = 1
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=581599282]
+position = Vector2(1, -28)
+scale = Vector2(2.15625, 2.15625)
+color = Color(1.173499, 1.177154, 0.7734868, 1)
+energy = 1.12
+texture = ExtResource("3_k73g1")
+
+[connection signal="body_entered" from="InteractArea" to="." method="_on_body_entered"]
+[connection signal="body_exited" from="InteractArea" to="." method="_on_body_exited"]

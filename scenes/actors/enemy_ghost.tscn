@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://buytpvonmaf7u"]
+
+[ext_resource type="PackedScene" uid="uid://di8qg0ho8kb82" path="res://scenes/actors/enemy.tscn" id="1_iksb5"]
+[ext_resource type="Script" uid="uid://dythgacpgvfyq" path="res://scripts/attacks/melee_pounce.gd" id="2_a0s5u"]
+
+[sub_resource type="Resource" id="Resource_a7gjo"]
+script = ExtResource("2_a0s5u")
+pounce_range = 100.0
+metadata/_custom_type_script = "uid://dythgacpgvfyq"
+
+[node name="Enemy" unique_id=123456789 instance=ExtResource("1_iksb5")]
+detection_range = 100.0
+attack_behavior = SubResource("Resource_a7gjo")
+attack_damage = 10
+attack_range = 20.0

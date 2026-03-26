@@ -1,0 +1,14 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://lj55cl2pfjg6"]
+
+[ext_resource type="Texture2D" uid="uid://dlhb8q1jg1awe" path="res://assets/sprites/ui/puloduplo.png" id="2_okvwq"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_okvwq")
+}],
+"loop": false,
+"name": &"idle",
+"speed": 5.0
+}]

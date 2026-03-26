@@ -1,0 +1,26 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://c6lq5n5t8wat2"]
+
+[ext_resource type="Texture2D" uid="uid://rvgpp7w1h1kc" path="res://assets/sprites/weapons/grenade/granada.png" id="1_suhkr"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lqirs"]
+atlas = ExtResource("1_suhkr")
+region = Rect2(0, 0, 16, 16)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lqirs")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lqirs")
+}],
+"loop": false,
+"name": &"shoot",
+"speed": 5.0
+}]

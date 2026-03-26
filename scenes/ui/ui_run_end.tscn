@@ -1,0 +1,177 @@
+[gd_scene format=3 uid="uid://run_end_scene_001"]
+
+[ext_resource type="Script" path="res://scripts/ui/ui_run_end.gd" id="1_script"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg_dark"]
+bg_color = Color(0.047, 0.047, 0.059, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn"]
+bg_color = Color(0.3, 0.48, 0.22, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_hover"]
+bg_color = Color(0.46, 0.73, 0.33, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[node name="RunEnd" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_script")
+
+[node name="BG" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.047, 0.047, 0.059, 1)
+
+[node name="Center" type="CenterContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Panel" type="VBoxContainer" parent="Center"]
+custom_minimum_size = Vector2(220, 0)
+theme_override_constants/separation = 4
+
+[node name="Titulo" type="Label" parent="Center/Panel"]
+theme_override_colors/font_color = Color(0.9, 0.18, 0.18, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 8
+text = "FIM DA RUN"
+horizontal_alignment = 1
+
+[node name="RunNumero" type="Label" parent="Center/Panel"]
+theme_override_colors/font_color = Color(0.5, 0.5, 0.5, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 5
+text = "Run #0"
+horizontal_alignment = 1
+
+[node name="Sep1" type="HSeparator" parent="Center/Panel"]
+theme_override_colors/color = Color(0.2, 0.2, 0.22, 1)
+
+[node name="RowDanoCausado" type="HBoxContainer" parent="Center/Panel"]
+theme_override_constants/separation = 4
+
+[node name="Key" type="Label" parent="Center/Panel/RowDanoCausado"]
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.55, 0.55, 0.55, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 4
+text = "DANO CAUSADO"
+
+[node name="Val" type="Label" parent="Center/Panel/RowDanoCausado"]
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 4
+text = "0"
+horizontal_alignment = 2
+
+[node name="RowInimigos" type="HBoxContainer" parent="Center/Panel"]
+theme_override_constants/separation = 4
+
+[node name="Key" type="Label" parent="Center/Panel/RowInimigos"]
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.55, 0.55, 0.55, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 4
+text = "INIMIGOS MORTOS"
+
+[node name="Val" type="Label" parent="Center/Panel/RowInimigos"]
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 4
+text = "0"
+horizontal_alignment = 2
+
+[node name="RowDanoRecebido" type="HBoxContainer" parent="Center/Panel"]
+theme_override_constants/separation = 4
+
+[node name="Key" type="Label" parent="Center/Panel/RowDanoRecebido"]
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.55, 0.55, 0.55, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 4
+text = "DANO RECEBIDO"
+
+[node name="Val" type="Label" parent="Center/Panel/RowDanoRecebido"]
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 4
+text = "0"
+horizontal_alignment = 2
+
+[node name="RowDuracao" type="HBoxContainer" parent="Center/Panel"]
+theme_override_constants/separation = 4
+
+[node name="Key" type="Label" parent="Center/Panel/RowDuracao"]
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.55, 0.55, 0.55, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 4
+text = "DURACAO"
+
+[node name="Val" type="Label" parent="Center/Panel/RowDuracao"]
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 4
+text = "0:00"
+horizontal_alignment = 2
+
+[node name="RowGold" type="HBoxContainer" parent="Center/Panel"]
+theme_override_constants/separation = 4
+
+[node name="Key" type="Label" parent="Center/Panel/RowGold"]
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.55, 0.55, 0.55, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 4
+text = "GOLD"
+
+[node name="Val" type="Label" parent="Center/Panel/RowGold"]
+theme_override_colors/font_color = Color(1, 0.82, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 4
+text = "0"
+horizontal_alignment = 2
+
+[node name="Sep2" type="HSeparator" parent="Center/Panel"]
+theme_override_colors/color = Color(0.2, 0.2, 0.22, 1)
+
+[node name="ItensLabel" type="Label" parent="Center/Panel"]
+theme_override_colors/font_color = Color(0.5, 0.5, 0.5, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 4
+text = "ITENS COLETADOS"
+
+[node name="ItensContainer" type="HBoxContainer" parent="Center/Panel"]
+theme_override_constants/separation = 2
+
+[node name="Sep3" type="HSeparator" parent="Center/Panel"]
+theme_override_colors/color = Color(0.2, 0.2, 0.22, 1)
+
+[node name="BtnAvancar" type="Button" parent="Center/Panel"]
+custom_minimum_size = Vector2(120, 16)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 5
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn")
+text = "AVANCAR"

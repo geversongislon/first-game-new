@@ -1,0 +1,51 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://b5lq5n5t8wah3"]
+
+[ext_resource type="Texture2D" uid="uid://csjryadvk1gs0" path="res://assets/sprites/weapons/smg/smg_atirando.png" id="1_shoot"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q16jv"]
+atlas = ExtResource("1_shoot")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6gjhx"]
+atlas = ExtResource("1_shoot")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ja7q0"]
+atlas = ExtResource("1_shoot")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7d3ss"]
+atlas = ExtResource("1_shoot")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1kd6x"]
+atlas = ExtResource("1_shoot")
+region = Rect2(48, 0, 16, 16)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q16jv")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6gjhx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ja7q0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7d3ss")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1kd6x")
+}],
+"loop": false,
+"name": &"shoot",
+"speed": 12.0
+}]

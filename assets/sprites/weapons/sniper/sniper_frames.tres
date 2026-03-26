@@ -1,0 +1,58 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://wyg5tuadkun8"]
+
+[ext_resource type="Texture2D" uid="uid://b8pdja4proytd" path="res://assets/sprites/weapons/sniper/projectile_sniper.png" id="2_fwlik"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ax34s"]
+atlas = ExtResource("2_fwlik")
+region = Rect2(0, 0, 48, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pv0kv"]
+atlas = ExtResource("2_fwlik")
+region = Rect2(0, 0, 48, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rwsrc"]
+atlas = ExtResource("2_fwlik")
+region = Rect2(48, 0, 48, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xlab1"]
+atlas = ExtResource("2_fwlik")
+region = Rect2(96, 0, 48, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5feyp"]
+atlas = ExtResource("2_fwlik")
+region = Rect2(144, 0, 48, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_snvxx"]
+atlas = ExtResource("2_fwlik")
+region = Rect2(192, 0, 48, 16)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ax34s")
+}],
+"loop": false,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pv0kv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rwsrc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xlab1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5feyp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_snvxx")
+}],
+"loop": false,
+"name": &"shoot",
+"speed": 8.0
+}]

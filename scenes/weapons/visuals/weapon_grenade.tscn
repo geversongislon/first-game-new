@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://n8v35aad76up"]
+
+[ext_resource type="Script" uid="uid://dw0bee425p51s" path="res://scripts/weapons/weapon_visual.gd" id="1_script"]
+[ext_resource type="SpriteFrames" uid="uid://c6lq5n5t8wat2" path="res://assets/sprites/weapons/grenade/grenade_frames.tres" id="2_frames"]
+[ext_resource type="Texture2D" uid="uid://3opfggh01ywq" path="res://assets/sprites/ui/luz.png" id="3_light"]
+
+[node name="WeaponVisual" type="Node2D" unique_id=1392034985]
+script = ExtResource("1_script")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1509701783]
+light_mask = 17
+position = Vector2(4, 0)
+sprite_frames = ExtResource("2_frames")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="MuzzleLight" type="PointLight2D" parent="." unique_id=1072112898]
+position = Vector2(6, -3)
+scale = Vector2(0.65, 0.58)
+color = Color(1, 0.7, 0.3, 1)
+energy = 0.0
+texture = ExtResource("3_light")
+texture_scale = 0.4
+
+[node name="AmbientLight" type="PointLight2D" parent="." unique_id=1672962087]
+position = Vector2(4, 0)
+scale = Vector2(0.07, 0.07)
+color = Color(1, 0.8, 0.4, 1)
+energy = 2.0
+range_item_cull_mask = 16
+shadow_enabled = true
+shadow_item_cull_mask = 16
+texture = ExtResource("3_light")
+
+[node name="SpawnPoint" type="Marker2D" parent="." unique_id=40981454]
+position = Vector2(6, -3)

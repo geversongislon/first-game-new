@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://b8y2r6p1n4g7k"]
+
+[ext_resource type="Script" uid="uid://3x5p6mqsqfwm" path="res://scripts/pickups/master_pickup.gd" id="1_master"]
+[ext_resource type="Texture2D" uid="uid://bgh11feqd5dn" path="res://assets/sprites/ui/hud_icons/pickup_vida_comun.png" id="2_jwuqn"]
+[ext_resource type="Texture2D" uid="uid://3opfggh01ywq" path="res://assets/sprites/ui/luz.png" id="3_light"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_master"]
+size = Vector2(16, 16)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_unshaded"]
+
+[node name="MasterPickupWeapon" type="Area2D" unique_id=422123884]
+collision_mask = 4
+script = ExtResource("1_master")
+card_id = "card_health_regen"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=434503733]
+shape = SubResource("RectangleShape2D_master")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1394582878]
+material = SubResource("CanvasItemMaterial_unshaded")
+texture = ExtResource("2_jwuqn")
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=2090449568]
+position = Vector2(0, -1)
+scale = Vector2(0.12863606, 0.12862739)
+energy = 1.55
+texture = ExtResource("3_light")
+texture_scale = 3.0
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

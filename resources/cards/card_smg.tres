@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="CardData" format=3 uid="uid://b8t5q4v3w2x1"]
+
+[ext_resource type="Texture2D" uid="uid://cnnn2nwju21vm" path="res://assets/sprites/cards/full_art/SMG NIVEl 1.png" id="1_khale"]
+[ext_resource type="Script" uid="uid://l04jvxr7j3mm" path="res://scripts/resources/card_data.gd" id="1_xxx"]
+[ext_resource type="Texture2D" uid="uid://by1l5uhtb73kn" path="res://assets/sprites/ui/hud_icons/pickup_smg.png" id="2_khale"]
+[ext_resource type="PackedScene" uid="uid://x30v1hr6nndx" path="res://scenes/weapons/visuals/weapon_smg.tscn" id="5_visual"]
+
+[resource]
+script = ExtResource("1_xxx")
+id = "card_smg"
+display_name = "SMG"
+description = "Dispara projéteis em alta velocidade."
+full_art = ExtResource("1_khale")
+icon = ExtResource("2_khale")
+weapon_archetype = "Projectile"
+is_automatic = true
+fire_rate = 7.0
+max_ammo = 12
+reload_time = 2.0
+crit_chance = 0.25
+projectile_speed = 450.0
+projectile_knockback = 30.0
+projectile_gravity = 10.0
+weapon_recoil = 25.0
+weapon_visual_scene = ExtResource("5_visual")
+weapon_id = "smg"
+spread_base_angle = 2.0
+spread_max_angle = 60.0
+spread_buildup_per_shot = 7.0
+spread_recovery_rate = 18.0
+sell_price = 25
+drop_weight = 50.0
+upgrade_cost = 50

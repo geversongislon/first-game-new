@@ -1,0 +1,72 @@
+[gd_scene format=3 uid="uid://ddw5jmo2w616v"]
+
+[ext_resource type="Script" uid="uid://qrjafhy4b156" path="res://scripts/weapons/grenade.gd" id="1_grnd"]
+[ext_resource type="Texture2D" uid="uid://rvgpp7w1h1kc" path="res://assets/sprites/weapons/grenade/granada.png" id="2_0sjyr"]
+[ext_resource type="Texture2D" uid="uid://3opfggh01ywq" path="res://assets/sprites/ui/luz.png" id="3_7bw42"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_grnd"]
+friction = 0.5
+bounce = 0.6
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_grnd"]
+radius = 6.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xplo"]
+radius = 44.04543
+
+[sub_resource type="Animation" id="Animation_grnd"]
+resource_name = "blink"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 0, 0, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_grnd"]
+_data = {
+&"blink": SubResource("Animation_grnd")
+}
+
+[node name="ProjectileGrenade" type="RigidBody2D" unique_id=854855435]
+collision_layer = 4
+collision_mask = 3
+physics_material_override = SubResource("PhysicsMaterial_grnd")
+script = ExtResource("1_grnd")
+explosion_radius = 100.0
+knockback = 500.0
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1809992186]
+texture = ExtResource("2_0sjyr")
+region_rect = Rect2(0, 0, 126, 126)
+
+[node name="AmbientLight" type="PointLight2D" parent="Sprite2D" unique_id=80533465]
+position = Vector2(7.6293945e-06, -3.8146973e-06)
+scale = Vector2(0.5015885, 0.4192708)
+color = Color(3.1182785, 0.92247814, 0, 1)
+energy = 1.15
+shadow_enabled = true
+texture = ExtResource("3_7bw42")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=131916404]
+shape = SubResource("CircleShape2D_grnd")
+
+[node name="ExplosionArea" type="Area2D" parent="." unique_id=453922493]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ExplosionArea" unique_id=22669904]
+shape = SubResource("CircleShape2D_xplo")
+debug_color = Color(0.960784, 0.176471, 0.231373, 0.419608)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=414914443]
+libraries/ = SubResource("AnimationLibrary_grnd")
+autoplay = &"blink"

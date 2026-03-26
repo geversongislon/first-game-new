@@ -1,0 +1,209 @@
+[gd_scene format=3 uid="uid://df7k3m2n1p0q"]
+
+[ext_resource type="Script" uid="uid://flcsugtqlfxc" path="res://scripts/ui/ui_main_menu.gd" id="1_xxx"]
+[ext_resource type="Texture2D" uid="uid://nmr04xeblwss" path="res://assets/sprites/coin.png" id="2_arwl3"]
+[ext_resource type="PackedScene" uid="uid://c7nan1o2p3q5" path="res://scenes/ui/inventory/drop_slot.tscn" id="2_yyy"]
+[ext_resource type="FontFile" uid="uid://c1ckwixr8xce5" path="res://assets/fonts/Press_Start_2P/PressStart2P-Regular.ttf" id="3_2s7c1"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_arwl3"]
+bg_color = Color(0.30288002, 0.48, 0.22079998, 1)
+corner_detail = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fnxgh"]
+bg_color = Color(0.45919746, 0.72742176, 0.33489838, 1)
+corner_detail = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fvswa"]
+bg_color = Color(0.76, 0.5750666, 0.20519999, 1)
+corner_detail = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k5r58"]
+bg_color = Color(0.6645997, 0.23069328, 0.49848992, 1)
+corner_detail = 1
+
+[node name="UIMainMenu" type="Control" unique_id=1653903338]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_xxx")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1957113500]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.047, 0.047, 0.059, 1)
+
+[node name="CoinIcon" type="TextureRect" parent="." unique_id=963140334]
+custom_minimum_size = Vector2(8, 8)
+layout_mode = 0
+offset_left = 4.0
+offset_top = 5.0
+offset_right = 12.0
+offset_bottom = 13.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("2_arwl3")
+expand_mode = 3
+
+[node name="StatsLabel" type="Label" parent="." unique_id=1536183618]
+layout_mode = 0
+offset_left = 13.0
+offset_top = 7.0
+offset_right = 77.0
+offset_bottom = 11.0
+theme_override_colors/font_color = Color(1, 0.8, 0, 1)
+theme_override_font_sizes/font_size = 4
+text = "0"
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1491857639]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginCenter" type="MarginContainer" parent="HBoxContainer" unique_id=1154773970]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="CenterPanel" type="VBoxContainer" parent="HBoxContainer/MarginCenter" unique_id=1372664010]
+layout_mode = 2
+theme_override_constants/separation = 3
+alignment = 1
+
+[node name="Title" type="Label" parent="HBoxContainer/MarginCenter/CenterPanel" unique_id=1898553631]
+layout_mode = 2
+theme_override_font_sizes/font_size = 9
+text = "NOIRUN"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LabelLoadout" type="Label" parent="HBoxContainer/MarginCenter/CenterPanel" unique_id=580062411]
+layout_mode = 2
+theme_override_font_sizes/font_size = 3
+text = "SEU LOADOUT"
+horizontal_alignment = 1
+
+[node name="LoadoutSlots" type="HBoxContainer" parent="HBoxContainer/MarginCenter/CenterPanel" unique_id=2076602286]
+layout_mode = 2
+theme_override_constants/separation = 3
+alignment = 1
+
+[node name="DropSlot1" parent="HBoxContainer/MarginCenter/CenterPanel/LoadoutSlots" unique_id=47447473 instance=ExtResource("2_yyy")]
+layout_mode = 2
+
+[node name="DropSlot2" parent="HBoxContainer/MarginCenter/CenterPanel/LoadoutSlots" unique_id=514468712 instance=ExtResource("2_yyy")]
+layout_mode = 2
+
+[node name="DropSlot3" parent="HBoxContainer/MarginCenter/CenterPanel/LoadoutSlots" unique_id=1117945777 instance=ExtResource("2_yyy")]
+layout_mode = 2
+
+[node name="StartRunButton" type="Button" parent="HBoxContainer/MarginCenter/CenterPanel" unique_id=2142515802]
+custom_minimum_size = Vector2(54, 12)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("3_2s7c1")
+theme_override_font_sizes/font_size = 4
+theme_override_styles/normal = SubResource("StyleBoxFlat_arwl3")
+theme_override_styles/hover = SubResource("StyleBoxFlat_fnxgh")
+text = "INICIAR RUN"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/MarginCenter/CenterPanel" unique_id=145684504]
+layout_mode = 2
+alignment = 1
+
+[node name="ShopButton" type="Button" parent="HBoxContainer/MarginCenter/CenterPanel/HBoxContainer" unique_id=2142515803]
+custom_minimum_size = Vector2(20, 10)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_fvswa")
+text = "LOJA"
+
+[node name="FusionButton" type="Button" parent="HBoxContainer/MarginCenter/CenterPanel/HBoxContainer" unique_id=2142515804]
+custom_minimum_size = Vector2(30, 10)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_k5r58")
+text = "FUNDIR"
+
+[node name="MarginRight" type="MarginContainer" parent="HBoxContainer" unique_id=865284774]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="RightPanel" type="VBoxContainer" parent="HBoxContainer/MarginRight" unique_id=47230273]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="InventoryHeader" type="HBoxContainer" parent="HBoxContainer/MarginRight/RightPanel" unique_id=666452494]
+layout_mode = 2
+theme_override_constants/separation = 4
+alignment = 1
+
+[node name="LabelInventory" type="Label" parent="HBoxContainer/MarginRight/RightPanel/InventoryHeader" unique_id=1822898929]
+layout_mode = 2
+theme_override_font_sizes/font_size = 4
+text = "INVENTÁRIO"
+
+[node name="CapacityLabel" type="Label" parent="HBoxContainer/MarginRight/RightPanel/InventoryHeader" unique_id=1083114138]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.701961, 0.701961, 0.701961, 1)
+theme_override_font_sizes/font_size = 3
+text = "0/20"
+
+[node name="InventoryScroll" type="ScrollContainer" parent="HBoxContainer/MarginRight/RightPanel" unique_id=2032043706]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="InventoryGrid" type="GridContainer" parent="HBoxContainer/MarginRight/RightPanel/InventoryScroll" unique_id=1671027473]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/h_separation = 2
+theme_override_constants/v_separation = 2
+columns = 5
+
+[node name="SortButton" type="Button" parent="HBoxContainer/MarginRight/RightPanel" unique_id=797794350]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 3
+text = "Organizar"
+
+[node name="v_label" type="Label" parent="." unique_id=1711948579]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 11.0
+offset_top = -16.0
+offset_right = 48.0
+offset_bottom = -10.0
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.47788018, 0.47788012, 0.47788012, 1)
+theme_override_font_sizes/font_size = 3
+text = "V.0.01 - Tudo tem um começo!"
+
+[connection signal="pressed" from="HBoxContainer/MarginCenter/CenterPanel/StartRunButton" to="." method="_on_start_run_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/MarginCenter/CenterPanel/HBoxContainer/ShopButton" to="." method="_on_shop_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/MarginCenter/CenterPanel/HBoxContainer/FusionButton" to="." method="_on_fusion_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/MarginRight/RightPanel/SortButton" to="." method="_on_sort_button_pressed"]

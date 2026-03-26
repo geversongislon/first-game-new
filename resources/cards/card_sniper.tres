@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="CardData" format=3 uid="uid://cshsjjrm2m2rn"]
+
+[ext_resource type="Script" uid="uid://l04jvxr7j3mm" path="res://scripts/resources/card_data.gd" id="1_carddata"]
+[ext_resource type="Texture2D" uid="uid://baywh3y2fmtcl" path="res://assets/sprites/ui/hud_icons/pickup_sniper.png" id="2_ebhdw"]
+[ext_resource type="PackedScene" uid="uid://djq8b358ov0pf" path="res://scenes/weapons/projectile_sniper.tscn" id="2_proj"]
+[ext_resource type="PackedScene" uid="uid://7hkv2f2xjjur" path="res://scenes/weapons/visuals/weapon_sniper.tscn" id="5_visual"]
+
+[resource]
+script = ExtResource("1_carddata")
+id = "card_sniper"
+display_name = "Sniper"
+rarity = "Legendary"
+description = "Penetra inimigos. Quanto mais longe, mais dano."
+icon = ExtResource("2_ebhdw")
+weapon_archetype = "Projectile"
+fire_rate = 1.0
+max_ammo = 1
+reload_time = 2.0
+projectile_damage = 50
+crit_chance = 0.39
+crit_multiplier = 1.5
+projectile_speed = 2000.0
+projectile_knockback = 100.0
+projectile_gravity = 0.0
+weapon_recoil = 100.0
+weapon_visual_scene = ExtResource("5_visual")
+custom_projectile_scene = ExtResource("2_proj")
+weapon_id = "sniper"
+requires_stillness = true
+has_scope = true
+sell_price = 50
+drop_weight = 2.0
+upgrade_cost = 280

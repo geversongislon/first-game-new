@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://dajq6eejldnxi"]
+
+[ext_resource type="Script" uid="uid://bjri1uxs2ejen" path="res://scripts/weapons/projectile.gd" id="1_enpro"]
+[ext_resource type="Texture2D" uid="uid://3opfggh01ywq" path="res://assets/sprites/ui/luz.png" id="2_5fkbg"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_enpro"]
+radius = 3.0
+
+[node name="EnemyProjectile" type="Area2D" unique_id=1563645973]
+collision_layer = 0
+collision_mask = 5
+script = ExtResource("1_enpro")
+projectile_gravity = 0.0
+damage = 5
+
+[node name="Visual" type="ColorRect" parent="." unique_id=713988734]
+offset_left = -3.0
+offset_top = -3.0
+offset_right = 3.0
+offset_bottom = 3.0
+color = Color(1, 0.3, 0.05, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=290486644]
+shape = SubResource("CircleShape2D_enpro")
+
+[node name="PointLight2D" type="PointLight2D" parent="CollisionShape2D" unique_id=2027329560]
+position = Vector2(1.9999999, -4.999999)
+scale = Vector2(0.29140565, 0.22836328)
+color = Color(0.7086499, 0.2867762, 6.738305e-07, 1)
+energy = 3.77
+texture = ExtResource("2_5fkbg")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

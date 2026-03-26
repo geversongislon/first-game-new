@@ -1,0 +1,75 @@
+[gd_scene format=3 uid="uid://c6r6u3cgonk22"]
+
+[ext_resource type="Script" uid="uid://c3ai5dyun4a10" path="res://scripts/interactables/loot_box.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://bb8l4gfa2deiw" path="res://assets/sprites/boxlootsprite.png" id="2_nq4ip"]
+[ext_resource type="Texture2D" uid="uid://3opfggh01ywq" path="res://assets/sprites/ui/luz.png" id="3"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y3fto"]
+atlas = ExtResource("2_nq4ip")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8opo1"]
+atlas = ExtResource("2_nq4ip")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_m8be7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y3fto")
+}],
+"loop": false,
+"name": &"aberto",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8opo1")
+}],
+"loop": false,
+"name": &"fechado",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1"]
+radius = 52.0
+
+[node name="LootBox" type="Node2D" unique_id=196054992]
+script = ExtResource("1")
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=1096456671]
+sprite_frames = SubResource("SpriteFrames_m8be7")
+animation = &"fechado"
+offset = Vector2(0, -16)
+
+[node name="InteractArea" type="Area2D" parent="." unique_id=2105386098]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractArea" unique_id=778746668]
+position = Vector2(0, -27)
+shape = SubResource("CircleShape2D_1")
+
+[node name="InteractLabel" type="Label" parent="." unique_id=525676310]
+offset_left = -40.0
+offset_top = -52.0
+offset_right = 40.0
+offset_bottom = -36.0
+text = "[ E ] Abrir"
+horizontal_alignment = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="." unique_id=285420186]
+offset_left = -30.0
+offset_top = -44.0
+offset_right = 30.0
+offset_bottom = -30.0
+max_value = 1.0
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=1572262227]
+position = Vector2(0, -28)
+scale = Vector2(1.1162494, 0.8704431)
+color = Color(1, 0.9285, 0.61, 1)
+texture = ExtResource("3")
+
+[connection signal="body_entered" from="InteractArea" to="." method="_on_body_entered"]
+[connection signal="body_exited" from="InteractArea" to="." method="_on_body_exited"]

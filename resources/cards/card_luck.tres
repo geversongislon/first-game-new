@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="CardData" format=3 uid="uid://c3g2722r2wkb0"]
+
+[ext_resource type="Texture2D" uid="uid://ug1ttm0glcb8" path="res://assets/sprites/ui/hud_icons/icon_card_sorte.png" id="1_4g7bp"]
+[ext_resource type="Script" uid="uid://l04jvxr7j3mm" path="res://scripts/resources/card_data.gd" id="1_qp2tp"]
+[ext_resource type="PackedScene" uid="uid://bjc4tfmpnxenr" path="res://scenes/passives/passive_luck.tscn" id="3_scene"]
+
+[resource]
+script = ExtResource("1_qp2tp")
+id = "card_luck"
+display_name = "Trevo da Sorte"
+type = "Passive"
+rarity = "Uncommon"
+description = "Inimigos dropam mais moedas e cartas.
+[Stack 2] Raridade dos drops melhora em todo lugar.
+[Stack 3] Lootboxes garantem 1 carta Lendária."
+icon = ExtResource("1_4g7bp")
+passive_scene = ExtResource("3_scene")
+sell_price = 30
+drop_weight = 25.0

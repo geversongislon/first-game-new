@@ -1,0 +1,35 @@
+[gd_resource type="Resource" script_class="CardData" format=3 uid="uid://cqd4nx16xqfxh"]
+
+[ext_resource type="Script" uid="uid://l04jvxr7j3mm" path="res://scripts/resources/card_data.gd" id="1_fuzil"]
+[ext_resource type="Texture2D" uid="uid://b623jn22jqixp" path="res://assets/sprites/ui/hud_icons/pickup_fuzil.png" id="2_fuzil"]
+[ext_resource type="PackedScene" uid="uid://6vll4vmviveo" path="res://scenes/weapons/projectile_fuzil.tscn" id="3_fuzil"]
+[ext_resource type="PackedScene" uid="uid://b5lyqrki714tc" path="res://scenes/weapons/visuals/weapon_fuzil.tscn" id="4_fuzil"]
+
+[resource]
+script = ExtResource("1_fuzil")
+id = "card_fuzil"
+display_name = "Fuzil"
+rarity = "Rare"
+description = "Rifle automático preciso. Menos dispersão que a SMG, mais potência por tiro."
+icon = ExtResource("2_fuzil")
+weapon_archetype = "Projectile"
+is_automatic = true
+max_ammo = 20
+reload_time = 2.2
+projectile_damage = 3
+crit_chance = 0.15
+crit_multiplier = 1.8
+projectile_speed = 520.0
+projectile_knockback = 40.0
+projectile_gravity = 20.0
+weapon_recoil = 55.0
+weapon_visual_scene = ExtResource("4_fuzil")
+custom_projectile_scene = ExtResource("3_fuzil")
+weapon_id = "fuzil"
+spread_base_angle = 2.0
+spread_max_angle = 100.0
+spread_buildup_per_shot = 5.0
+spread_recovery_rate = 18.0
+sell_price = 35
+drop_weight = 12.0
+upgrade_cost = 80

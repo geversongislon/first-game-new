@@ -1,0 +1,63 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://c7x0g4m2y106p"]
+
+[ext_resource type="Texture2D" uid="uid://bcempr5pvm214" path="res://assets/sprites/weapons/bow/arco_atirando.png" id="1_bowsheet"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b3s31"]
+atlas = ExtResource("1_bowsheet")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yf8yu"]
+atlas = ExtResource("1_bowsheet")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ug8ox"]
+atlas = ExtResource("1_bowsheet")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_isw34"]
+atlas = ExtResource("1_bowsheet")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_om74s"]
+atlas = ExtResource("1_bowsheet")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uct1s"]
+atlas = ExtResource("1_bowsheet")
+region = Rect2(240, 0, 48, 48)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b3s31")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yf8yu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ug8ox")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_isw34")
+}],
+"loop": true,
+"name": &"charge",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_om74s")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uct1s")
+}],
+"loop": false,
+"name": &"shoot",
+"speed": 16.0
+}]

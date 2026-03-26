@@ -1,0 +1,35 @@
+[gd_resource type="Resource" script_class="CardData" format=3 uid="uid://bfd3nfiwkjidy"]
+
+[ext_resource type="Texture2D" uid="uid://wilaamkeddvo" path="res://assets/sprites/ui/hud_icons/pickup_pistola.png" id="1_icon"]
+[ext_resource type="Script" uid="uid://l04jvxr7j3mm" path="res://scripts/resources/card_data.gd" id="2_script"]
+[ext_resource type="PackedScene" uid="uid://bgxgl8kc38qtn" path="res://scenes/weapons/projectile_pistola.tscn" id="4_proj"]
+[ext_resource type="PackedScene" uid="uid://63vabf0nfxvu" path="res://scenes/weapons/visuals/weapon_pistola.tscn" id="5_visual"]
+
+[resource]
+script = ExtResource("2_script")
+id = "card_pistola"
+display_name = "Pistola"
+rarity = "Rare"
+description = "Uma arma confiável de curto alcance."
+icon = ExtResource("1_icon")
+weapon_archetype = "Projectile"
+fire_rate = 2.0
+max_ammo = 7
+reload_time = 1.0
+projectile_damage = 4
+crit_chance = 0.1
+crit_multiplier = 1.5
+projectile_speed = 500.0
+projectile_knockback = 100.0
+projectile_gravity = 80.0
+weapon_recoil = 100.0
+weapon_visual_scene = ExtResource("5_visual")
+custom_projectile_scene = ExtResource("4_proj")
+weapon_id = "pistola"
+spread_base_angle = 3.0
+spread_max_angle = 8.0
+spread_buildup_per_shot = 2.0
+spread_recovery_rate = 20.0
+sell_price = 15
+drop_weight = 15.0
+upgrade_cost = 120

@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://wxx2teed8k84"]
+
+[ext_resource type="PackedScene" uid="uid://di8qg0ho8kb82" path="res://scenes/actors/enemy.tscn" id="1_yj7ni"]
+[ext_resource type="PackedScene" uid="uid://dajq6eejldnxi" path="res://scenes/weapons/enemy_projectile.tscn" id="2_i8ine"]
+[ext_resource type="Script" uid="uid://c43w7npygftgi" path="res://scripts/attacks/ranged_projectile.gd" id="3_cfu4q"]
+
+[sub_resource type="Resource" id="Resource_jei73"]
+script = ExtResource("3_cfu4q")
+wind_up = 1.0
+cooldown = 2.0
+projectile_scene = ExtResource("2_i8ine")
+projectile_speed = 160.0
+metadata/_custom_type_script = "uid://c43w7npygftgi"
+
+[node name="Enemy_Basico" unique_id=123456789 instance=ExtResource("1_yj7ni")]
+max_health = 20
+speed = 50.0
+follow_on_detect = true
+detection_range = 200.0
+keep_distance = 50.0
+can_jump_obstacles = true
+jump_force = -200.0
+attack_behavior = SubResource("Resource_jei73")
+attack_damage = 15
+attack_range = 150.0
+card_drop_chance = 0.15
+min_gold = 3
+max_gold = 10
+
+[node name="PointLight2D" parent="." index="4" unique_id=302922653]
+visible = true
+position = Vector2(-4.7683716e-07, -9.536743e-07)
+scale = Vector2(0.0859375, 0.08593749)

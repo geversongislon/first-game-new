@@ -1,0 +1,44 @@
+[gd_scene format=3 uid="uid://ci7dj2ke4lf8"]
+
+[ext_resource type="Script" uid="uid://dyj55tc3crpig" path="res://scripts/loot/pickup_coin.gd" id="1_xxx"]
+[ext_resource type="Texture2D" uid="uid://nmr04xeblwss" path="res://assets/sprites/coin.png" id="2_qj6um"]
+[ext_resource type="Texture2D" uid="uid://3opfggh01ywq" path="res://assets/sprites/ui/luz.png" id="3_8r215"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_8r215"]
+light_mode = 1
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1"]
+radius = 8.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pickup"]
+radius = 16.0
+
+[node name="PickupCoin" type="CharacterBody2D" unique_id=94408670 groups=["Loot"]]
+scale = Vector2(0.5, 0.5)
+collision_layer = 8
+script = ExtResource("1_xxx")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=964620850]
+material = SubResource("CanvasItemMaterial_8r215")
+scale = Vector2(0.375, 0.375)
+texture = ExtResource("2_qj6um")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=822359701]
+scale = Vector2(1, 0.8400024)
+shape = SubResource("CircleShape2D_1")
+
+[node name="PickupArea" type="Area2D" parent="." unique_id=779963892]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupArea" unique_id=780124233]
+shape = SubResource("CircleShape2D_pickup")
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=1104804164]
+position = Vector2(0, -1)
+scale = Vector2(0.36458334, 0.359375)
+color = Color(0.7539077, 0.61418724, 0, 1)
+energy = 0.3
+texture = ExtResource("3_8r215")
+
+[connection signal="body_entered" from="PickupArea" to="." method="_on_body_entered"]

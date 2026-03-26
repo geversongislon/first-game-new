@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/weapons/archetypes/throwable_weapon.gd" id="1_throw"]
+[ext_resource type="PackedScene" path="res://scenes/weapons/projectile_grenade.tscn" id="2_proj"]
+
+[node name="ThrowableTemplate" type="Node"]
+script = ExtResource("1_throw")
+throwable_scene = ExtResource("2_proj")

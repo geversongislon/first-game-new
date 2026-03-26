@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://dvus2o3xko3mk"]
+
+[ext_resource type="Script" uid="uid://3x5p6mqsqfwm" path="res://scripts/pickups/master_pickup.gd" id="1_xxx"]
+[ext_resource type="Texture2D" uid="uid://3opfggh01ywq" path="res://assets/sprites/ui/luz.png" id="2_7ao5i"]
+[ext_resource type="Texture2D" uid="uid://brm0c5rr4p1d" path="res://assets/sprites/ui/hud_icons/pickup_randon.png" id="2_25lus"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2"]
+size = Vector2(45, 46)
+
+[node name="PickupCard" type="Area2D" unique_id=372608215 groups=["Loot"]]
+collision_layer = 8
+collision_mask = 5
+script = ExtResource("1_xxx")
+is_random = true
+card_id = ""
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=302506895]
+shape = SubResource("RectangleShape2D_2")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1950415425]
+scale = Vector2(0.057142857, 0.057142857)
+texture = ExtResource("2_25lus")
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=1017177790]
+position = Vector2(0, -1)
+scale = Vector2(0.8999977, 0.9134529)
+color = Color(0.6, 0.2, 1, 1)
+texture = ExtResource("2_7ao5i")
+
+[node name="FloorRay" type="RayCast2D" parent="." unique_id=1717226640]
+target_position = Vector2(0, 25)

@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://bgxgl8kc38qtn"]
+
+[ext_resource type="Script" uid="uid://bjri1uxs2ejen" path="res://scripts/weapons/projectile.gd" id="1_vkfiu"]
+[ext_resource type="Texture2D" uid="uid://fwlfjghnpx06" path="res://assets/sprites/weapons/bullet-basic.png" id="2_d6hit"]
+[ext_resource type="Texture2D" uid="uid://3opfggh01ywq" path="res://assets/sprites/ui/luz.png" id="3_3qih2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2ndhl"]
+size = Vector2(1, 1.4303836)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_oij7l"]
+gravity = Vector3(0, 98, 0)
+turbulence_enabled = true
+
+[node name="projectile_pistola" type="Area2D" unique_id=1604825692]
+physics_interpolation_mode = 2
+collision_mask = 3
+script = ExtResource("1_vkfiu")
+projectile_gravity = 10.0
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1061524251]
+modulate = Color(0, 0.4833331, 1, 1)
+texture = ExtResource("2_d6hit")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1351476907]
+shape = SubResource("RectangleShape2D_2ndhl")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=1903337697]
+amount = 16
+lifetime = 0.15000000000000002
+process_material = SubResource("ParticleProcessMaterial_oij7l")
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=2002676456]
+scale = Vector2(0.116825126, 0.11554198)
+color = Color(0, 0.6500001, 1, 1)
+energy = 1.12
+texture = ExtResource("3_3qih2")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

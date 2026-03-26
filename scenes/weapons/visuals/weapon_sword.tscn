@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://dscgqf2j6ybhy"]
+
+[ext_resource type="Script" uid="uid://dw0bee425p51s" path="res://scripts/weapons/weapon_visual.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://3opfggh01ywq" path="res://assets/sprites/ui/luz.png" id="3_light"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_gqofi"]
+light_mode = 1
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gqofi"]
+size = Vector2(26, 3.5)
+
+[node name="Weapon_Sword" type="Node2D" unique_id=1713811269]
+script = ExtResource("1_script")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1095998070]
+light_mask = 17
+material = SubResource("CanvasItemMaterial_gqofi")
+position = Vector2(15, 2)
+animation = &""
+autoplay = "idle"
+offset = Vector2(0, -2)
+
+[node name="MuzzleLight" type="PointLight2D" parent="." unique_id=1427199131]
+position = Vector2(8, 0)
+scale = Vector2(0.65, 0.58)
+color = Color(1, 0.96, 0.86, 1)
+energy = 0.0
+texture = ExtResource("3_light")
+texture_scale = 0.4
+
+[node name="AmbientLight" type="PointLight2D" parent="." unique_id=1796765393]
+position = Vector2(29.999996, 0)
+scale = Vector2(0.07, 0.07)
+color = Color(0.9, 0.9, 1, 1)
+energy = 1.8
+range_item_cull_mask = 16
+shadow_enabled = true
+shadow_item_cull_mask = 16
+texture = ExtResource("3_light")
+
+[node name="SpawnPoint" type="Marker2D" parent="." unique_id=1839345314]
+
+[node name="Hitbox" type="Area2D" parent="." unique_id=1663775780]
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=429713653]
+position = Vector2(22, 0)
+shape = SubResource("RectangleShape2D_gqofi")

@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://bw0ht4oux3kpk"]
+
+[ext_resource type="Script" uid="uid://cl8apfly3qjvr" path="res://scripts/levels/spawn_point.gd" id="1_script"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_q3k3w"]
+light_mode = 1
+
+[node name="SpawnPoint" type="Marker2D" unique_id=1428988180]
+material = SubResource("CanvasItemMaterial_q3k3w")
+script = ExtResource("1_script")

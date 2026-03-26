@@ -1,0 +1,76 @@
+[gd_scene format=3 uid="uid://6kwps8qhdwbh"]
+
+[ext_resource type="Script" uid="uid://im84tnx4mrvc" path="res://scripts/actives/active_health_regen.gd" id="1_regen"]
+[ext_resource type="Texture2D" uid="uid://bb6gh7ltora0r" path="res://assets/sprites/regenvida.png" id="2_58jxc"]
+[ext_resource type="Texture2D" uid="uid://3opfggh01ywq" path="res://assets/sprites/ui/luz.png" id="3_wxc36"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wxc36"]
+atlas = ExtResource("2_58jxc")
+region = Rect2(0, 0, 48, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t0rha"]
+atlas = ExtResource("2_58jxc")
+region = Rect2(48, 0, 48, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_njfy8"]
+atlas = ExtResource("2_58jxc")
+region = Rect2(96, 0, 48, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_htiq2"]
+atlas = ExtResource("2_58jxc")
+region = Rect2(144, 0, 48, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xqemv"]
+atlas = ExtResource("2_58jxc")
+region = Rect2(192, 0, 48, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nevuh"]
+atlas = ExtResource("2_58jxc")
+region = Rect2(240, 0, 48, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nr2l3"]
+atlas = ExtResource("2_58jxc")
+region = Rect2(288, 0, 48, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qgtvh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wxc36")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t0rha")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_njfy8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_htiq2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xqemv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nevuh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nr2l3")
+}],
+"loop": false,
+"name": &"life",
+"speed": 8.0
+}]
+
+[node name="ActiveHealthRegen" type="Node2D" unique_id=1495647360]
+script = ExtResource("1_regen")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=577813617]
+position = Vector2(0, -5)
+sprite_frames = SubResource("SpriteFrames_qgtvh")
+animation = &"life"
+
+[node name="PointLight2D" type="PointLight2D" parent="AnimatedSprite2D" unique_id=108193635]
+position = Vector2(2.2737368e-13, -4)
+scale = Vector2(0.14322917, 0.14322917)
+color = Color(1, 0.100000024, 0.15999997, 1)
+texture = ExtResource("3_wxc36")

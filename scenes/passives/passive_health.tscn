@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://cxhy4p1w7q8ga"]
+
+[ext_resource type="Script" path="res://scripts/passives/passive_health.gd" id="1_pass_h"]
+
+[node name="PassiveHealth" type="Node"]
+script = ExtResource("1_pass_h")

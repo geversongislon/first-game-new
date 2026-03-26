@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://blsx6v0to7ljy"]
+
+[ext_resource type="Script" uid="uid://cfv4pguc6ivmx" path="res://scripts/run/run.gd" id="1_run"]
+[ext_resource type="PackedScene" uid="uid://cklapkd2gagtj" path="res://scenes/actors/player.tscn" id="2_player"]
+[ext_resource type="PackedScene" uid="uid://c4yyx3qos3aim" path="res://scenes/levels/areas/area_01.tscn" id="2_wdonh"]
+
+[node name="Run" type="Node2D" unique_id=985810444]
+script = ExtResource("1_run")
+initial_area = ExtResource("2_wdonh")
+
+[node name="WorldContainer" type="Node2D" parent="." unique_id=766077142]
+
+[node name="Player" parent="." unique_id=1808297631 instance=ExtResource("2_player")]
+position = Vector2(160, 90)

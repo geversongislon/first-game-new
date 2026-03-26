@@ -1,0 +1,156 @@
+[gd_scene format=3 uid="uid://cqt6fupefpcpl"]
+
+[ext_resource type="Script" uid="uid://bg58qp0mgdmqs" path="res://scripts/ui/inventory/card_detail_popup.gd" id="1_popup"]
+[ext_resource type="Texture2D" uid="uid://wilaamkeddvo" path="res://assets/sprites/ui/hud_icons/pickup_pistola.png" id="2_g363c"]
+
+[node name="CardDetailPopup" type="Control" unique_id=1424812369]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_popup")
+
+[node name="Overlay" type="ColorRect" parent="." unique_id=220275873]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.7647059)
+
+[node name="Panel" type="PanelContainer" parent="." unique_id=1905140502]
+custom_minimum_size = Vector2(185, 0)
+layout_mode = 0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel" unique_id=1085930117]
+layout_mode = 2
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 6
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer" unique_id=671728231]
+layout_mode = 2
+theme_override_constants/separation = 3
+
+[node name="Header" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer" unique_id=1004105394]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="CardIcon" type="TextureRect" parent="Panel/MarginContainer/VBoxContainer/Header" unique_id=1080899324]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("2_g363c")
+expand_mode = 3
+stretch_mode = 6
+
+[node name="InfoVBox" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/Header" unique_id=166885047]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 1
+
+[node name="CardName" type="Label" parent="Panel/MarginContainer/VBoxContainer/Header/InfoVBox" unique_id=563405598]
+layout_mode = 2
+theme_override_font_sizes/font_size = 5
+text = "PISTOLA"
+
+[node name="RarityLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer/Header/InfoVBox" unique_id=1756950018]
+layout_mode = 2
+theme_override_font_sizes/font_size = 4
+text = "Rare"
+
+[node name="LevelDisplay" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer/Header/InfoVBox" unique_id=734639779]
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="PoderVBox" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/Header" unique_id=543219876]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 0
+
+[node name="PoderValue" type="Label" parent="Panel/MarginContainer/VBoxContainer/Header/PoderVBox" unique_id=876543210]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.25, 1)
+theme_override_font_sizes/font_size = 8
+text = "3.5"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PoderName" type="Label" parent="Panel/MarginContainer/VBoxContainer/Header/PoderVBox" unique_id=123456789]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.55, 0.55, 0.6, 1)
+theme_override_font_sizes/font_size = 3
+text = "PODER"
+horizontal_alignment = 1
+
+[node name="CloseButton" type="Button" parent="Panel/MarginContainer/VBoxContainer/Header" unique_id=1450449032]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 4
+text = "X"
+alignment = 2
+icon_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="Panel/MarginContainer/VBoxContainer" unique_id=1654320086]
+layout_mode = 2
+
+[node name="DescLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer" unique_id=2078604413]
+layout_mode = 2
+theme_override_font_sizes/font_size = 3
+autowrap_mode = 3
+
+[node name="HSeparator2" type="HSeparator" parent="Panel/MarginContainer/VBoxContainer" unique_id=1459911960]
+layout_mode = 2
+
+[node name="StatsGrid" type="GridContainer" parent="Panel/MarginContainer/VBoxContainer" unique_id=1058847372]
+layout_mode = 2
+theme_override_constants/h_separation = 4
+theme_override_constants/v_separation = 1
+columns = 4
+
+[node name="HSeparator3" type="HSeparator" parent="Panel/MarginContainer/VBoxContainer" unique_id=278967580]
+layout_mode = 2
+
+[node name="UpgradeSection" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer" unique_id=1474145975]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="UpgradeCostLabel" type="RichTextLabel" parent="Panel/MarginContainer/VBoxContainer/UpgradeSection" unique_id=178624046]
+custom_minimum_size = Vector2(0, 9)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 4
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="UpgradeButton" type="Button" parent="Panel/MarginContainer/VBoxContainer/UpgradeSection" unique_id=978838812]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 3
+text = "MELHORAR"
+
+[node name="SellButton" type="Button" parent="Panel/MarginContainer/VBoxContainer" unique_id=705861760]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 3
+text = "VENDER"
+
+[connection signal="gui_input" from="Overlay" to="." method="_on_overlay_gui_input"]
+[connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/Header/CloseButton" to="." method="_on_close_pressed"]
+[connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/UpgradeSection/UpgradeButton" to="." method="_on_upgrade_pressed"]
+[connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/SellButton" to="." method="_on_sell_pressed"]

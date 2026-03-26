@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://soj5dqv1e155"]
+
+[ext_resource type="Script" uid="uid://dk6oo3223vbnd" path="res://scripts/passives/passive_speed.gd" id="1_pekid"]
+
+[node name="PassiveSpeed" type="Node" unique_id=2055181066]
+script = ExtResource("1_pekid")
+speed_bonus = 30.0
