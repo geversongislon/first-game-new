@@ -1,0 +1,71 @@
+[gd_scene format=3 uid="uid://7d2s5g1cxjbj"]
+
+[ext_resource type="Script" uid="uid://c7i85343qmfol" path="res://scripts/props/light_post.gd" id="1_7fuum"]
+[ext_resource type="Texture2D" uid="uid://cnsebl8vi72tw" path="res://assets/sprites/lampada.png" id="1_t0h2o"]
+[ext_resource type="Texture2D" uid="uid://3opfggh01ywq" path="res://assets/sprites/ui/luz.png" id="2_7fuum"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dmlby"]
+size = Vector2(10, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yl2mv"]
+atlas = ExtResource("1_t0h2o")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n4v54"]
+atlas = ExtResource("1_t0h2o")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v7dyq"]
+atlas = ExtResource("1_t0h2o")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_f7j4e"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yl2mv")
+}],
+"loop": true,
+"name": &"off",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n4v54")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v7dyq")
+}],
+"loop": true,
+"name": &"on",
+"speed": 5.0
+}]
+
+[node name="Luminaria" type="StaticBody2D" unique_id=1812095291 node_paths=PackedStringArray("animated_sprite")]
+script = ExtResource("1_7fuum")
+animated_sprite = NodePath("Sprite2D")
+
+[node name="HitDetector" type="Area2D" parent="." unique_id=1894135689]
+collision_layer = 0
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitDetector" unique_id=587440933]
+shape = SubResource("RectangleShape2D_dmlby")
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=189570512]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_f7j4e")
+animation = &"off"
+autoplay = "on"
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=669856220]
+position = Vector2(2.728484e-12, 1.9073486e-06)
+scale = Vector2(0.6206773, 0.56916815)
+color = Color(0.85882354, 0.6431373, 0.3647059, 1)
+energy = 1.5
+blend_mode = 2
+shadow_enabled = true
+texture = ExtResource("2_7fuum")
+offset = Vector2(1.9104477, 9.931034)
+
+[connection signal="area_entered" from="HitDetector" to="." method="_on_hit_detector_area_entered"]

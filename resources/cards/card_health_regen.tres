@@ -12,8 +12,8 @@ type = "Consumable"
 description = "Restaura 15 de vida.
 Máx 3 cargas por slot."
 icon = ExtResource("2_ebvcq")
-max_charges = 3
+max_charges = 5
 activation_input_action = "active_ability_f"
 active_scene = ExtResource("2_regen")
 sell_price = 15
-drop_weight = 50.0
+drop_weight = 55.0

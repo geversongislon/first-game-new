@@ -8,24 +8,27 @@
 size = Vector2(11, 10)
 
 [node name="LightPost" type="StaticBody2D" unique_id=4788118]
+position = Vector2(0, 8)
 script = ExtResource("0_script")
 
 [node name="HitDetector" type="Area2D" parent="." unique_id=998877661]
-position = Vector2(-0.5, -20)
+position = Vector2(-0.39427185, -59.241394)
 collision_layer = 0
 collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitDetector" unique_id=776655443]
+position = Vector2(-0.60572815, 0.24139404)
 shape = SubResource("RectangleShape2D_detector")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=793394597]
 texture_filter = 1
+position = Vector2(-0.394, -39)
 texture = ExtResource("1_1s8r7")
 
 [node name="PointLight2D" type="PointLight2D" parent="." unique_id=1226773]
-position = Vector2(-1, -26)
-scale = Vector2(0.5234375, 0.6041667)
-color = Color(0.85882354, 0.6431373, 0.3647059, 1)
+position = Vector2(-0.3942719, -59.999996)
+scale = Vector2(0.8606771, 0.7291666)
+color = Color(0.86, 0.86, 0.86, 1)
 energy = 1.5
 blend_mode = 2
 shadow_enabled = true

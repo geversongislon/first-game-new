@@ -18,6 +18,7 @@ size = Vector2(18.059685, 77.674995)
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_player"]
 shader = ExtResource("shader_player")
 shader_parameter/flash_amount = 0.0
+shader_parameter/flash_color = Vector3(1, 1, 1)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ds2sr"]
 atlas = ExtResource("4_wl55n")

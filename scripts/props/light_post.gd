@@ -1,5 +1,7 @@
 extends StaticBody2D
 
+@export var animated_sprite: AnimatedSprite2D = null
+
 var _broken: bool = false
 
 
@@ -19,6 +21,9 @@ func _hit() -> void:
 	var light := get_node_or_null("PointLight2D")
 	if light:
 		light.enabled = false
+
+	if animated_sprite:
+		animated_sprite.play("off")
 
 	# Faísca: origem no centro da collision da lampada
 	var col := get_node_or_null("CollisionShape2D") as CollisionShape2D

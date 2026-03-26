@@ -89,7 +89,7 @@ func _create_difficulty_bar() -> void:
 
 	_diff_bar_fill = ColorRect.new()
 	_diff_bar_fill.name = "Fill"
-	_diff_bar_fill.color = Color(0.0, 1.0, 0.0, 1.0)
+	_diff_bar_fill.color = Color(0.146, 0.56, 0.146, 1.0)
 	_diff_bar_fill.size = Vector2(0.0, 3.0)
 	_diff_bar_fill.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var mat := CanvasItemMaterial.new()
@@ -235,13 +235,15 @@ func _create_slot_panel(index: int, bg_color: Color, is_loadout: bool) -> Panel:
 	cooldown_overlay.name = "CooldownOverlay"
 	cooldown_overlay.color = Color(0, 0, 0, 0.6)
 	cooldown_overlay.set_anchors_preset(Control.PRESET_FULL_RECT)
+	
 	cooldown_overlay.visible = false
 	panel.add_child(cooldown_overlay)
 	
 	var cooldown_label = Label.new()
 	cooldown_label.name = "CooldownLabel"
 	cooldown_label.set_anchors_preset(Control.PRESET_CENTER)
-	cooldown_label.add_theme_font_size_override("font_size", 8)
+	cooldown_label.add_theme_font_size_override("font_size", 4)
+	cooldown_label.position = Vector2(-7, -15)
 	cooldown_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	cooldown_overlay.add_child(cooldown_label)
 
@@ -543,11 +545,9 @@ func _update_slot_icon(panel: Panel, id: String):
 		badge.name = "KeyBadge"
 		badge.text = key_text
 		badge.set_anchors_preset(Control.PRESET_BOTTOM_LEFT)
-		badge.position = Vector2(2, -8)
-		badge.add_theme_font_size_override("font_size", 4)
+		badge.position = Vector2(1, -4)
+		badge.add_theme_font_size_override("font_size", 3)
 		badge.add_theme_color_override("font_color", Color(1, 0.9, 0, 1))
-		badge.add_theme_color_override("font_outline_color", Color(0, 0, 0, 1))
-		badge.add_theme_constant_override("outline_size", 1)
 		panel.add_child(badge)
 
 	# Badge "P" para cartas PASSIVAS

@@ -56,23 +56,25 @@ func _drop_data(_at_position: Vector2, data: Variant) -> void:
 		var incoming_inv_charges := GameManager.get_card_charges_at(inv_idx) if inv_idx >= 0 else 1
 
 		# --- MERGE: mesma carta consumível já no slot → soma cargas ---
+		# Só mergeia se nenhuma carga for perdida (total <= max_charges).
+		# Se ultrapassar, cai no equip normal (swap) abaixo.
 		var incoming_cdata := CardDB.get_card(incoming_card_id)
 		if incoming_cdata and incoming_cdata.type == "Consumable" and previous_card_id == incoming_card_id:
 			var slot_charges := GameManager.equipped_card_charges[slot_index] if slot_index >= 0 and slot_index < GameManager.equipped_card_charges.size() else 0
 			var total := slot_charges + incoming_inv_charges
-			var merged := mini(total, incoming_cdata.max_charges)
-			# Atualiza charges no slot
-			if slot_index >= 0 and slot_index < GameManager.equipped_card_charges.size():
-				GameManager.equipped_card_charges[slot_index] = merged
-			GameManager.save_game()
-			# Remove a carta do inventário (foi consumida no merge)
-			if inv_idx >= 0:
-				GameManager.replace_card_in_inventory_at(inv_idx, "")
-			else:
-				GameManager.remove_card_from_inventory(incoming_card_id)
-			# Atualiza visual com charges somadas
-			_update_visual(current_card_id, current_card_level, merged)
-			return
+			if total <= incoming_cdata.max_charges:
+				# Atualiza charges no slot
+				if slot_index >= 0 and slot_index < GameManager.equipped_card_charges.size():
+					GameManager.equipped_card_charges[slot_index] = total
+				GameManager.save_game()
+				# Remove a carta do inventário (foi consumida no merge)
+				if inv_idx >= 0:
+					GameManager.replace_card_in_inventory_at(inv_idx, "")
+				else:
+					GameManager.remove_card_from_inventory(incoming_card_id)
+				# Atualiza visual com charges somadas
+				_update_visual(current_card_id, current_card_level, total)
+				return
 
 		# --- EQUIP NORMAL: carta diferente ou slot vazio ---
 		# Determina as charges a serem preservadas da carta anterior (se for consumível)

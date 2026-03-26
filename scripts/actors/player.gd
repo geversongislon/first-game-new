@@ -198,6 +198,8 @@ func take_damage(amount: int, hit_direction: Vector2 = Vector2.ZERO, kb: float =
 	if hit_direction != Vector2.ZERO and kb > 0.0:
 		in_knockback = true
 		velocity.x = sign(hit_direction.x) * kb
+		if hit_direction.y != 0.0:
+			velocity.y = sign(hit_direction.y) * kb
 	if current_health <= 0:
 		die(amount)
 

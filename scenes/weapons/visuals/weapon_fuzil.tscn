@@ -54,6 +54,7 @@ animations = [{
 
 [node name="WeaponVisual" type="Node2D" unique_id=1021506680]
 script = ExtResource("1_fuzil")
+pivot_offset = Vector2(-8, 0)
 
 [node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=654295133]
 light_mask = 17

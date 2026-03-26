@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://dbu3d7vvdpmaq"]
+
+[ext_resource type="Script" uid="uid://w86x7e2audnv" path="res://scripts/hazards/spikes.gd" id="1_spikes"]
+[ext_resource type="Texture2D" uid="uid://crclu0dqardva" path="res://assets/sprites/spikes.png" id="2_spikes"]
+[ext_resource type="Texture2D" uid="uid://3opfggh01ywq" path="res://assets/sprites/ui/luz.png" id="3_d78ay"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0"]
+size = Vector2(32, 11)
+
+[node name="Spikes" type="Area2D" unique_id=2080808903]
+position = Vector2(-8, 8)
+collision_layer = 0
+collision_mask = 4
+monitorable = false
+script = ExtResource("1_spikes")
+knockback_force = 150.0
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1820911010]
+position = Vector2(16, -8)
+texture = ExtResource("2_spikes")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1578908123]
+position = Vector2(16, -5.5)
+shape = SubResource("RectangleShape2D_0")
+
+[node name="PointLight2D" type="PointLight2D" parent="CollisionShape2D" unique_id=1402087864]
+position = Vector2(0, -5.5)
+scale = Vector2(0.09895841, 0.039029952)
+color = Color(0.8086039, 0.093831085, 0.17799988, 1)
+texture = ExtResource("3_d78ay")

@@ -26,20 +26,22 @@ func _drop_data(_at_position: Vector2, data: Variant) -> void:
 	var target_level: int = GameManager.get_card_level_at(slot_index)
 
 	# --- MERGE: mesma carta consumível no slot de destino ---
+	# Só mergeia se nenhuma carga for perdida (total <= max_charges).
+	# Se ultrapassar, cai no swap normal abaixo.
 	if target_card_id == dragged_id and dragged_id != "" and source_slot == null:
 		var cdata := CardDB.get_card(dragged_id)
 		if cdata and cdata.type == "Consumable":
 			var target_charges := GameManager.get_card_charges_at(slot_index)
 			var origin_charges := GameManager.get_card_charges_at(origin_inv_idx) if origin_inv_idx >= 0 else 1
 			var total := target_charges + origin_charges
-			var merged := mini(total, cdata.max_charges)
-			GameManager.set_card_charges_at(slot_index, merged)
-			# Remove a carta de origem (foi absorvida)
-			if origin_inv_idx >= 0:
-				GameManager.replace_card_in_inventory_at(origin_inv_idx, "")
-			GameManager.unlocked_cards_changed.emit()
-			GameManager.save_game()
-			return
+			if total <= cdata.max_charges:
+				GameManager.set_card_charges_at(slot_index, total)
+				# Remove a carta de origem (foi absorvida)
+				if origin_inv_idx >= 0:
+					GameManager.replace_card_in_inventory_at(origin_inv_idx, "")
+				GameManager.unlocked_cards_changed.emit()
+				GameManager.save_game()
+				return
 
 	if source_slot != null:
 		# Veio do loadout para este slot do baú — troca bidirecional com nível

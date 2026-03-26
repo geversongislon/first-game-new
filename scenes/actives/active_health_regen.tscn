@@ -66,6 +66,7 @@ script = ExtResource("1_regen")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=577813617]
 position = Vector2(0, -5)
+scale = Vector2(0.8125, 0.8125)
 sprite_frames = SubResource("SpriteFrames_qgtvh")
 animation = &"life"
 
@@ -73,4 +74,5 @@ animation = &"life"
 position = Vector2(2.2737368e-13, -4)
 scale = Vector2(0.14322917, 0.14322917)
 color = Color(1, 0.100000024, 0.15999997, 1)
+energy = 1.56
 texture = ExtResource("3_wxc36")

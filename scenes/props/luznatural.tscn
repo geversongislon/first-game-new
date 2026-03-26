@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://bb5t2fs0xjsdl"]
+
+[ext_resource type="Texture2D" uid="uid://3opfggh01ywq" path="res://assets/sprites/ui/luz.png" id="1_1m0hs"]
+
+[node name="Luznatural" type="StaticBody2D" unique_id=1946209634]
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=1517319567]
+position = Vector2(1.9073486e-06, 9.536743e-07)
+scale = Vector2(0.7082923, 0.6495121)
+color = Color(0.38220003, 0.7956433, 0.91, 1)
+energy = 0.74
+blend_mode = 2
+shadow_enabled = true
+texture = ExtResource("1_1m0hs")
+offset = Vector2(1.9104477, 9.931034)
