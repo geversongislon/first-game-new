@@ -173,6 +173,8 @@ text = "0/20"
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+size_flags_stretch_ratio = 5.2
+theme_override_constants/scrollbar_h_separation = 4
 horizontal_scroll_mode = 0
 
 [node name="InventoryGrid" type="GridContainer" parent="HBoxContainer/MarginRight/RightPanel/InventoryScroll" unique_id=1671027473]

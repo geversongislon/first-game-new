@@ -5,12 +5,12 @@ class_name LootBoxChoiceUI
 ## UI construída via código. O jogo continua rodando durante a escolha.
 
 var _loot_box: Node = null
-var _cards: Array = []          # [{card_id, card_level}, ...]
+var _cards: Array = [] # [{card_id, card_level}, ...]
 var _reveal_index: int = 0
 var _reveal_timer: float = 0.0
-var _reveal_interval: float = 0.8  # segundos entre revelações
+var _reveal_interval: float = 0.8 # segundos entre revelações
 
-var _slots: Array = []  # [{icon_wrapper, placeholder, icon, loading_bar, name_lbl, rarity_lbl, btn}]
+var _slots: Array = [] # [{icon_wrapper, placeholder, icon, loading_bar, name_lbl, rarity_lbl, btn}]
 var _full_label: Label = null
 
 func setup(cards: Array, loot_box: Node) -> void:
@@ -72,13 +72,13 @@ func _build_ui() -> void:
 
 	for i in 3:
 		var slot_vbox := VBoxContainer.new()
-		slot_vbox.custom_minimum_size = Vector2(80, 0)
+		slot_vbox.custom_minimum_size = Vector2(40, 0)
 		slot_vbox.alignment = BoxContainer.ALIGNMENT_CENTER
 		slot_vbox.add_theme_constant_override("separation", 2)
 		hbox.add_child(slot_vbox)
 
 		var icon_wrapper := Control.new()
-		icon_wrapper.custom_minimum_size = Vector2(70, 84)
+		icon_wrapper.custom_minimum_size = Vector2(16, 16)
 		icon_wrapper.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 		icon_wrapper.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 		slot_vbox.add_child(icon_wrapper)
@@ -178,10 +178,10 @@ func _reveal_card(i: int) -> void:
 
 	var slot = _slots[i]
 	slot["loading_bar"].visible = false
-	var art_tex = data.full_art if data.full_art else data.icon
+	var art_tex = data.icon
 	if art_tex:
 		slot["icon"].texture = art_tex
-		slot["icon"].texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+		slot["icon"].texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	slot["name_lbl"].text = data.display_name
 	slot["rarity_lbl"].text = data.rarity
 	slot["rarity_lbl"].add_theme_color_override("font_color", _rarity_color(data.rarity))
@@ -233,19 +233,19 @@ func _add_level_pips(wrapper: Control, level: int) -> void:
 		style.border_width_bottom = 1
 		pip.add_theme_stylebox_override("panel", style)
 		pip.set_anchors_preset(Control.PRESET_BOTTOM_LEFT)
-		pip.offset_left   = 1
-		pip.offset_right  = 5
-		pip.offset_bottom = -(i * 5) - 1
-		pip.offset_top    = pip.offset_bottom - 4
+		pip.offset_left = 1
+		pip.offset_right = 5
+		pip.offset_bottom = - (i * 5) - 1
+		pip.offset_top = pip.offset_bottom - 4
 		wrapper.add_child(pip)
 
 func _rarity_color(rarity: String) -> Color:
 	match rarity:
 		"Legendary": return Color(1.0, 0.8, 0.2)
-		"Epic":      return Color(1.0, 0.2, 1.0)
-		"Rare":      return Color(0.2, 0.4, 1.0)
-		"Uncommon":  return Color(0.2, 1.0, 0.2)
-		_:           return Color(1.0, 1.0, 1.0)
+		"Epic": return Color(1.0, 0.2, 1.0)
+		"Rare": return Color(0.2, 0.4, 1.0)
+		"Uncommon": return Color(0.2, 1.0, 0.2)
+		_: return Color(1.0, 1.0, 1.0)
 
 func _close() -> void:
 	var player = get_tree().get_first_node_in_group("player")

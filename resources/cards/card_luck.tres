@@ -7,7 +7,7 @@
 [resource]
 script = ExtResource("1_qp2tp")
 id = "card_luck"
-display_name = "Trevo da Sorte"
+display_name = "Luck"
 type = "Passive"
 rarity = "Uncommon"
 description = "Inimigos dropam mais moedas e cartas.

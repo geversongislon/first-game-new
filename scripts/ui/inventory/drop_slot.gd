@@ -153,7 +153,7 @@ func _update_visual(id: String, level: int = 1, charges: int = -1) -> void:
 func apply_stack_visual(level: int) -> void:
 	clear_stack_visual()
 
-	var stack_color := Color(1.0, 0.85, 0.1, 1.0) if level == 2 else Color(1.0, 0.2, 0.8, 1.0)
+	var stack_color := Color(0.66, 0.592, 0.251, 1.0) if level == 2 else Color(0.77, 0.346, 0.664, 1.0)
 
 	_stack_border = Panel.new()
 	_stack_border.set_anchors_preset(Control.PRESET_FULL_RECT)

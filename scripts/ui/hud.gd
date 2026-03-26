@@ -250,8 +250,8 @@ func _create_slot_panel(index: int, bg_color: Color, is_loadout: bool) -> Panel:
 		var ammo_lbl := Label.new()
 		ammo_lbl.name = "AmmoLabel"
 		ammo_lbl.set_anchors_preset(Control.PRESET_TOP_LEFT)
-		ammo_lbl.position = Vector2(0, -10)
-		ammo_lbl.add_theme_font_size_override("font_size", 5)
+		ammo_lbl.position = Vector2(0, -6)
+		ammo_lbl.add_theme_font_size_override("font_size", 4)
 		ammo_lbl.add_theme_color_override("font_color", Color(1, 1, 1, 1))
 		ammo_lbl.add_theme_color_override("font_outline_color", Color(0, 0, 0, 1))
 		ammo_lbl.add_theme_constant_override("outline_size", 1)
@@ -304,7 +304,7 @@ func _update_ammo_slots() -> void:
 			continue
 
 		ammo_lbl.visible = true
-		ammo_lbl.add_theme_font_size_override("font_size", 5)
+		ammo_lbl.add_theme_font_size_override("font_size", 4)
 		if weapon.is_reloading:
 			ammo_lbl.add_theme_color_override("font_color", Color(1, 1, 1, 0.5))
 			ammo_lbl.text = "%.1fs" % weapon.reload_timer
@@ -544,7 +544,7 @@ func _update_slot_icon(panel: Panel, id: String):
 		badge.text = key_text
 		badge.set_anchors_preset(Control.PRESET_BOTTOM_LEFT)
 		badge.position = Vector2(2, -8)
-		badge.add_theme_font_size_override("font_size", 5)
+		badge.add_theme_font_size_override("font_size", 4)
 		badge.add_theme_color_override("font_color", Color(1, 0.9, 0, 1))
 		badge.add_theme_color_override("font_outline_color", Color(0, 0, 0, 1))
 		badge.add_theme_constant_override("outline_size", 1)
@@ -556,8 +556,8 @@ func _update_slot_icon(panel: Panel, id: String):
 		badge.name = "PassiveBadge"
 		badge.text = "P"
 		badge.set_anchors_preset(Control.PRESET_TOP_RIGHT)
-		badge.position = Vector2(-10, 2)
-		badge.add_theme_font_size_override("font_size", 5)
+		badge.position = Vector2(-4, 2)
+		badge.add_theme_font_size_override("font_size", 4)
 		badge.add_theme_color_override("font_color", Color(0, 1, 1, 1))
 		badge.add_theme_color_override("font_outline_color", Color(0, 0, 0, 1))
 		badge.add_theme_constant_override("outline_size", 1)
@@ -678,29 +678,19 @@ func _update_stack_visuals() -> void:
 
 		var level := indices.size()
 		var stack_color := Color(0.65, 0.55, 0.2, 0.85) if level == 2 else Color(0.55, 0.15, 0.55, 0.85)
-		var pulse_color := Color(0.8, 0.7, 0.3, 1.0) if level == 2 else Color(0.7, 0.25, 0.7, 1.0)
-		var pulse_speed := 0.55 if level == 2 else 0.35
 
 		for idx in indices:
 			var panel: Panel = slot_panels[idx]
 
 			panel.call("set_border_color", stack_color)
 
-			# Badge "×2" ou "×3" no canto superior direito
-			var badge = Label.new()
-			badge.name = "StackBadge"
-			badge.text = "x" + str(level)
-			badge.set_anchors_preset(Control.PRESET_TOP_RIGHT)
-			badge.position = Vector2(-12, 2)
-			badge.add_theme_font_size_override("font_size", 5)
-			badge.add_theme_color_override("font_color", stack_color)
-			badge.add_theme_color_override("font_outline_color", Color(0, 0, 0, 1))
-			badge.add_theme_constant_override("outline_size", 1)
-			panel.add_child(badge)
-			_stack_overlays.append(badge)
+			var is_active: bool = (_manager.current_weapon_index == idx)
+			if not is_active:
+				var pulse_max: float = 0.7 if level == 2 else 1.0
+				panel.modulate = Color(1.0, 1.0, 1.0, pulse_max * 0.7)
+				var tween := create_tween().set_loops()
+				tween.tween_property(panel, "modulate:a", pulse_max, 1.0).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
+				tween.tween_property(panel, "modulate:a", 0.45, 1.0).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
+				_stack_tweens.append(tween)
 
-			# Tween de pulso infinito
-			var tween = create_tween().set_loops()
-			tween.tween_property(panel, "modulate", pulse_color, pulse_speed)
-			tween.tween_property(panel, "modulate", Color.WHITE, pulse_speed)
-			_stack_tweens.append(tween)
+			

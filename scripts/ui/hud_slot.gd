@@ -19,6 +19,10 @@ func set_border_color(c: Color) -> void:
 
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed:
+		if event.button_index == MOUSE_BUTTON_LEFT:
+			if is_loadout and weapon_ui and weapon_ui._manager and not weapon_ui.is_backpack_active:
+				weapon_ui._manager.equip_by_index(slot_index)
+				get_viewport().set_input_as_handled()
 		if event.button_index == MOUSE_BUTTON_RIGHT:
 			var id := ""
 			if is_loadout:

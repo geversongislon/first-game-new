@@ -123,15 +123,24 @@ func equip_by_id(card_id: String) -> void:
 
 	# Se a mesma carta já está equipada e a instância é válida, apenas reaplica bônus (não reinstancia)
 	if current_card_data != null and current_card_data.id == card_id and is_instance_valid(current_weapon):
-		# Só corrige o índice se o slot atual não tem mais esta carta (evita find() com duplicatas)
+		# Corrige o índice se o slot atual não tem mais esta carta (ex: chamada direta via equip_by_id)
 		if current_weapon_index < 0 or current_weapon_index >= unlocked_weapons.size() or unlocked_weapons[current_weapon_index] != card_id:
 			var new_idx := unlocked_weapons.find(card_id)
-			if new_idx != -1 and new_idx != current_weapon_index:
+			if new_idx != -1:
 				current_weapon_index = new_idx
-				weapon_equipped.emit(current_weapon_id, current_weapon_index)
+		# Salva ammo antes de apply_all_bonuses (que reseta current_ammo = max_ammo)
+		var saved_ammo: int = current_weapon.get("current_ammo") if "current_ammo" in current_weapon else -1
 		# Reaplica bônus com o menor nível entre todas as cópias no loadout
 		if current_weapon.has_method("apply_all_bonuses"):
 			current_weapon.apply_all_bonuses(get_stack_level(card_id), get_stack_upgrade_levels(card_id))
+		# Restaura ammo (via cache de slot se disponível, senão valor salvo)
+		if saved_ammo >= 0 and "current_ammo" in current_weapon:
+			if _ammo_cache.has(current_weapon_index):
+				current_weapon.current_ammo = mini(_ammo_cache[current_weapon_index], current_weapon.max_ammo)
+			else:
+				current_weapon.current_ammo = mini(saved_ammo, current_weapon.max_ammo)
+		# Sempre emite o sinal para garantir atualização visual (inclui troca entre slots stacked)
+		weapon_equipped.emit(current_weapon_id, current_weapon_index)
 		return
 
 	# Pega os dados da carta
@@ -276,8 +285,13 @@ func _refresh_current_weapon_stacks() -> void:
 	var card_id := unlocked_weapons[current_weapon_index]
 	if card_id == "" or current_card_data == null: return
 
+	# Salva ammo antes do re-init (initialize_from_card e apply_all_bonuses resetam current_ammo)
+	var saved_ammo: int = current_weapon.get("current_ammo") if "current_ammo" in current_weapon else -1
 	# Reinicia os stats base do CardData antes de reaplicar multiplicadores
 	if current_weapon.has_method("initialize_from_card"):
 		current_weapon.initialize_from_card(current_card_data)
 	if current_weapon.has_method("apply_all_bonuses"):
 		current_weapon.apply_all_bonuses(get_stack_level(card_id), get_stack_upgrade_levels(card_id))
+	# Restaura ammo respeitando o novo max_ammo após bônus
+	if saved_ammo >= 0 and "current_ammo" in current_weapon:
+		current_weapon.current_ammo = mini(saved_ammo, current_weapon.max_ammo)
