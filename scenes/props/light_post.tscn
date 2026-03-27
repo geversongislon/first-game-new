@@ -1,15 +1,44 @@
 [gd_scene format=3 uid="uid://da4cct5avoodi"]
 
 [ext_resource type="Script" uid="uid://c7i85343qmfol" path="res://scripts/props/light_post.gd" id="0_script"]
-[ext_resource type="Texture2D" uid="uid://b5sy47oe6l4k5" path="res://assets/sprites/poste.png" id="1_1s8r7"]
 [ext_resource type="Texture2D" uid="uid://3opfggh01ywq" path="res://assets/sprites/ui/luz.png" id="1_luz"]
+[ext_resource type="Texture2D" uid="uid://cv3p0he5s8xcj" path="res://assets/sprites/posteoff.png" id="2_ngugi"]
+[ext_resource type="Texture2D" uid="uid://cxvvfwdwyugk4" path="res://assets/sprites/poste1.png" id="3_tndbx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_detector"]
 size = Vector2(11, 10)
 
-[node name="LightPost" type="StaticBody2D" unique_id=4788118]
+[sub_resource type="AtlasTexture" id="AtlasTexture_8xt02"]
+atlas = ExtResource("2_ngugi")
+region = Rect2(0, 0, 16, 78)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_26e0d"]
+atlas = ExtResource("3_tndbx")
+region = Rect2(0, 0, 16, 78)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tifbg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8xt02")
+}],
+"loop": false,
+"name": &"off",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_26e0d")
+}],
+"loop": false,
+"name": &"on",
+"speed": 5.0
+}]
+
+[node name="LightPost" type="StaticBody2D" unique_id=4788118 node_paths=PackedStringArray("animated_sprite")]
 position = Vector2(0, 8)
 script = ExtResource("0_script")
+animated_sprite = NodePath("Sprite2D")
 
 [node name="HitDetector" type="Area2D" parent="." unique_id=998877661]
 position = Vector2(-0.39427185, -59.241394)
@@ -20,15 +49,17 @@ collision_mask = 3
 position = Vector2(-0.60572815, 0.24139404)
 shape = SubResource("RectangleShape2D_detector")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=793394597]
+[node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=2100162045]
 texture_filter = 1
 position = Vector2(-0.394, -39)
-texture = ExtResource("1_1s8r7")
+sprite_frames = SubResource("SpriteFrames_tifbg")
+animation = &"on"
+autoplay = "on"
 
 [node name="PointLight2D" type="PointLight2D" parent="." unique_id=1226773]
 position = Vector2(-0.3942719, -59.999996)
 scale = Vector2(0.8606771, 0.7291666)
-color = Color(0.86, 0.86, 0.86, 1)
+color = Color(0.87968594, 0.8681689, 0.72118497, 1)
 energy = 1.5
 blend_mode = 2
 shadow_enabled = true

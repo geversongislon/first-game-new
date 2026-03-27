@@ -1,6 +1,5 @@
 [gd_resource type="Resource" script_class="CardData" format=3 uid="uid://b8t5q4v3w2x1"]
 
-[ext_resource type="Texture2D" uid="uid://cnnn2nwju21vm" path="res://assets/sprites/cards/full_art/SMG NIVEl 1.png" id="1_khale"]
 [ext_resource type="Script" uid="uid://l04jvxr7j3mm" path="res://scripts/resources/card_data.gd" id="1_xxx"]
 [ext_resource type="Texture2D" uid="uid://by1l5uhtb73kn" path="res://assets/sprites/ui/hud_icons/pickup_smg.png" id="2_khale"]
 [ext_resource type="PackedScene" uid="uid://x30v1hr6nndx" path="res://scenes/weapons/visuals/weapon_smg.tscn" id="5_visual"]
@@ -10,7 +9,6 @@ script = ExtResource("1_xxx")
 id = "card_smg"
 display_name = "SMG"
 description = "Dispara projéteis em alta velocidade."
-full_art = ExtResource("1_khale")
 icon = ExtResource("2_khale")
 weapon_archetype = "Projectile"
 is_automatic = true

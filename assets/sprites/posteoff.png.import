@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://lggtfi5vemh"
-path="res://.godot/imported/pickup_vida_comun.png-abdbcef241b18067052604104fbed937.ctex"
+uid="uid://cv3p0he5s8xcj"
+path="res://.godot/imported/posteoff.png-fc4e035f7544d57a9a81939deb753bbe.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/ui/hud_icons/pickup_vida_comun.png"
-dest_files=["res://.godot/imported/pickup_vida_comun.png-abdbcef241b18067052604104fbed937.ctex"]
+source_file="res://assets/sprites/posteoff.png"
+dest_files=["res://.godot/imported/posteoff.png-fc4e035f7544d57a9a81939deb753bbe.ctex"]
 
 [params]
 

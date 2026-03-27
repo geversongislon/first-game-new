@@ -14,6 +14,7 @@ var card_scene = preload("res://scenes/ui/inventory/draggable_card.tscn")
 var _popup_scene = preload("res://scenes/ui/inventory/card_detail_popup.tscn")
 
 var card_popup: CardDetailPopup = null
+var _popup_source_slot: DropSlot = null
 
 func _unhandled_input(event: InputEvent) -> void:
 	if not OS.is_debug_build(): return
@@ -222,6 +223,11 @@ func _on_card_right_clicked(card: DraggableCard) -> void:
 
 func _on_slot_card_right_clicked(card_id: String, card_level: int) -> void:
 	if not card_popup: return
+	_popup_source_slot = null
+	for slot in [slot1, slot2, slot3]:
+		if slot.current_card_id == card_id:
+			_popup_source_slot = slot
+			break
 	var idx := GameManager.unlocked_cards.find(card_id)
 	card_popup.open(card_id, card_level, idx)
 
@@ -232,22 +238,60 @@ func _on_card_upgraded(index: int) -> void:
 	_setup_inventory()
 
 func _on_upgrade_requested(inventory_index: int) -> void:
-	GameManager.upgrade_card_at(inventory_index)
+	if _popup_source_slot != null:
+		# Upgrade de carta no slot do loadout — afeta equipped_card_levels, não o inventário
+		var slot := _popup_source_slot
+		var card_id := slot.current_card_id
+		var current_level := slot.current_card_level
+		if current_level >= 3 or card_id == "": return
+		var card := CardDB.get_card(card_id)
+		if not card: return
+		var cost := card.upgrade_cost * (2 if current_level == 2 else 1)
+		if GameManager.total_coins < cost: return
+		GameManager.total_coins -= cost
+		GameManager.permanent_coins_changed.emit(GameManager.total_coins)
+		var new_level := current_level + 1
+		GameManager.equipped_card_levels[slot.slot_index] = new_level
+		var charges := GameManager.equipped_card_charges[slot.slot_index] if slot.slot_index < GameManager.equipped_card_charges.size() else -1
+		slot.set_initial_card(card_id, new_level, charges)
+		GameManager.save_game()
+		if card_popup and card_popup.visible:
+			card_popup.refresh_level(new_level)
+		_update_stats_label()
+	else:
+		GameManager.upgrade_card_at(inventory_index)
 
 func _on_sell_requested(inventory_index: int) -> void:
-	if inventory_index < 0 or inventory_index >= GameManager.unlocked_cards.size():
-		return
-	var card_id := GameManager.unlocked_cards[inventory_index]
+	var source_slot := _popup_source_slot
+	_popup_source_slot = null
+
+	var card_id: String = ""
+	if inventory_index >= 0 and inventory_index < GameManager.unlocked_cards.size():
+		card_id = GameManager.unlocked_cards[inventory_index]
+	elif source_slot != null:
+		card_id = source_slot.current_card_id
 	if card_id == "": return
 
 	var card := CardDB.get_card(card_id)
-	var price := card.sell_price if card else 20
-
-	GameManager.total_coins += price
+	GameManager.total_coins += card.sell_price if card else 20
 	GameManager.permanent_coins_changed.emit(GameManager.total_coins)
-	GameManager.replace_card_in_inventory_at(inventory_index, "")
-	GameManager.set_card_level_at(inventory_index, 1)
-	GameManager.save_game()
 
+	if inventory_index >= 0:
+		GameManager.replace_card_in_inventory_at(inventory_index, "")
+		GameManager.set_card_level_at(inventory_index, 1)
+
+	# Limpa o slot do loadout se a carta estiver equipada
+	var slot_to_clear: DropSlot = source_slot
+	if slot_to_clear == null or slot_to_clear.current_card_id != card_id:
+		for s in [slot1, slot2, slot3]:
+			if s.current_card_id == card_id:
+				slot_to_clear = s
+				break
+	if slot_to_clear != null and slot_to_clear.current_card_id == card_id:
+		slot_to_clear.clear_sold()
+		LoadoutManager.equip_card(slot_to_clear.slot_index + 1, "")
+
+	GameManager.save_game()
 	if card_popup:
 		card_popup.visible = false
+	_setup_inventory()

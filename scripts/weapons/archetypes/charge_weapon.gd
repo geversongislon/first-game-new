@@ -50,20 +50,22 @@ func _apply_archetype_bonuses(stack: int, upgrade_levels: Array) -> void:
 
 var is_charging: bool = false
 var charge_time: float = 0.0
+var _charge_start_ms: int = 0
 var _base_light_energy: float = -1.0
 
 func on_attack_pressed() -> void:
 	if can_fire():
 		is_charging = true
 		charge_time = 0.0
+		_charge_start_ms = Time.get_ticks_msec()
 		var visual: WeaponVisual = player._current_weapon_visual if player else null
 		if visual and visual.ambient_light:
 			_base_light_energy = visual.ambient_light.energy
 
-func on_attack_held(delta: float) -> void:
+func on_attack_held(_delta: float) -> void:
 	if not is_charging: return
-	
-	charge_time = clamp(charge_time + delta, 0.0, max_charge)
+
+	charge_time = clamp((Time.get_ticks_msec() - _charge_start_ms) / 1000.0, 0.0, max_charge)
 	
 	if player and player.weapon_sprite:
 		var ratio := charge_time / max_charge

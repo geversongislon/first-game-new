@@ -47,6 +47,7 @@ var _current_weapon_visual: WeaponVisual = null
 
 @onready var weapons: WeaponManager = $WeaponManager
 @onready var hud: CanvasLayer = $HUD
+@onready var _flashlight_holder: Node2D = $FlashlightHolder
 
 # ============================================================
 # RUNTIME STATE
@@ -102,9 +103,11 @@ func _ready() -> void:
 		hud.connect_to_weapon_manager(weapons)
 		weapons.weapon_equipped.connect(_on_weapon_equipped)
 		weapons.loadout_changed.connect(update_stats_from_loadout)
+		weapons.loadout_changed.connect(_rebuild_auto_actions)
 
 	# Inicializa os status com base no que está equipado
 	update_stats_from_loadout()
+	_rebuild_auto_actions()
 
 	_eye_base_pos = eye_sprite.position
 	_hand_pivot_base_x = hand_pivot.position.x
@@ -522,24 +525,33 @@ func _physics_process(delta: float) -> void:
 
 	# --- Attacks & Active Abilities (Bloqueados se mochila aberta) ---
 	if not is_backpack_open and not is_loot_ui_open:
-		if Input.is_action_just_pressed("mouse_click"):
-			if weapons.current_card_data and weapons.current_card_data.type == "Active":
-				execute_active_ability(weapons.current_card_data)
-			else:
-				weapons.handle_attack_pressed()
-				
-		if Input.is_action_pressed("mouse_click"):
-			weapons.handle_attack_held(delta)
-			
-		if Input.is_action_just_released("mouse_click"):
-			weapons.handle_attack_released()
+		if not _flashlight_active:
+			if Input.is_action_just_pressed("mouse_click"):
+				if weapons.current_card_data and weapons.current_card_data.type == "Active":
+					execute_active_ability(weapons.current_card_data)
+				else:
+					weapons.handle_attack_pressed()
 
+			if Input.is_action_pressed("mouse_click"):
+				weapons.handle_attack_held(delta)
+
+			if Input.is_action_just_released("mouse_click"):
+				weapons.handle_attack_released()
+
+		var _aim_has_scope := weapons.current_card_data != null and weapons.current_card_data.has_scope
 		if Input.is_action_just_pressed("aim"):
-			weapons.handle_aim_pressed()
+			if _aim_has_scope:
+				weapons.handle_aim_pressed()
+			else:
+				_set_flashlight(true)
 		if Input.is_action_pressed("aim"):
-			weapons.handle_aim_held(delta)
+			if _aim_has_scope:
+				weapons.handle_aim_held(delta)
 		if Input.is_action_just_released("aim"):
-			weapons.handle_aim_released()
+			if _aim_has_scope:
+				weapons.handle_aim_released()
+			else:
+				_set_flashlight(false)
 
 		if Input.is_action_just_pressed("reload"):
 			var current_weapon = weapons.get_current_weapon()
@@ -562,7 +574,32 @@ func _physics_process(delta: float) -> void:
 
 var is_backpack_open: bool = false
 var is_loot_ui_open: bool = false
+var _flashlight_active: bool = false
+
+const _AUTO_ACTIONS := ["active_ability_f", "active_ability_c", "active_ability_v"]
+var _auto_action_map: Dictionary = {}  # slot_index -> action_string
 var loadout_charges: Array[int] = [0, 0, 0]
+
+func _rebuild_auto_actions() -> void:
+	_auto_action_map.clear()
+	var next_idx := 0
+	for slot_idx in range(weapons.unlocked_weapons.size()):
+		if next_idx >= _AUTO_ACTIONS.size(): break
+		var card := CardDB.get_card(weapons.unlocked_weapons[slot_idx])
+		if card and card.type in ["Active", "Consumable"] and card.activation_input_action == "":
+			_auto_action_map[slot_idx] = _AUTO_ACTIONS[next_idx]
+			next_idx += 1
+	if hud:
+		hud.set_auto_action_map(_auto_action_map)
+
+func _set_flashlight(active: bool) -> void:
+	if active:
+		weapons.handle_attack_released()
+	_flashlight_active = active
+	_flashlight_holder.visible = active
+	hand_pivot.visible = not active
+	if hud:
+		hud.set_flashlight_active(active)
 
 func toggle_backpack():
 	is_backpack_open = !is_backpack_open
@@ -604,16 +641,24 @@ func execute_active_ability(card: CardData) -> void:
 	ability_cooldowns[card.id] = card.cooldown
 
 func _try_activate_by_action(action: String) -> void:
-	for card_id in weapons.unlocked_weapons:
-		var card := CardDB.get_card(card_id)
-		if card and card.type == "Active" and card.activation_input_action == action:
-			execute_active_ability(card)
-			return
-	# Consumíveis no loadout
+	# Cartas com botão dedicado (activation_input_action preenchido)
 	for i in range(weapons.unlocked_weapons.size()):
 		var card := CardDB.get_card(weapons.unlocked_weapons[i])
-		if card and card.type == "Consumable" and card.activation_input_action == action:
-			_use_consumable(i, card)
+		if card and card.activation_input_action == action:
+			if card.type == "Active":
+				execute_active_ability(card)
+			elif card.type == "Consumable":
+				_use_consumable(i, card)
+			return
+	# Cartas auto-atribuídas (activation_input_action == "")
+	for slot_idx in _auto_action_map:
+		if _auto_action_map[slot_idx] == action:
+			var card := CardDB.get_card(weapons.unlocked_weapons[slot_idx])
+			if card:
+				if card.type == "Active":
+					execute_active_ability(card)
+				elif card.type == "Consumable":
+					_use_consumable(slot_idx, card)
 			return
 
 func _use_consumable(slot_idx: int, card: CardData) -> void:
@@ -710,9 +755,14 @@ func _process(delta: float) -> void:
 	_update_eye_follow()
 
 func _update_weapon_rotation() -> void:
+	var mouse_pos = get_global_mouse_position()
+
+	if _flashlight_active:
+		_flashlight_holder.look_at(mouse_pos)
+		return
+
 	if not weapon_sprite or not weapon_sprite.visible: return
 
-	var mouse_pos = get_global_mouse_position()
 	hand_pivot.look_at(mouse_pos)
 
 	var is_looking_left = mouse_pos.x < global_position.x

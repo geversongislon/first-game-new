@@ -118,10 +118,6 @@ func set_initial_card(id: String, level: int = 1, charges: int = -1) -> void:
 	current_card_level = level
 	_update_visual(id, level, charges)
 
-func _gui_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.pressed:
-		if event.button_index == MOUSE_BUTTON_RIGHT:
-			set_initial_card("")
 
 func _update_visual(id: String, level: int = 1, charges: int = -1) -> void:
 	for child in $CardContainer.get_children():
@@ -141,10 +137,6 @@ func _update_visual(id: String, level: int = 1, charges: int = -1) -> void:
 		new_card.set_charges(display_charges, _cdata.max_charges)
 	new_card.card_right_clicked.connect(
 		func(card): card_right_clicked_in_slot.emit(card.card_id, card.card_level)
-	)
-	new_card.custom_minimum_size = Vector2(
-		custom_minimum_size.x - 2,
-		custom_minimum_size.y - 2
 	)
 	$CardContainer.add_child(new_card)
 	slot_changed.emit()
@@ -178,3 +170,10 @@ func clear_stack_visual() -> void:
 # --------- API ---------
 func get_card_id() -> String:
 	return current_card_id
+
+func clear_sold() -> void:
+	if slot_index >= 0 and slot_index < GameManager.equipped_card_charges.size():
+		GameManager.equipped_card_charges[slot_index] = 0
+	current_card_id = ""
+	current_card_level = 1
+	_update_visual("", 1, -1)

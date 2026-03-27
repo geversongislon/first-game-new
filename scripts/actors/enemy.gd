@@ -112,6 +112,7 @@ var _fly_stuck_frames: int   = 0    # frames colidindo lateralmente (voadores)
 var _fly_escape_y: float     = 0.0  # direção vertical de escape (+1 / -1)
 var _fly_nav_x: float        = 0.0  # direção horizontal ao contornar plataforma (+1/-1)
 var _fly_nav_timer: float    = 0.0  # segundos restantes de navegação ao redor de obstáculo
+var _fly_nav_attempt: int    = 0    # número de inversões consecutivas sob plataforma
 var _fly_patrol_escape: float = 0.0 # escape vertical durante cooldown de patrol loop
 var _eff_keep_dist: float    = 0.0  # keep_distance efetivo adaptativo (reduz em espaços apertados)
 
@@ -243,7 +244,6 @@ func _physics_process(delta: float) -> void:
 
 	move_and_slide()
 	_check_patrol_stuck()
-	_push_player()
 	_check_contact_damage()
 	_tick_eye(delta)
 
@@ -468,15 +468,17 @@ func _move_chase() -> void:
 		if is_on_ceiling() or is_on_floor():
 			# Obstáculo vertical: inicia/renova timer de navegação lateral
 			_fly_stuck_frames = 0
-			if _fly_nav_timer <= 0.0:
-				# Primeira colisão: escolhe direção em direção ao X do player
+			if _fly_nav_timer <= 0.0 and _fly_nav_x == 0.0:
+				# Primeira colisão (sem nav ativa): escolhe direção em direção ao X do player
 				var dx := target_player.global_position.x - global_position.x if is_instance_valid(target_player) else 0.0
 				_fly_nav_x = sign(dx) if absf(dx) > 5.0 else (1.0 if randf() < 0.5 else -1.0)
+				_fly_nav_attempt = 0
 				_fly_nav_timer = 1.2
 			elif _fly_nav_timer < 0.1:
-				# Timer quase expirou e ainda colidindo: tenta o outro lado
+				# Timer expirou ou prestes a expirar com nav ativa → inverte com distância crescente
 				_fly_nav_x *= -1
-				_fly_nav_timer = 1.2
+				_fly_nav_attempt += 1
+				_fly_nav_timer = minf(1.2 + 0.8 * _fly_nav_attempt, 4.0)
 			target_vel = Vector2(_fly_nav_x * speed, speed * 0.35 if is_on_ceiling() else -speed * 0.25)
 		elif _fly_nav_timer > 0.0:
 			# Contato quebrou mas timer ainda ativo: mantém direção de navegação
@@ -492,7 +494,10 @@ func _move_chase() -> void:
 			target_vel.y += _fly_escape_y * speed * 0.7
 			target_vel = target_vel.limit_length(speed * 1.3)
 		else:
+			# Voo livre, sem obstáculo: reseta sentinela de nav para próxima colisão
 			_fly_stuck_frames = maxi(_fly_stuck_frames - 1, 0)
+			_fly_nav_x = 0.0
+			_fly_nav_attempt = 0
 		velocity = velocity.move_toward(target_vel, speed * 4.0 * dt)
 	else:
 		if move_dir == Vector2.ZERO:
@@ -747,15 +752,6 @@ func _spawn_loot_item(scene: PackedScene) -> void:
 	if "velocity" in item:
 		item.velocity = Vector2(randf_range(-38.0, 38.0), randf_range(-88.0, -50.0))
 	get_parent().call_deferred("add_child", item)
-
-# ── Push player on body contact ───────────────────────────────────────────────
-func _push_player() -> void:
-	if absf(velocity.x) < 1.0: return
-	for i in get_slide_collision_count():
-		var col = get_slide_collision(i).get_collider()
-		if col and col.is_in_group("player"):
-			col.velocity.x = velocity.x
-			break
 
 # ── Contact damage ────────────────────────────────────────────────────────────
 func _check_contact_damage() -> void:

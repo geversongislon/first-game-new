@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://lggtfi5vemh"
-path="res://.godot/imported/pickup_vida_comun.png-abdbcef241b18067052604104fbed937.ctex"
+uid="uid://cegaub3hckdis"
+path="res://.godot/imported/lanterna.png-d0cdcd7308d3a6803e1c218096878989.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/ui/hud_icons/pickup_vida_comun.png"
-dest_files=["res://.godot/imported/pickup_vida_comun.png-abdbcef241b18067052604104fbed937.ctex"]
+source_file="res://assets/sprites/lanterna.png"
+dest_files=["res://.godot/imported/lanterna.png-d0cdcd7308d3a6803e1c218096878989.ctex"]
 
 [params]
 

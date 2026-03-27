@@ -5,6 +5,7 @@ extends CanvasLayer
 @onready var life_label: Label = $LifeBar/LifeLabel
 @onready var gold_label: Label = $GoldDisplay/GoldLabel
 @onready var run_label: Label = $RunLabel
+@onready var _flashlight_panel: Panel = $FlashlightPanel
 
 # Mapeamento de action → tecla exibida no HUD
 const ACTION_LABELS: Dictionary = {
@@ -485,7 +486,7 @@ func refresh_all_icons():
 	var player = _manager.get_parent() if _manager else null
 	for i in range(slot_panels.size()):
 		if i < _manager.unlocked_weapons.size():
-			_update_slot_icon(slot_panels[i], _manager.unlocked_weapons[i])
+			_update_slot_icon(slot_panels[i], _manager.unlocked_weapons[i], i)
 		var card_id: String = _manager.unlocked_weapons[i] if i < _manager.unlocked_weapons.size() else ""
 		var level: int = GameManager.equipped_card_levels[i] if i < GameManager.equipped_card_levels.size() else 1
 		_draw_level_pips(slot_panels[i], level if card_id != "" else 0)
@@ -511,7 +512,7 @@ func refresh_all_icons():
 
 	_update_stack_visuals()
 
-func _update_slot_icon(panel: Panel, id: String):
+func _update_slot_icon(panel: Panel, id: String, slot_index: int = -1):
 	var icon_rect = panel.get_node_or_null("Icon") as TextureRect
 	if not icon_rect: return
 
@@ -539,8 +540,11 @@ func _update_slot_icon(panel: Panel, id: String):
 	if not card_data: return
 
 	# Badge de tecla para cartas ATIVAS e CONSUMÍVEIS
-	if card_data.type in ["Active", "Consumable"] and card_data.activation_input_action != "":
-		var key_text: String = ACTION_LABELS.get(card_data.activation_input_action, "?")
+	var _active_action: String = card_data.activation_input_action
+	if _active_action == "" and slot_index in _auto_action_map:
+		_active_action = _auto_action_map[slot_index]
+	if card_data.type in ["Active", "Consumable"] and _active_action != "":
+		var key_text: String = ACTION_LABELS.get(_active_action, "?")
 		var badge := Label.new()
 		badge.name = "KeyBadge"
 		badge.text = key_text
@@ -594,6 +598,15 @@ func update_backpack() -> void:
 	refresh_all_icons()
 
 var is_backpack_active: bool = false
+
+var _auto_action_map: Dictionary = {}
+
+func set_auto_action_map(map: Dictionary) -> void:
+	_auto_action_map = map
+	refresh_all_icons()
+
+func set_flashlight_active(active: bool) -> void:
+	_flashlight_panel.modulate = Color.WHITE if active else Color(0.4, 0.4, 0.4, 1.0)
 
 func set_backpack_mode(active: bool):
 	is_backpack_active = active

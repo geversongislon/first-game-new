@@ -14,9 +14,8 @@ description = "Dilata o tempo por 4 segundos.
 Inimigos e projéteis ficam lentos.
 Seu movimento não é afetado."
 icon = ExtResource("2_5t53l")
-max_charges = 2
+max_charges = 5
 charge_cooldown = 3.0
-activation_input_action = "active_ability_f"
 active_scene = ExtResource("3_scene")
 sell_price = 40
 drop_weight = 5.0

@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="CardData" format=3 uid="uid://bgnws40rchr2m"]
 
 [ext_resource type="Script" uid="uid://l04jvxr7j3mm" path="res://scripts/resources/card_data.gd" id="1_regen"]
-[ext_resource type="Texture2D" uid="uid://bgh11feqd5dn" path="res://assets/sprites/ui/hud_icons/pickup_vida_comun.png" id="2_ebvcq"]
+[ext_resource type="Texture2D" uid="uid://b31ipes8w1ui7" path="res://assets/sprites/ui/hud_icons/pickup_vida_comun-export.png" id="2_ebvcq"]
 [ext_resource type="PackedScene" uid="uid://6kwps8qhdwbh" path="res://scenes/actives/active_health_regen.tscn" id="2_regen"]
 
 [resource]
@@ -13,7 +13,6 @@ description = "Restaura 15 de vida.
 Máx 3 cargas por slot."
 icon = ExtResource("2_ebvcq")
 max_charges = 5
-activation_input_action = "active_ability_f"
 active_scene = ExtResource("2_regen")
 sell_price = 15
 drop_weight = 55.0

@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://3opfggh01ywq" path="res://assets/sprites/ui/luz.png" id="7_7860b"]
 [ext_resource type="PackedScene" uid="uid://dpsaemeqb2f52" path="res://scenes/ui/hud.tscn" id="10_weaponui"]
 [ext_resource type="PackedScene" path="res://scenes/ui/debug_stats_overlay.tscn" id="11_dbgoverlay"]
+[ext_resource type="PackedScene" uid="uid://flashlight_001" path="res://scenes/props/flashlight.tscn" id="12_flashlight"]
 [ext_resource type="Script" uid="uid://dqew2pcdthohx" path="res://scripts/camera_follow.gd" id="11_kggx2"]
 [ext_resource type="Shader" uid="uid://cbcqamn8fhcvq" path="res://scripts/actors/enemy.gdshader" id="shader_player"]
 
@@ -357,6 +358,12 @@ texture = ExtResource("7_7860b")
 
 [node name="HandPivot" type="Node2D" parent="." unique_id=823481237]
 position = Vector2(8, 2)
+
+[node name="FlashlightHolder" type="Node2D" parent="." unique_id=912345678]
+position = Vector2(8, 2)
+visible = false
+
+[node name="Flashlight" parent="FlashlightHolder" instance=ExtResource("12_flashlight")]
 
 [node name="WeaponManager" type="Node2D" parent="." unique_id=1556085604]
 script = ExtResource("5_qlg0r")

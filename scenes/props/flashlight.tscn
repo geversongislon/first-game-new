@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://2dc4kypll5yd"]
+
+[ext_resource type="Script" uid="uid://bim81cwcnf8h7" path="res://scripts/props/flashlight.gd" id="0_script"]
+[ext_resource type="Texture2D" uid="uid://i6pctre6qmju" path="res://assets/sprites/luzdelanterna.png" id="2_teec7"]
+[ext_resource type="Texture2D" uid="uid://cegaub3hckdis" path="res://assets/sprites/lanterna.png" id="3_8rwrc"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_8rwrc"]
+light_mode = 1
+
+[node name="Flashlight" type="Node2D" unique_id=725391185]
+script = ExtResource("0_script")
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=1750381484]
+position = Vector2(211, 0)
+scale = Vector2(0.60058594, 0.76283747)
+color = Color(0.95, 0.92, 0.75, 1)
+energy = 2.5
+blend_mode = 2
+shadow_enabled = true
+shadow_color = Color(1, 0.80046636, 0.7648378, 0.8901961)
+shadow_item_cull_mask = 16384
+texture = ExtResource("2_teec7")
+texture_scale = 1.83
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1206402091]
+material = SubResource("CanvasItemMaterial_8rwrc")
+texture = ExtResource("3_8rwrc")
