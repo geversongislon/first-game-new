@@ -90,6 +90,11 @@ var is_dead: bool             = false
 var life_state: LifeState     = LifeState.ALIVE
 var move_mode: MoveMode       = MoveMode.PATROL
 var attack_phase: AttackPhase = AttackPhase.READY
+# Elementos ativos aplicados por projéteis do player (DoT)
+# Estrutura: { type: String → { timer: float, ticks_left: int, data: Dictionary, particles: CPUParticles2D } }
+var _element_timers: Dictionary = {}
+var _ice_slow_stacks: int = 0
+var _ice_base_speed: float = 0.0
 
 var health: int
 var direction: int       = 1
@@ -105,6 +110,10 @@ var _stuck_frames: int    = 0   # Frames sem movimento horizontal em PATROL — 
 var _is_climbing: bool    = false
 var _rapid_turns: int     = 0   # Contador de turns consecutivos rápidos — detecta inimigo preso
 var _last_turn_ms: int    = 0
+var _hit_streak: int      = 0   # Hits consecutivos sem pausa — escala partículas
+var _last_hit_ms: int     = 0   # Timestamp do último hit (real-time)
+const _STREAK_RESET_MS    = 1200
+const _STREAK_MAX         = 4
 var _ledge_wait: float    = 0.0  # timer de espera na borda de queda alta
 var _orbit_dir: int          = 1    # 1=horário, -1=antihorário (inimigos voadores em órbita)
 var _orbit_switch_timer: float = 0.0
@@ -151,6 +160,9 @@ func _ready() -> void:
 		$ProgressBar.max_value = max_health
 		$ProgressBar.value = health
 
+	if not is_flying and movement_style != MoveStyle.STATIONARY:
+		collision_mask |= 16  # colide com one-way platforms (layer 5)
+
 	_sync_area_shapes()
 	update_visual()
 	_setup_signals()
@@ -162,6 +174,8 @@ func _ready() -> void:
 
 	if wall_ray:
 		wall_ray.add_exception(self)
+		wall_ray.collide_with_areas = true
+		wall_ray.collision_mask |= 32  # detecta spike areas (layer 6)
 	if not is_flying:
 		if floor_ray:
 			# Sincroniza só o floor_ray — wall_ray usa a máscara padrão da cena
@@ -242,7 +256,8 @@ func _physics_process(delta: float) -> void:
 	# 5. Movement system — completely independent from attack
 	_tick_movement(delta)
 
-	move_and_slide()
+	if movement_style != MoveStyle.STATIONARY:
+		move_and_slide()
 	_check_patrol_stuck()
 	_check_contact_damage()
 	_tick_eye(delta)
@@ -349,6 +364,9 @@ func _move_patrol(delta: float) -> void:
 
 		MoveStyle.PATROL:
 			velocity.x = direction * speed
+			if not is_flying and _turn_cooldown <= 0.0 and _has_floor_spike_ahead():
+				turn()
+				return
 			if is_flying:
 				if _fly_patrol_escape != 0.0:
 					velocity.y = _fly_patrol_escape * speed
@@ -504,7 +522,10 @@ func _move_chase() -> void:
 			velocity.x = move_toward(velocity.x, 0.0, speed)
 		else:
 			velocity.x = sign(move_dir.x) * speed
-			_try_jump()
+			if _has_floor_spike_ahead():
+				velocity.x = 0.0
+			else:
+				_try_jump()
 
 func _check_patrol_stuck() -> void:
 	## Se o enemy está em PATROL mas não se move horizontalmente por 3+ frames,
@@ -619,9 +640,15 @@ func _try_jump() -> bool:
 func take_damage(amount: int, hit_direction: Vector2 = Vector2.ZERO, kb: float = 0.0, is_crit: bool = false) -> void:
 	if life_state == LifeState.DEAD: return
 
-	flash_white()
+	var now_ms := Time.get_ticks_msec()
+	if now_ms - _last_hit_ms > _STREAK_RESET_MS:
+		_hit_streak = 0
+	_hit_streak = mini(_hit_streak + 1, _STREAK_MAX)
+	_last_hit_ms = now_ms
+
+	flash_white(0.5 + _hit_streak * 0.1)
 	_play_eye_damage()
-	_spawn_hit_fx(hit_direction)
+	_spawn_hit_fx(hit_direction, amount, _hit_streak)
 	_show_damage_number(amount, is_crit)
 
 	if hit_direction != Vector2.ZERO and kb > 0.0 and movement_style != MoveStyle.STATIONARY:
@@ -650,6 +677,7 @@ func apply_hit_stun(duration: float) -> void:
 func die() -> void:
 	is_dead = true
 	life_state = LifeState.DEAD
+	_hit_streak = 0
 	GameManager.run_enemies_killed += 1
 	if attack_behavior: attack_behavior.reset()
 	set_physics_process(false)
@@ -659,9 +687,21 @@ func die() -> void:
 	_spawn_death_fx()
 	queue_free()
 
-func _spawn_hit_fx(hit_dir: Vector2) -> void:
+func _spawn_hit_fx(hit_dir: Vector2, damage: int = 5, streak: int = 0) -> void:
 	var root := get_parent()
 	if not root: return
+
+	# sqrt comprime a curva: dano 5→t≈0.53, dano 10→t≈0.82, dano 15→t=1.0
+	var dmg_t    := clampf(sqrt((damage - 1.0) / 14.0), 0.0, 1.0)
+	var streak_t := float(streak) / float(_STREAK_MAX)
+	var t        := clampf(dmg_t * 0.5 + streak_t * 0.7, 0.0, 1.0)
+
+	var count    := roundi(lerpf(6.0, 42.0, t))
+	var spread   := lerpf(deg_to_rad(65), deg_to_rad(110), t)
+	var dist_max := lerpf(10.0, 22.0, t)
+	var dur_max  := lerpf(0.45, 0.85, t)        # longa = efeito vapor
+	var br_max   := lerpf(0.12, 0.28, t)        # mais escuro, predominantemente preto
+	var big_chance := t * 0.15                  # máx 15% de partículas com 2px
 
 	# Ponto de impacto: borda do sprite na direção de onde veio o golpe
 	var impact := global_position + (-hit_dir if hit_dir != Vector2.ZERO else Vector2.ZERO) * 8.0
@@ -669,21 +709,28 @@ func _spawn_hit_fx(hit_dir: Vector2) -> void:
 	var mat := CanvasItemMaterial.new()
 	mat.light_mode = CanvasItemMaterial.LIGHT_MODE_UNSHADED
 
-	for i in range(8):
+	var base_angle := hit_dir.angle() if hit_dir != Vector2.ZERO else 0.0
+
+	for i in range(count):
 		var p := ColorRect.new()
-		p.size = Vector2(1, 1)
-		var shade := randf_range(0.3, 0.7)
+		var sz := 2.0 if randf() < big_chance else 1.0
+		p.size = Vector2(sz, sz)
+		var shade := pow(randf(), 2.0) * br_max  # bias para preto
 		p.color = Color(shade, shade, shade, 1.0)
 		p.material = mat
 		root.add_child(p)
-		p.global_position = impact + Vector2(randf_range(-3.0, 3.0), randf_range(-3.0, 3.0))
+		p.global_position = impact + Vector2(randf_range(-4.0, 4.0), randf_range(-4.0, 4.0))
 
-		# Espalha para fora do ponto de impacto com leve arco
-		var base_angle := hit_dir.angle() if hit_dir != Vector2.ZERO else 0.0
-		var angle := base_angle + randf_range(deg_to_rad(-70), deg_to_rad(70))
-		var dist  := randf_range(4.0, 12.0)
+		# 60% seguem a direção do impacto, 40% derivam para cima (vapor)
+		var angle: float
+		if randf() < 0.6:
+			angle = base_angle + randf_range(-spread, spread)
+		else:
+			angle = -PI * 0.5 + randf_range(-spread * 0.5, spread * 0.5)
+
+		var dist  := randf_range(3.0, dist_max)
 		var target := p.global_position + Vector2(cos(angle) * dist, sin(angle) * dist)
-		var dur   := randf_range(0.15, 0.35)
+		var dur   := randf_range(0.25, dur_max)
 
 		var tw := p.create_tween().set_parallel(true)
 		tw.tween_property(p, "global_position", target, dur).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
@@ -723,7 +770,8 @@ func _drop_loot() -> void:
 		card_node.global_position = global_position
 		card_node.velocity = Vector2(randf_range(-38.0, 38.0), randf_range(-88.0, -50.0))
 		if _drop_card_id != "":
-			card_node.card_level = _pick_level(drop_level_flags)
+			var _cdata := CardDB.get_card(_drop_card_id)
+			card_node.card_level = _pick_level(drop_level_flags) if (_cdata and _cdata.type == "Weapon") else 1
 			card_node.set_card_id(_drop_card_id)
 		else:
 			card_node.is_random = true
@@ -876,6 +924,20 @@ func _get_body_animation() -> StringName:
 	if absf(velocity.x) > 1.0:  return &"walking"
 	return &"idle"
 
+func _has_floor_spike_ahead() -> bool:
+	if is_flying or movement_style == MoveStyle.STATIONARY:
+		return false
+	var space := get_world_2d().direct_space_state
+	# Raio diagonal: parte ligeiramente acima dos pés e desce, garantindo
+	# que passe pela shape do spike (que fica ~3px abaixo do topo do tile).
+	var from := global_position + Vector2(direction * 2.0, 10.0)
+	var to   := global_position + Vector2(direction * 22.0, 22.0)
+	var params := PhysicsRayQueryParameters2D.create(from, to)
+	params.collide_with_areas = true
+	params.collision_mask = 32
+	params.exclude = [get_rid()]
+	return not space.intersect_ray(params).is_empty()
+
 func update_rays() -> void:
 	# Posições e alcances são configurados visualmente no editor.
 	# O código só garante que os rays apontem para o lado correto ao virar.
@@ -905,16 +967,97 @@ func turn() -> void:
 	update_visual()
 	update_rays()
 
-func flash_white() -> void:
+func flash_white(intensity: float = 0.5) -> void:
 	if not sprite or not sprite.material: return
 	var mat := sprite.material as ShaderMaterial
 	if mat == null: return
 	if flash_tween and flash_tween.is_running(): flash_tween.kill()
-	mat.set_shader_parameter("flash_amount", 0.5)
+	mat.set_shader_parameter("flash_amount", intensity)
 	flash_tween = create_tween()
 	flash_tween.tween_property(mat, "shader_parameter/flash_amount", 0.0, 0.12)
 
-func _show_damage_number(amount: int, is_crit: bool = false) -> void:
+func apply_element(data: Dictionary) -> void:
+	if life_state == LifeState.DEAD: return
+	var type: String = data.type
+	if _element_timers.has(type):
+		# Refresca os ticks — o efeito foi reaplicado antes de expirar
+		_element_timers[type].ticks_left = data.dot_ticks
+		if type == "ice":
+			_apply_ice_slow()
+		return
+	var particles := _spawn_element_particles(data.color)
+	_element_timers[type] = {
+		timer      = data.tick_interval,
+		ticks_left = data.dot_ticks,
+		data       = data,
+		particles  = particles
+	}
+	if type == "ice":
+		_apply_ice_slow()
+
+func _apply_ice_slow() -> void:
+	if _ice_base_speed == 0.0:
+		_ice_base_speed = speed
+	_ice_slow_stacks += 1
+	speed = _ice_base_speed * maxf(1.0 - _ice_slow_stacks * 0.15, 0.25)
+
+func _process(delta: float) -> void:
+	if _element_timers.is_empty(): return
+	for type in _element_timers.keys():
+		var entry: Dictionary = _element_timers[type]
+		entry.timer -= delta
+		if entry.timer <= 0.0:
+			entry.timer = entry.data.tick_interval
+			if life_state != LifeState.DEAD:
+				# Aplica dano direto sem passar por take_damage() para evitar número branco duplicado
+				flash_white()
+				_play_eye_damage()
+				GameManager.run_damage_dealt += entry.data.dot_damage
+				health -= entry.data.dot_damage
+				if has_node("ProgressBar"):
+					$ProgressBar.value = health
+				_show_damage_number(entry.data.dot_damage, false, entry.data.color)
+				if health <= 0:
+					die()
+					break  # enemy destruído — para de processar outros elementos
+			entry.ticks_left -= 1
+			if entry.ticks_left <= 0:
+				if is_instance_valid(entry.particles):
+					entry.particles.queue_free()
+				if type == "ice" and _ice_base_speed > 0.0:
+					speed = _ice_base_speed
+					_ice_base_speed = 0.0
+					_ice_slow_stacks = 0
+				_element_timers.erase(type)
+				break  # erase durante iteração — reinicia no próximo frame
+
+func _spawn_element_particles(color: Color) -> CPUParticles2D:
+	var p := CPUParticles2D.new()
+	p.emitting = true
+	p.amount = 24
+	p.lifetime = 1.2
+	p.emission_shape = CPUParticles2D.EMISSION_SHAPE_SPHERE
+	p.emission_sphere_radius = 7.0
+	p.direction = Vector2(0, -1)
+	p.spread = 180.0
+	p.gravity = Vector2(0, -25)
+	p.initial_velocity_min = 5.0
+	p.initial_velocity_max = 22.0
+	p.scale_amount_min = 1.0
+	p.scale_amount_max = 2.5
+	var grad := Gradient.new()
+	grad.set_color(0, Color(color.r, color.g, color.b, 1.0))
+	grad.set_color(1, Color(color.r, color.g, color.b, 0.0))
+	p.color_ramp = grad
+	p.color = Color(1, 1, 1, 1)
+	var mat := CanvasItemMaterial.new()
+	mat.light_mode = CanvasItemMaterial.LIGHT_MODE_UNSHADED
+	p.material = mat
+	p.z_index = 2
+	add_child(p)
+	return p
+
+func _show_damage_number(amount: int, is_crit: bool = false, override_color: Color = Color.WHITE) -> void:
 	if not damage_number_scene: return
 	var dn = damage_number_scene.instantiate()
 	var pos := global_position
@@ -926,6 +1069,8 @@ func _show_damage_number(amount: int, is_crit: bool = false) -> void:
 	par.add_child(dn)
 	if is_crit:
 		dn.setup(amount, Color(1.0, 0.65, 0.0), true)
+	elif override_color != Color.WHITE:
+		dn.setup(amount, override_color)
 	else:
 		dn.setup(amount)
 

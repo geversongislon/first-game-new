@@ -9,7 +9,7 @@ script = ExtResource("1_data")
 id = "card_slow"
 display_name = "Slow Mo"
 type = "Consumable"
-rarity = "Epic"
+rarity = "Uncommon"
 description = "Dilata o tempo por 4 segundos.
 Inimigos e projéteis ficam lentos.
 Seu movimento não é afetado."
@@ -18,4 +18,4 @@ max_charges = 5
 charge_cooldown = 3.0
 active_scene = ExtResource("3_scene")
 sell_price = 40
-drop_weight = 5.0
+drop_weight = 45.0

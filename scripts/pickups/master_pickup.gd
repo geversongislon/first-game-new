@@ -70,7 +70,8 @@ func _ready() -> void:
 	if is_random:
 		_randomize_card()
 
-	card_level = _pick_level(level_flags)
+	var _cd := CardDB.get_card(_card_id) if _card_id != "" else null
+	card_level = _pick_level(level_flags) if (_cd and _cd.type == "Weapon") else 1
 
 	# Conecta sinal de coleta
 	if not body_entered.is_connected(_on_body_entered):

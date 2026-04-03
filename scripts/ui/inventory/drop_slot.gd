@@ -151,6 +151,10 @@ func apply_stack_visual(level: int) -> void:
 
 	_stack_border = Panel.new()
 	_stack_border.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_stack_border.offset_left   = -1
+	_stack_border.offset_top    = -1
+	_stack_border.offset_right  = 1
+	_stack_border.offset_bottom = 1
 	_stack_border.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var style := StyleBoxFlat.new()
 	style.bg_color = Color(0, 0, 0, 0)

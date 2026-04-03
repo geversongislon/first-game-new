@@ -91,18 +91,8 @@ func _input(event: InputEvent) -> void:
 		return
 
 	if event is InputEventKey and event.pressed and not event.echo:
-		# Shift + 9 — adiciona 3 pistolas ao baú e desbloqueia todas as zonas
-		if event.keycode == KEY_9 and event.shift_pressed:
-			for i in 3:
-				add_card_to_inventory("card_pistola")
-				add_card_to_inventory("card_dash")
-			var _debug_points := {"ext_0": "Início", "ext_1": "Zona 1", "ext_2": "Zona 2"}
-			for _pid in _debug_points:
-				unlock_extraction_point(_pid, _debug_points[_pid])
-			print(">>> [DEBUG] 3 pistolas e todas as zonas desbloqueadas!")
-
 		# Shift + 0 — adiciona uma cópia de cada carta existente ao baú
-		elif event.keycode == KEY_0 and event.shift_pressed:
+		if event.keycode == KEY_0 and event.shift_pressed:
 			var all_cards := CardDB.get_all_cards()
 			for card in all_cards:
 				add_card_to_inventory(card.id)
@@ -308,15 +298,15 @@ func add_to_run_backpack(card_id: String, level: int = 1, charges: int = 0) -> b
 					run_backpack_changed.emit()
 					return true
 		# Sem slot com espaço: abre slot novo
-		var bpk_idx = run_backpack.find("")
-		if bpk_idx != -1:
-			run_backpack[bpk_idx] = card_id
-			while run_backpack_levels.size() <= bpk_idx:
+		var nested_bpk_idx = run_backpack.find("")
+		if nested_bpk_idx != -1:
+			run_backpack[nested_bpk_idx] = card_id
+			while run_backpack_levels.size() <= nested_bpk_idx:
 				run_backpack_levels.append(1)
-			while run_backpack_charges.size() <= bpk_idx:
+			while run_backpack_charges.size() <= nested_bpk_idx:
 				run_backpack_charges.append(0)
-			run_backpack_levels[bpk_idx] = clampi(level, 1, 3)
-			run_backpack_charges[bpk_idx] = charges if charges > 0 else 1
+			run_backpack_levels[nested_bpk_idx] = clampi(level, 1, 3)
+			run_backpack_charges[nested_bpk_idx] = charges if charges > 0 else 1
 			run_backpack_changed.emit()
 			return true
 		return false
@@ -446,6 +436,8 @@ func reset_save() -> void:
 	card_upgrade_levels = []
 	equipped_cards = ["", "", ""]
 	equipped_card_levels = [1, 1, 1]
+	inventory_card_charges.clear()
+	equipped_card_charges = [0, 0, 0]
 	run_coins = 0
 	run_cards.clear()
 	run_backpack = ["", "", "", "", ""]

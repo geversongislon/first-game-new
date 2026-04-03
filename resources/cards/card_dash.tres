@@ -1,6 +1,5 @@
 [gd_resource type="Resource" script_class="CardData" format=3 uid="uid://biga0ws4k1f01"]
 
-[ext_resource type="Texture2D" uid="uid://cpf3nuc3u18rp" path="res://assets/sprites/cards/dash.png" id="1_0kqxq"]
 [ext_resource type="Script" uid="uid://l04jvxr7j3mm" path="res://scripts/resources/card_data.gd" id="1_c3hws"]
 [ext_resource type="PackedScene" uid="uid://bact1vdash01" path="res://scenes/actives/active_dash.tscn" id="1_rdhwa"]
 [ext_resource type="Texture2D" uid="uid://dhhv6cmnxkcs5" path="res://assets/sprites/ui/hud_icons/pickup_dash.png" id="2_rdhwa"]
@@ -12,7 +11,6 @@ display_name = "Dash"
 type = "Active"
 rarity = "Epic"
 description = "Avança na direção do movimento.\\nx2: Distância maior\\nx3: Invulnerável durante o dash"
-full_art = ExtResource("1_0kqxq")
 icon = ExtResource("2_rdhwa")
 active_ability_id = "dash"
 cooldown = 1.0

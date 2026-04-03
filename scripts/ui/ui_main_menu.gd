@@ -19,7 +19,7 @@ var _popup_source_slot: DropSlot = null
 func _unhandled_input(event: InputEvent) -> void:
 	if not OS.is_debug_build(): return
 	if event is InputEventKey and event.pressed and not event.echo:
-		if event.keycode == KEY_7 and event.shift_pressed:
+		if event.keycode == KEY_9 and event.shift_pressed:
 			var _pts := {
 				"ext_0": "Início",
 				"ext_1": "Zona 01",

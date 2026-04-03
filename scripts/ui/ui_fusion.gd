@@ -2,7 +2,9 @@ extends Control
 
 const RARITY_ORDER = ["Common", "Uncommon", "Rare", "Epic", "Legendary"]
 
-@onready var inventory_grid: GridContainer = $HBoxContainer/MarginLeft/LeftPanel/InventoryScroll/InventoryGrid
+@onready var inventory_grid: GridContainer = $HBoxContainer/MarginLeft/LeftPanel/ScrollArea/InventoryScroll/InventoryGrid
+@onready var inventory_scroll: ScrollContainer = $HBoxContainer/MarginLeft/LeftPanel/ScrollArea/InventoryScroll
+@onready var inventory_vscroll: VScrollBar = $HBoxContainer/MarginLeft/LeftPanel/ScrollArea/InventoryVScroll
 @onready var fusion_slot1: DropSlot = $HBoxContainer/MarginRight/RightPanel/FusionSlots/FusionSlot1
 @onready var fusion_slot2: DropSlot = $HBoxContainer/MarginRight/RightPanel/FusionSlots/FusionSlot2
 @onready var fusion_slot3: DropSlot = $HBoxContainer/MarginRight/RightPanel/FusionSlots/FusionSlot3
@@ -16,8 +18,28 @@ func _ready() -> void:
 	fusion_slot1.slot_changed.connect(_on_slot_changed)
 	fusion_slot2.slot_changed.connect(_on_slot_changed)
 	fusion_slot3.slot_changed.connect(_on_slot_changed)
-	GameManager.unlocked_cards_changed.connect(_setup_inventory)
+	GameManager.unlocked_cards_changed.connect(_on_inventory_changed)
 	fuse_button.disabled = true
+
+	# Sincroniza VScrollBar externo (lado esquerdo) com o ScrollContainer
+	inventory_vscroll.value_changed.connect(func(v): inventory_scroll.scroll_vertical = int(v))
+	inventory_scroll.get_v_scroll_bar().value_changed.connect(_on_internal_scroll_changed)
+	await get_tree().process_frame
+	_sync_vscroll_range()
+
+func _on_inventory_changed() -> void:
+	_setup_inventory()
+	_sync_vscroll_range.call_deferred()
+
+func _on_internal_scroll_changed(v: float) -> void:
+	_sync_vscroll_range()
+	inventory_vscroll.set_value_no_signal(v)
+
+func _sync_vscroll_range() -> void:
+	var bar := inventory_scroll.get_v_scroll_bar()
+	inventory_vscroll.min_value = bar.min_value
+	inventory_vscroll.max_value = bar.max_value
+	inventory_vscroll.page = bar.page
 
 func _setup_inventory() -> void:
 	for child in inventory_grid.get_children():
@@ -35,13 +57,16 @@ func _setup_inventory() -> void:
 		slot_wrapper.custom_minimum_size = Vector2(16, 16)
 		slot_wrapper.color = Color(0.15, 0.15, 0.15, 1)
 
+		inventory_grid.add_child(slot_wrapper)
+
 		if card_id != "":
 			var new_card = _card_scene.instantiate()
-			var lvl := GameManager.card_upgrade_levels[i] if i < GameManager.card_upgrade_levels.size() else 1
-			new_card.setup(card_id, lvl)
 			slot_wrapper.add_child(new_card)
-
-		inventory_grid.add_child(slot_wrapper)
+			var lvl := GameManager.get_card_level_at(i)
+			new_card.setup(card_id, lvl)
+			var cdata := CardDB.get_card(card_id)
+			if cdata and cdata.type == "Consumable" and cdata.max_charges > 0:
+				new_card.set_charges(GameManager.get_card_charges_at(i), cdata.max_charges)
 
 func _on_slot_changed() -> void:
 	var ids = [fusion_slot1.current_card_id, fusion_slot2.current_card_id, fusion_slot3.current_card_id]
@@ -71,18 +96,41 @@ func _on_fuse_button_pressed() -> void:
 	if next_rarity == "":
 		return
 
+	fuse_button.disabled = true
+
+	# ① Slots piscam branco e encolhem em sequência (stagger 0.12s entre cada)
+	var slots: Array = [fusion_slot1, fusion_slot2, fusion_slot3]
+	for i in range(slots.size()):
+		var s: Control = slots[i]
+		var tw := create_tween().set_parallel(true)
+		tw.tween_property(s, "modulate", Color.WHITE, 0.08).set_delay(i * 0.12)
+		tw.tween_property(s, "modulate", Color(0, 0, 0, 0), 0.15).set_delay(i * 0.12 + 0.08)
+		tw.tween_property(s, "scale", Vector2.ZERO, 0.15) \
+			.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN).set_delay(i * 0.12 + 0.08)
+
+	await get_tree().create_timer(slots.size() * 0.12 + 0.25).timeout
+
 	# Limpa os slots sem devolver ao inventário — cartas já foram removidas ao dropar
-	for slot: DropSlot in [fusion_slot1, fusion_slot2, fusion_slot3]:
+	for slot: DropSlot in slots:
 		slot.current_card_id = ""
 		slot._update_visual("")
+		slot.scale    = Vector2.ONE
+		slot.modulate = Color.WHITE
 
-	var rarity_filter: Array[String] = []
-	if next_rarity != "":
-		rarity_filter.append(next_rarity)
+	# ② Resolve carta resultado
+	var rarity_filter: Array[String] = [next_rarity]
 	var result := CardDB.get_random_card("", rarity_filter)
-	if result:
-		GameManager.add_card_to_inventory(result.id)
+	if result == null:
+		return
+	GameManager.add_card_to_inventory(result.id)
 	GameManager.save_game()
+
+	# ③ Abre popup de reveal
+	var reveal_scene := preload("res://scenes/ui/ui_fusion_reveal.tscn") as PackedScene
+	var reveal := reveal_scene.instantiate()
+	add_child(reveal)
+	reveal.closed.connect(func(): _on_slot_changed())
+	reveal.play(result)
 
 func _on_back_button_pressed() -> void:
 	# Devolve ao inventário cartas que ainda estão nos slots de fusão

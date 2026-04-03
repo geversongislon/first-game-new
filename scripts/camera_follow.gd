@@ -10,6 +10,14 @@ var _walk_timer: float = 0.0
 ## Segundos andando antes de mudar o offset
 @export var walk_commit_time: float = 0.12
 
+## Offset vertical ao olhar para baixo (S)
+@export var look_down_offset: float = 60.0
+## Segundos segurando S antes de iniciar o movimento da câmera
+@export var look_down_delay: float = 0.4
+
+var _target_offset_y: float = 0.0
+var _look_down_timer: float = 0.0
+
 var _shake_intensity: float = 0.0
 var _shake_duration: float  = 0.0
 
@@ -63,6 +71,16 @@ func _process(delta: float) -> void:
 
 	offset.x = lerpf(offset.x, _target_offset_x, transition_speed * delta)
 
+	# Look down — câmera desce após segurar S por look_down_delay segundos
+	if Input.is_action_pressed("move_down"):
+		_look_down_timer += delta
+		if _look_down_timer >= look_down_delay:
+			_target_offset_y = look_down_offset
+	else:
+		_look_down_timer = 0.0
+		_target_offset_y = 0.0
+	offset.y = lerpf(offset.y, _target_offset_y, transition_speed * delta)
+
 	# Hitstop — restaura time_scale quando o tempo real passar
 	if _hitstop_end_ms > 0 and Time.get_ticks_msec() >= _hitstop_end_ms:
 		_hitstop_end_ms = 0
@@ -75,5 +93,3 @@ func _process(delta: float) -> void:
 	if _shake_duration > 0.0:
 		_shake_duration -= delta
 		offset += Vector2(randf_range(-1.0, 1.0), randf_range(-1.0, 1.0)) * _shake_intensity
-	elif offset.y != 0.0:
-		offset.y = 0.0

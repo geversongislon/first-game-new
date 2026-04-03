@@ -118,12 +118,12 @@ func _draw() -> void:
 	# corpo do enemy: base no origin, altura para cima (-Y local)
 	var body_h := 28.0
 	var body_w := 10.0
-	var body_rect := Rect2(-body_w * 0.5, -body_h, body_w, body_h)
+	var body_rect := Rect2(-body_w * 0.5, -body_h * 0.5, body_w, body_h)
 	draw_rect(body_rect, Color(col_ring.r, col_ring.g, col_ring.b, 0.12))
 	draw_rect(body_rect, col_ring, false, 1.2)
 	# cabeça
-	draw_circle(Vector2(0, -body_h - 5), 5.0, Color(col_ring.r, col_ring.g, col_ring.b, 0.18))
-	draw_arc(Vector2(0, -body_h - 5), 5.0, 0.0, TAU, 16, col_ring, 1.2)
+	draw_circle(Vector2(0, -body_h * 0.5 - 5), 5.0, Color(col_ring.r, col_ring.g, col_ring.b, 0.18))
+	draw_arc(Vector2(0, -body_h * 0.5 - 5), 5.0, 0.0, TAU, 16, col_ring, 1.2)
 
 	var count := mini(spawn_count, 8)
 	if count > 1:

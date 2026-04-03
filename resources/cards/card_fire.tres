@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="CardData" format=3 uid="uid://dlfw2uto8l53b"]
+
+[ext_resource type="Texture2D" uid="uid://4kdaosswnnh7" path="res://assets/sprites/ui/hud_icons/pickup_fire.png" id="1_3ydta"]
+[ext_resource type="Script" uid="uid://l04jvxr7j3mm" path="res://scripts/resources/card_data.gd" id="1_qp2tp"]
+[ext_resource type="PackedScene" uid="uid://b7aow3j3qr8hj" path="res://scenes/passives/passive_fire.tscn" id="3_scene"]
+
+[resource]
+script = ExtResource("1_qp2tp")
+id = "card_fire"
+display_name = "Fogo"
+type = "Passive"
+rarity = "Rare"
+description = "Incendeia inimigos ao acertar."
+icon = ExtResource("1_3ydta")
+passive_scene = ExtResource("3_scene")
+dot_damage = 3
+dot_tick_interval = 0.3
+dot_ticks = 3
+sell_price = 40
+drop_weight = 15.0

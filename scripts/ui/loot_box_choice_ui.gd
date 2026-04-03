@@ -31,7 +31,7 @@ func _build_ui() -> void:
 	add_child(center)
 
 	var panel := PanelContainer.new()
-	panel.custom_minimum_size = Vector2(280, 0)
+	panel.custom_minimum_size = Vector2(180, 0)
 	center.add_child(panel)
 
 	var margin := MarginContainer.new()
@@ -42,7 +42,7 @@ func _build_ui() -> void:
 	panel.add_child(margin)
 
 	var vbox := VBoxContainer.new()
-	vbox.add_theme_constant_override("separation", 5)
+	vbox.add_theme_constant_override("separation", 3)
 	margin.add_child(vbox)
 
 	var title_row := HBoxContainer.new()
@@ -52,13 +52,13 @@ func _build_ui() -> void:
 	title.text = "LOOT BOX"
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	title.add_theme_font_size_override("font_size", 9)
+	title.add_theme_font_size_override("font_size", 4)
 	title_row.add_child(title)
 
 	var close_btn := Button.new()
 	close_btn.text = "X"
 	close_btn.flat = true
-	close_btn.custom_minimum_size = Vector2(14, 14)
+	close_btn.custom_minimum_size = Vector2(12, 12)
 	close_btn.pressed.connect(_close)
 	title_row.add_child(close_btn)
 
@@ -66,13 +66,13 @@ func _build_ui() -> void:
 	vbox.add_child(sep)
 
 	var hbox := HBoxContainer.new()
-	hbox.add_theme_constant_override("separation", 7)
+	hbox.add_theme_constant_override("separation", 5)
 	hbox.alignment = BoxContainer.ALIGNMENT_CENTER
 	vbox.add_child(hbox)
 
 	for i in 3:
 		var slot_vbox := VBoxContainer.new()
-		slot_vbox.custom_minimum_size = Vector2(40, 0)
+		slot_vbox.custom_minimum_size = Vector2(20, 0)
 		slot_vbox.alignment = BoxContainer.ALIGNMENT_CENTER
 		slot_vbox.add_theme_constant_override("separation", 2)
 		hbox.add_child(slot_vbox)
@@ -90,10 +90,10 @@ func _build_ui() -> void:
 		var ph_style := StyleBoxFlat.new()
 		ph_style.bg_color = Color(0.22, 0.22, 0.25, 1.0)
 		ph_style.border_color = Color(0.5, 0.5, 0.55, 1.0)
-		ph_style.border_width_left = 2
-		ph_style.border_width_top = 2
-		ph_style.border_width_right = 2
-		ph_style.border_width_bottom = 2
+		ph_style.border_width_left = 1
+		ph_style.border_width_top = 1
+		ph_style.border_width_right = 1
+		ph_style.border_width_bottom = 1
 		ph_style.expand_margin_left = -2
 		ph_style.expand_margin_top = -2
 		ph_style.expand_margin_right = -2
@@ -107,7 +107,7 @@ func _build_ui() -> void:
 		q_lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 		q_lbl.set_anchors_preset(Control.PRESET_FULL_RECT)
 		q_lbl.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		q_lbl.add_theme_font_size_override("font_size", 7)
+		q_lbl.add_theme_font_size_override("font_size", 5)
 		placeholder.add_child(q_lbl)
 
 		var icon := TextureRect.new()
@@ -131,7 +131,7 @@ func _build_ui() -> void:
 		name_lbl.autowrap_mode = TextServer.AUTOWRAP_OFF
 		name_lbl.clip_text = true
 		name_lbl.custom_minimum_size = Vector2(52, 0)
-		name_lbl.add_theme_font_size_override("font_size", 7)
+		name_lbl.add_theme_font_size_override("font_size", 4)
 		slot_vbox.add_child(name_lbl)
 
 		var rarity_lbl := Label.new()
@@ -143,7 +143,7 @@ func _build_ui() -> void:
 		var btn := Button.new()
 		btn.text = "Pegar"
 		btn.disabled = true
-		btn.add_theme_font_size_override("font_size", 7)
+		btn.add_theme_font_size_override("font_size", 5)
 		var capture_i := i
 		btn.pressed.connect(func(): _on_pick(capture_i))
 		slot_vbox.add_child(btn)

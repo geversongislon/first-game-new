@@ -57,9 +57,13 @@ var current_max_speed: float = 70.0
 var slow_mo_compensation: bool = false
 var max_health: int = 100
 var current_health: int = 100
+## Elementos ativos — cada passiva elemental registra aqui seu Dictionary de dados.
+## Projéteis leem esta lista ao spawnar para aplicar elemento aleatório.
+var active_elements: Array = []
 
 var coyote_timer: float = 0.0
 var jump_buffer_timer: float = 0.0
+var _drop_timer: float = 0.0
 
 # --- MECH: EXTRA JUMPS ---
 var max_jumps: int = 1
@@ -174,6 +178,9 @@ func _update_eye_follow() -> void:
 	if _eye_x_history.size() > 10:
 		_eye_x_history.pop_front()
 
+	var look_down := Input.is_action_pressed("move_down")
+	if look_down:
+		dir_y = 1.0
 	_eye_y_history.append(dir_y)
 	if _eye_y_history.size() > 1:
 		_eye_y_history.pop_front()
@@ -181,9 +188,10 @@ func _update_eye_follow() -> void:
 	var lx := _eye_x_history[0] if _eye_x_history.size() >= 10 else dir_x
 	var ly := _eye_y_history[0]
 	var flip := -1.0 if sprite.flip_h else 1.0
+	var y_offset := 4.0 if look_down else eye_max_offset.y
 	eye_sprite.position = Vector2(
 		roundf(_eye_base_pos.x * flip + lx * eye_max_offset.x),
-		roundf(_eye_base_pos.y + ly * eye_max_offset.y)
+		roundf(_eye_base_pos.y + ly * y_offset)
 	)
 
 func take_damage(amount: int, hit_direction: Vector2 = Vector2.ZERO, kb: float = 0.0, _is_crit: bool = false) -> void:
@@ -498,6 +506,7 @@ func _physics_process(delta: float) -> void:
 	_apply_gravity(eff_delta)
 	_update_coyote(eff_delta)
 	_update_jump_buffer(eff_delta)
+	_update_drop_timer(eff_delta)
 
 	# Só processa pulo se a mochila estiver fechada
 	if not is_backpack_open:
@@ -722,23 +731,6 @@ func drop_card_into_world(card_id: String, card_level: int = 1, charges: int = 1
 
 	print("Player: Dropou a carta ", card_id, " lvl ", card_level, " para o mundo.")
 
-func _unhandled_input(event: InputEvent) -> void:
-	if not OS.is_debug_build(): return
-	if event is InputEventKey and event.pressed and not event.echo:
-		if event.keycode == KEY_9 and event.shift_pressed:
-			_debug_add_pistol()
-
-func _debug_add_pistol() -> void:
-	var slot := weapons.unlocked_weapons.find("")
-	if slot == -1:
-		print("[DEBUG] Loadout cheio")
-		return
-	weapons.unlocked_weapons[slot] = "card_pistola"
-	weapons.loadout_changed.emit()
-	if weapons.current_weapon_id == "":
-		weapons.equip_by_index(slot)
-	if hud: hud.refresh_all_icons()
-	print("[DEBUG] Pistola → slot ", slot + 1)
 
 func _process(delta: float) -> void:
 	# Atualiza cooldowns
@@ -797,13 +789,26 @@ func _update_jump_buffer(delta: float) -> void:
 		jump_buffer_timer = jump_buffer_time
 	else:
 		jump_buffer_timer -= delta
+
+func _update_drop_timer(delta: float) -> void:
+	if _drop_timer > 0.0:
+		_drop_timer -= delta
+		if _drop_timer <= 0.0:
+			set_collision_mask_value(5, true)
 		
 
 func _handle_jump() -> void:
 	# Reseta os pulos ao tocar o chão
 	if is_on_floor():
 		jumps_left = max_jumps
-	
+
+	# Drop-through: S + Pulo quando no chão passa pela plataforma semi-sólida
+	if is_on_floor() and Input.is_action_pressed("move_down") and jump_buffer_timer > 0.0:
+		set_collision_mask_value(5, false)
+		_drop_timer = 0.3
+		jump_buffer_timer = 0.0
+		return
+
 	# Pulo buffered ou pressionado agora (Ground Jump / Coyote Jump)
 	if jump_buffer_timer > 0.0:
 		if coyote_timer > 0.0:

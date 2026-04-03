@@ -55,13 +55,24 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 4
 text = "INVENTÁRIO"
 
-[node name="InventoryScroll" type="ScrollContainer" parent="HBoxContainer/MarginLeft/LeftPanel" unique_id=1957982454]
+[node name="ScrollArea" type="HBoxContainer" parent="HBoxContainer/MarginLeft/LeftPanel" unique_id=1111111111]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 4
+
+[node name="InventoryVScroll" type="VScrollBar" parent="HBoxContainer/MarginLeft/LeftPanel/ScrollArea" unique_id=2222222222]
+layout_mode = 2
+custom_minimum_size = Vector2(5, 0)
+
+[node name="InventoryScroll" type="ScrollContainer" parent="HBoxContainer/MarginLeft/LeftPanel/ScrollArea" unique_id=1957982454]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
+vertical_scroll_mode = 3
 
-[node name="InventoryGrid" type="GridContainer" parent="HBoxContainer/MarginLeft/LeftPanel/InventoryScroll" unique_id=1399593511]
+[node name="InventoryGrid" type="GridContainer" parent="HBoxContainer/MarginLeft/LeftPanel/ScrollArea/InventoryScroll" unique_id=1399593511]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3

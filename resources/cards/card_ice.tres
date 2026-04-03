@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="CardData" format=3 uid="uid://bryqbq45ljnax"]
+
+[ext_resource type="Texture2D" uid="uid://bm2xbg3647r87" path="res://assets/sprites/ui/hud_icons/pickup_ice.png" id="1_lf0l4"]
+[ext_resource type="Script" uid="uid://l04jvxr7j3mm" path="res://scripts/resources/card_data.gd" id="1_qp2tp"]
+[ext_resource type="PackedScene" uid="uid://dvma7aaadag0l" path="res://scenes/passives/passive_ice.tscn" id="3_scene"]
+
+[resource]
+script = ExtResource("1_qp2tp")
+id = "card_ice"
+display_name = "Gelo"
+type = "Passive"
+rarity = "Rare"
+description = "Congela inimigos ao acertar."
+icon = ExtResource("1_lf0l4")
+passive_scene = ExtResource("3_scene")
+dot_damage = 2
+dot_tick_interval = 1.0
+dot_ticks = 4
+element_has_slow = true
+sell_price = 30
+drop_weight = 20.0

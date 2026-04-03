@@ -1,0 +1,64 @@
+[gd_scene format=3 uid="uid://dm13g34p7c5se"]
+
+[ext_resource type="Script" uid="uid://c7i85343qmfol" path="res://scripts/props/light_post.gd" id="1_ge0xp"]
+[ext_resource type="Texture2D" uid="uid://bne3rty6yxa4f" path="res://assets/sprites/barradeluz.png" id="2_ndadh"]
+[ext_resource type="Texture2D" uid="uid://dj3yrt58jw8ma" path="res://assets/sprites/ui/luz - barra.png" id="3_ndadh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dmlby"]
+size = Vector2(32, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0xvrd"]
+atlas = ExtResource("2_ndadh")
+region = Rect2(32, 0, 32, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1u1dv"]
+atlas = ExtResource("2_ndadh")
+region = Rect2(0, 0, 32, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_f7j4e"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0xvrd")
+}],
+"loop": true,
+"name": &"off",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1u1dv")
+}],
+"loop": true,
+"name": &"on",
+"speed": 5.0
+}]
+
+[node name="Luminaria" type="StaticBody2D" unique_id=1812095291 node_paths=PackedStringArray("animated_sprite")]
+script = ExtResource("1_ge0xp")
+animated_sprite = NodePath("Sprite2D")
+
+[node name="HitDetector" type="Area2D" parent="." unique_id=1894135689]
+collision_layer = 0
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitDetector" unique_id=587440933]
+shape = SubResource("RectangleShape2D_dmlby")
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=189570512]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_f7j4e")
+animation = &"off"
+autoplay = "on"
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=669856220]
+position = Vector2(-3.8146973e-06, 0)
+scale = Vector2(0.55774426, 0.8599283)
+color = Color(1, 0.83533335, 0.62, 1)
+energy = 2.04
+blend_mode = 2
+shadow_enabled = true
+texture = ExtResource("3_ndadh")
+offset = Vector2(1.9104477, 9.931034)
+
+[connection signal="area_entered" from="HitDetector" to="." method="_on_hit_detector_area_entered"]

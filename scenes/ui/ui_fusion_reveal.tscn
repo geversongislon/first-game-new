@@ -1,0 +1,102 @@
+[gd_scene format=3 uid="uid://dfy8n3kxc2p5m"]
+
+[ext_resource type="Script" uid="uid://c6b7iox8qmlvd" path="res://scripts/ui/ui_fusion_reveal.gd" id="1_reveal"]
+
+[node name="UIFusionReveal" type="Control" unique_id=1921609685]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("1_reveal")
+
+[node name="Overlay" type="ColorRect" parent="." unique_id=1966794698]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.85)
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=94653482]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="PanelContainer" parent="CenterContainer" unique_id=1826247066]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/Panel" unique_id=458190914]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/Panel/VBoxContainer" unique_id=1666885107]
+layout_mode = 2
+theme_override_constants/margin_top = 5
+
+[node name="CardIcon" type="TextureRect" parent="CenterContainer/Panel/VBoxContainer/MarginContainer" unique_id=485842956]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+expand_mode = 1
+stretch_mode = 5
+
+[node name="CardNameMargin" type="MarginContainer" parent="CenterContainer/Panel/VBoxContainer" unique_id=1907200141]
+layout_mode = 2
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_bottom = 0
+
+[node name="CardName" type="Label" parent="CenterContainer/Panel/VBoxContainer/CardNameMargin" unique_id=1620174581]
+layout_mode = 2
+theme_override_font_sizes/font_size = 6
+horizontal_alignment = 1
+
+[node name="RarityLabel" type="Label" parent="CenterContainer/Panel/VBoxContainer" unique_id=976822338]
+layout_mode = 2
+theme_override_font_sizes/font_size = 4
+horizontal_alignment = 1
+
+[node name="ProgressContainer" type="Control" parent="CenterContainer/Panel/VBoxContainer" unique_id=1127486405]
+custom_minimum_size = Vector2(90, 4)
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="ProgressBg" type="ColorRect" parent="CenterContainer/Panel/VBoxContainer/ProgressContainer" unique_id=1022555140]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.12, 0.12, 0.12, 1)
+
+[node name="ProgressFill" type="ColorRect" parent="CenterContainer/Panel/VBoxContainer/ProgressContainer" unique_id=1328641496]
+layout_mode = 0
+offset_bottom = 4.0
+color = Color(0.3, 0.6, 1, 1)
+
+[node name="LoadingLabel" type="Label" parent="CenterContainer/Panel/VBoxContainer" unique_id=539569488]
+layout_mode = 2
+theme_override_font_sizes/font_size = 3
+text = "FUNDINDO..."
+horizontal_alignment = 1
+
+[node name="MarginContainer2" type="MarginContainer" parent="CenterContainer/Panel/VBoxContainer" unique_id=578135226]
+layout_mode = 2
+theme_override_constants/margin_bottom = 5
+
+[node name="ContinueBtn" type="Button" parent="CenterContainer/Panel/VBoxContainer/MarginContainer2" unique_id=814029548]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(60, 12)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 4
+text = "CONTINUAR"

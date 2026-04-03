@@ -59,10 +59,10 @@ sprite_frames = SubResource("SpriteFrames_tfygr")
 animation = &"of"
 
 [node name="PointLight2D" type="PointLight2D" parent="." unique_id=1226773]
-position = Vector2(0, 39)
-scale = Vector2(0.5234375, 0.6041667)
+position = Vector2(9.536743e-07, 64)
+scale = Vector2(0.76171875, 0.6692709)
 color = Color(0.85882354, 0.6431373, 0.3647059, 1)
-energy = 1.5
+energy = 1.75
 blend_mode = 2
 texture = ExtResource("3_s7yab")
 offset = Vector2(0, -97.65517)

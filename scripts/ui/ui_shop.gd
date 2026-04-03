@@ -4,16 +4,22 @@ extends Control
 @onready var grid: GridContainer = $VBoxContainer/ScrollContainer/Grid
 @onready var back_button: Button = $VBoxContainer/TopBar/BackButton
 
-var _purchased_this_session: Array[String] = []
+# Guarda referência a cada botão e seu preço para refresh quando moedas mudam
+var _shop_entries: Array = []  # [{btn: Button, price: int}]
 
 func _ready() -> void:
-	GameManager.permanent_coins_changed.connect(_update_coins_label)
-	_update_coins_label(GameManager.total_coins)
+	GameManager.permanent_coins_changed.connect(_on_coins_changed)
+	_update_coins_label()
 	_build_shop()
 	back_button.pressed.connect(_on_back_pressed)
 
-func _update_coins_label(_amount: int = 0) -> void:
+func _update_coins_label() -> void:
 	coins_label.text = "Moedas: " + str(GameManager.total_coins)
+
+func _on_coins_changed(_amount: int) -> void:
+	_update_coins_label()
+	for entry in _shop_entries:
+		entry.btn.disabled = GameManager.total_coins < entry.price
 
 func _get_price(card: CardData) -> int:
 	match card.rarity:
@@ -27,6 +33,7 @@ func _get_price(card: CardData) -> int:
 func _build_shop() -> void:
 	for child in grid.get_children():
 		child.queue_free()
+	_shop_entries.clear()
 	var cards = CardDB.get_all_cards()
 	for card in cards:
 		_add_card_entry(card)
@@ -71,13 +78,14 @@ func _add_card_entry(card: CardData) -> void:
 
 	# Botão comprar
 	var btn := Button.new()
-	var already_bought := card.id in _purchased_this_session
-	btn.text = "COMPRADO" if already_bought else "COMPRAR"
-	btn.disabled = already_bought or GameManager.total_coins < price
+	btn.text = "COMPRAR"
+	btn.disabled = GameManager.total_coins < price
 	btn.add_theme_font_size_override("font_size", 3)
 	btn.pressed.connect(_on_buy_pressed.bind(card.id, price, btn))
+	_apply_buy_button_style(btn)
 	container.add_child(btn)
 
+	_shop_entries.append({ btn = btn, price = price })
 	grid.add_child(container)
 
 func _on_buy_pressed(card_id: String, price: int, btn: Button) -> void:
@@ -86,9 +94,42 @@ func _on_buy_pressed(card_id: String, price: int, btn: Button) -> void:
 	GameManager.total_coins -= price
 	GameManager.permanent_coins_changed.emit(GameManager.total_coins)
 	GameManager.add_card_to_inventory(card_id)
-	_purchased_this_session.append(card_id)
-	btn.text = "COMPRADO"
-	btn.disabled = true
+	_show_bought_label(btn)
+
+func _show_bought_label(btn: Button) -> void:
+	var lbl := Label.new()
+	lbl.text = "COMPRADO"
+	lbl.add_theme_font_size_override("font_size", 3)
+	lbl.add_theme_color_override("font_color", Color(0.4, 1.0, 0.4))
+	lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	lbl.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	lbl.z_index = 10
+
+	var btn_pos := btn.global_position - global_position
+	lbl.position = btn_pos
+	lbl.size = btn.size
+	add_child(lbl)
+
+	var tween := create_tween().set_parallel(true)
+	tween.tween_property(lbl, "position:y", btn_pos.y - 10.0, 0.7)
+	tween.tween_property(lbl, "modulate:a", 0.0, 0.7)
+	tween.chain().tween_callback(lbl.queue_free)
+
+func _apply_buy_button_style(btn: Button) -> void:
+	var c_normal := Color(0x4d7a38ff)
+	var c_hover  := c_normal.lightened(0.25)
+	var c_press  := c_normal.darkened(0.15)
+	var c_dis    := Color(0.25, 0.25, 0.25, 1.0)
+
+	for state in [["normal", c_normal], ["hover", c_hover], ["pressed", c_press], ["disabled", c_dis]]:
+		var sty := StyleBoxFlat.new()
+		sty.bg_color = state[1]
+		sty.content_margin_left  = 8.0
+		sty.content_margin_right  = 8.0
+		sty.content_margin_top   = 4.0
+		sty.content_margin_bottom = 4.0
+		btn.add_theme_stylebox_override(state[0], sty)
 
 func _get_type_color(type: String) -> Color:
 	match type:

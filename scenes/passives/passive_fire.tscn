@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://b7aow3j3qr8hj"]
+
+[ext_resource type="Script" uid="uid://dobgj3pigcl22" path="res://scripts/passives/passive_element.gd" id="1_elem"]
+[ext_resource type="Texture2D" uid="uid://v4o4qsei4jnc" path="res://assets/sprites/fire_companion.png" id="2_fire"]
+
+[node name="PassiveFire" type="Node" unique_id=1136438294]
+script = ExtResource("1_elem")
+element_type = "fire"
+element_color = Color(1, 0.35, 0.05, 1)
+companion_texture = ExtResource("2_fire")

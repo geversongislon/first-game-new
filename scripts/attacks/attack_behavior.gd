@@ -8,12 +8,12 @@ extends Resource
 
 ## Runs every physics frame BEFORE move_and_slide.
 ## Use this for state machines that need per-frame updates (e.g. pounce).
-func tick(enemy: CharacterBody2D, delta: float) -> void:
+func tick(_enemy: CharacterBody2D, _delta: float) -> void:
 	pass
 
 ## Called by the enemy base when attack_phase == READY and a player is nearby.
 ## The behavior decides whether and how to initiate the attack.
-func try_attack(enemy: CharacterBody2D) -> void:
+func try_attack(_enemy: CharacterBody2D) -> void:
 	pass
 
 ## Return true while the behavior needs to suppress normal movement

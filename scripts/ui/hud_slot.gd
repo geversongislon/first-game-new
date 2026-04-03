@@ -144,14 +144,14 @@ func _drop_data(_at_position: Vector2, data: Variant) -> void:
 	if target_id == dragged_id and dragged_id != "":
 		var card := CardDB.get_card(dragged_id)
 		if card and card.type == "Consumable":
-			var target_charges: int = 0
+			var merge_target_charges: int = 0
 			var player = weapon_ui._manager.get_parent() if weapon_ui and weapon_ui._manager else null
 			if is_loadout and player and "loadout_charges" in player:
-				target_charges = player.loadout_charges[slot_index]
+				merge_target_charges = player.loadout_charges[slot_index]
 			elif not is_loadout and slot_index < GameManager.run_backpack_charges.size():
-				target_charges = GameManager.run_backpack_charges[slot_index]
+				merge_target_charges = GameManager.run_backpack_charges[slot_index]
 
-			var total := target_charges + dragged_charges
+			var total := merge_target_charges + dragged_charges
 			var merged := mini(total, card.max_charges)
 			var overflow := total - merged
 

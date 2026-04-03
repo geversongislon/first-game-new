@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://dvma7aaadag0l"]
+
+[ext_resource type="Script" uid="uid://dobgj3pigcl22" path="res://scripts/passives/passive_element.gd" id="1_elem"]
+[ext_resource type="Texture2D" uid="uid://bvj8s783266qu" path="res://assets/sprites/ice_companion.png" id="2_qv5qu"]
+
+[node name="PassiveIce" type="Node" unique_id=1249200861]
+script = ExtResource("1_elem")
+element_type = "ice"
+element_color = Color(0.3, 0.7, 1, 1)
+companion_texture = ExtResource("2_qv5qu")

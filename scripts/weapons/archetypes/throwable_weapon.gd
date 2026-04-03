@@ -90,6 +90,9 @@ func _throw(final_speed: float, charge_ratio: float) -> void:
 	if throwable.has_method("setup"):
 		throwable.setup(dir, final_speed, charge_ratio)
 
+	if player and player.active_elements.size() > 0 and throwable.has_method("set_element_list"):
+		throwable.set_element_list(player.active_elements)
+
 # -------- Arco de Trajetória --------
 
 func _spawn_arc() -> void:

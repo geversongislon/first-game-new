@@ -15,4 +15,4 @@ icon = ExtResource("2_ebvcq")
 max_charges = 5
 active_scene = ExtResource("2_regen")
 sell_price = 15
-drop_weight = 55.0
+drop_weight = 65.0

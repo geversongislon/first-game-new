@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://cnsker5tloqof"]
+
+[ext_resource type="Script" uid="uid://dobgj3pigcl22" path="res://scripts/passives/passive_element.gd" id="1_elem"]
+[ext_resource type="Texture2D" uid="uid://b88ki8gqds1ub" path="res://assets/sprites/poison_companion.png" id="2_2x7aa"]
+
+[node name="PassivePoison" type="Node" unique_id=537947244]
+script = ExtResource("1_elem")
+element_color = Color(0.2, 0.9, 0.1, 1)
+companion_texture = ExtResource("2_2x7aa")

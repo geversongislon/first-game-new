@@ -169,6 +169,9 @@ func _shoot() -> void:
 	if bullet.has_method("setup"):
 		bullet.setup(dir, bullet_speed)
 
+	if player.active_elements.size() > 0 and bullet.has_method("set_element_list"):
+		bullet.set_element_list(player.active_elements)
+
 	player.velocity.x -= dir.x * recoil_per_shot
 	player.velocity.y -= dir.y * recoil_per_shot * 0.15
 

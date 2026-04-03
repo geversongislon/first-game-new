@@ -9,6 +9,9 @@
 bg_color = Color(0.30288002, 0.48, 0.22079998, 1)
 corner_detail = 1
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_arwl3_pr"]
+bg_color = Color(0.257, 0.408, 0.188, 1)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fnxgh"]
 bg_color = Color(0.45919746, 0.72742176, 0.33489838, 1)
 corner_detail = 1
@@ -17,9 +20,21 @@ corner_detail = 1
 bg_color = Color(0.76, 0.5750666, 0.20519999, 1)
 corner_detail = 1
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fvswa_pr"]
+bg_color = Color(0.646, 0.489, 0.175, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6268i"]
+bg_color = Color(0.91908586, 0.71940774, 0.33777788, 1)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k5r58"]
 bg_color = Color(0.6645997, 0.23069328, 0.49848992, 1)
 corner_detail = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6up21"]
+bg_color = Color(0.9646673, 0.46581468, 0.7734406, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2r7qm"]
+bg_color = Color(0.8609192, 0.40720752, 0.6747936, 1)
 
 [node name="UIMainMenu" type="Control" unique_id=1653903338]
 layout_mode = 3
@@ -117,6 +132,7 @@ size_flags_horizontal = 4
 theme_override_fonts/font = ExtResource("3_2s7c1")
 theme_override_font_sizes/font_size = 4
 theme_override_styles/normal = SubResource("StyleBoxFlat_arwl3")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_arwl3_pr")
 theme_override_styles/hover = SubResource("StyleBoxFlat_fnxgh")
 text = "INICIAR RUN"
 
@@ -130,6 +146,8 @@ layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 3
 theme_override_styles/normal = SubResource("StyleBoxFlat_fvswa")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_fvswa_pr")
+theme_override_styles/hover = SubResource("StyleBoxFlat_6268i")
 text = "LOJA"
 
 [node name="FusionButton" type="Button" parent="HBoxContainer/MarginCenter/CenterPanel/HBoxContainer" unique_id=2142515804]
@@ -138,6 +156,8 @@ layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 3
 theme_override_styles/normal = SubResource("StyleBoxFlat_k5r58")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_6up21")
+theme_override_styles/hover = SubResource("StyleBoxFlat_2r7qm")
 text = "FUNDIR"
 
 [node name="MarginRight" type="MarginContainer" parent="HBoxContainer" unique_id=865284774]

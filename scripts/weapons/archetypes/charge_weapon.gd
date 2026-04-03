@@ -130,7 +130,10 @@ func _shoot() -> void:
 	
 	if arrow.has_method("setup"):
 		arrow.setup(dir, final_speed)
-	
+
+	if player.active_elements.size() > 0 and arrow.has_method("set_element_list"):
+		arrow.set_element_list(player.active_elements)
+
 	var t: float = pow(ratio, 2.0)
 	arrow.knockback = lerp(min_knockback, max_knockback, t)
 

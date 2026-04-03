@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://b8y2r6p1n4g7k"]
 
 [ext_resource type="Script" uid="uid://3x5p6mqsqfwm" path="res://scripts/pickups/master_pickup.gd" id="1_master"]
-[ext_resource type="Texture2D" uid="uid://bgh11feqd5dn" path="res://assets/sprites/ui/hud_icons/pickup_vida_comun.png" id="2_jwuqn"]
+[ext_resource type="Texture2D" path="res://assets/sprites/ui/hud_icons/pickup_vida_comun.png" id="2_jwuqn"]
 [ext_resource type="Texture2D" uid="uid://3opfggh01ywq" path="res://assets/sprites/ui/luz.png" id="3_light"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_master"]

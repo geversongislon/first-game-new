@@ -65,6 +65,16 @@ class_name CardData
 @export var flat_health_bonus: int = 0
 @export var speed_multiplier: float = 1.0
 
+@export_group("Passive Element")
+## Dano por tick do DoT elemental (0 = não é uma passiva elemental)
+@export var dot_damage: int = 0
+## Intervalo em segundos entre ticks de dano
+@export var dot_tick_interval: float = 0.0
+## Número de ticks antes de expirar
+@export var dot_ticks: int = 0
+## Se verdadeiro, exibe linha de slow no popup
+@export var element_has_slow: bool = false
+
 # === Configurações de Consumíveis ===
 @export_group("Consumable")
 ## Quantidade máxima de cargas que um slot pode acumular

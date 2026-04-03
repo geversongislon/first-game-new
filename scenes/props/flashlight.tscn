@@ -11,8 +11,8 @@ light_mode = 1
 script = ExtResource("0_script")
 
 [node name="PointLight2D" type="PointLight2D" parent="." unique_id=1750381484]
-position = Vector2(211, 0)
-scale = Vector2(0.60058594, 0.76283747)
+position = Vector2(208.00002, -6.7762636e-21)
+scale = Vector2(0.6722552, 0.8538686)
 color = Color(0.95, 0.92, 0.75, 1)
 energy = 2.5
 blend_mode = 2

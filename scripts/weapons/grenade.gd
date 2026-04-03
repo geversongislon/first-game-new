@@ -17,6 +17,20 @@ const _LIGHT_COLOR_START := Color(3.12, 0.92, 0.0, 1.0)
 const _LIGHT_COLOR_END   := Color(3.0,  0.08, 0.0, 1.0)
 
 var _timer: float = 0.0
+var element_list: Array = []
+
+func set_element_list(list: Array) -> void:
+	var merged: Dictionary = {}
+	for entry in list:
+		var t: String = entry.type
+		if merged.has(t):
+			merged[t].dot_damage += entry.dot_damage
+			merged[t].dot_ticks = maxi(merged[t].dot_ticks, entry.dot_ticks)
+		else:
+			merged[t] = entry.duplicate()
+	element_list = merged.values()
+	if element_list.size() > 0:
+		sprite.modulate = element_list[0].color.lightened(0.3)
 
 func _ready() -> void:
 	explosion_area.monitoring = false
@@ -55,6 +69,9 @@ func explode() -> void:
 			var proximity: float = 1.0 - clamp(dist / explosion_radius, 0.0, 1.0)
 			var dmg_scale: float = lerpf(min_damage_ratio, 1.0, proximity)
 			body.take_damage(maxi(1, int(damage * dmg_scale)), knockback_dir, knockback * dmg_scale)
+			for elem in element_list:
+				if body.has_method("apply_element"):
+					body.apply_element(elem)
 	
 	_spawn_explosion_fx()
 

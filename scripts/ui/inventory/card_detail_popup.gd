@@ -246,6 +246,13 @@ func _populate_stats(grid: GridContainer, card: CardData, level: int = 1) -> voi
 		"Active":
 			pairs = [["Cooldown", "%.1fs" % card.cooldown, C_GRN]]
 		"Passive":
+			if card.dot_damage > 0:
+				var duration: float = card.dot_tick_interval * card.dot_ticks
+				pairs.append(["Dano/tick",  "%d" % card.dot_damage,              C_DMG])
+				pairs.append(["Intervalo",  "%.1fs" % card.dot_tick_interval,    C_VAL])
+				pairs.append(["Duração",    "%.1fs" % duration,                  C_GRN])
+				if card.element_has_slow:
+					pairs.append(["Slow", "-15%/hit",                            C_BLU])
 			if card.flat_health_bonus > 0:
 				pairs.append(["HP Bônus", "+%d" % card.flat_health_bonus, C_DMG])
 			if card.speed_multiplier != 1.0:

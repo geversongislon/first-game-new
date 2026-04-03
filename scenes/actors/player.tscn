@@ -9,8 +9,8 @@
 [ext_resource type="Texture2D" uid="uid://3opfggh01ywq" path="res://assets/sprites/ui/luz.png" id="7_7860b"]
 [ext_resource type="PackedScene" uid="uid://dpsaemeqb2f52" path="res://scenes/ui/hud.tscn" id="10_weaponui"]
 [ext_resource type="PackedScene" path="res://scenes/ui/debug_stats_overlay.tscn" id="11_dbgoverlay"]
-[ext_resource type="PackedScene" uid="uid://flashlight_001" path="res://scenes/props/flashlight.tscn" id="12_flashlight"]
 [ext_resource type="Script" uid="uid://dqew2pcdthohx" path="res://scripts/camera_follow.gd" id="11_kggx2"]
+[ext_resource type="PackedScene" uid="uid://2dc4kypll5yd" path="res://scenes/props/flashlight.tscn" id="12_flashlight"]
 [ext_resource type="Shader" uid="uid://cbcqamn8fhcvq" path="res://scripts/actors/enemy.gdshader" id="shader_player"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xx81n"]
@@ -315,13 +315,16 @@ animations = [{
 [node name="Player" type="CharacterBody2D" unique_id=1208320085 groups=["player"]]
 scale = Vector2(0.9940669, 1.0041842)
 collision_layer = 4
-collision_mask = 3
+collision_mask = 19
 floor_snap_length = 0.0
 script = ExtResource("1_onrkg")
 base_max_speed = 130.0
 decel_ground = 1200.0
+accel_air = 400.0
+decel_air = 150.0
 jump_velocity = -400.0
 gravity = 1000.0
+jump_cut_multiplier = 0.25
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=564998409]
 position = Vector2(1.0298414, 3.485415)
@@ -360,10 +363,10 @@ texture = ExtResource("7_7860b")
 position = Vector2(8, 2)
 
 [node name="FlashlightHolder" type="Node2D" parent="." unique_id=912345678]
-position = Vector2(8, 2)
 visible = false
+position = Vector2(8, 2)
 
-[node name="Flashlight" parent="FlashlightHolder" instance=ExtResource("12_flashlight")]
+[node name="Flashlight" parent="FlashlightHolder" unique_id=970645119 instance=ExtResource("12_flashlight")]
 
 [node name="WeaponManager" type="Node2D" parent="." unique_id=1556085604]
 script = ExtResource("5_qlg0r")

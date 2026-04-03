@@ -75,6 +75,8 @@ func _sync_passives() -> void:
 			
 			# Opcional: Se a passiva precisar de setup (ex: conhecer o player)
 			var player = get_parent() as CharacterBody2D
+			if "card_data" in node:
+				node.card_data = data
 			if player and node.has_method("setup"):
 				node.setup(player)
 
