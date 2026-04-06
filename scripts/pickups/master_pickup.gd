@@ -182,7 +182,6 @@ func _update_charge_bars() -> void:
 		bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		bar.size = Vector2(2, 2)
 		bar.position = Vector2(6, 4 - i * 3)
-		bar.z_index = 5
 		var style := StyleBoxFlat.new()
 		style.bg_color = Color(1.0, 0.55, 0.1, 1.0) if i < card_charges else Color(0.2, 0.2, 0.2, 0.8)
 		bar.add_theme_stylebox_override("panel", style)
@@ -206,9 +205,8 @@ func _update_level_label() -> void:
 		var pip := Panel.new()
 		pip.name = "_LvPip%d" % i
 		pip.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		pip.size = Vector2(4, 4)
-		pip.position = Vector2(-10, 4 - i * 5)
-		pip.z_index = 5
+		pip.size = Vector2(6, 6)
+		pip.position = Vector2(-11, 3 - i * 7)
 		var style := StyleBoxFlat.new()
 		style.bg_color = pip_color
 		style.border_color = border_color

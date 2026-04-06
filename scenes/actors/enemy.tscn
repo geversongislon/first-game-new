@@ -24,7 +24,7 @@ light_mode = 1
 radius = 207.11832
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_attack"]
-radius = 16.124516
+radius = 20.024984
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ei073"]
 radius = 17.029387

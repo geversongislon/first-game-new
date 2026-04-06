@@ -590,6 +590,7 @@ func _is_big_drop_of(limit: float) -> bool:
 	var from := Vector2(origin_x, origin_y)
 	var query := PhysicsRayQueryParameters2D.create(from, from + Vector2(0.0, limit))
 	query.exclude = [self]
+	# query.collision_mask = collision_mask
 	return space.intersect_ray(query).is_empty()
 
 

@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bysprtprx672p" path="res://scripts/ui/ui_run_selection.gd" id="1_runsel"]
 
-[node name="RunSelection" type="Control" unique_id=1583973518]
+[node name="RunSelection" type="Control" unique_id=476026143]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,7 +11,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_runsel")
 
-[node name="Background" type="ColorRect" parent="." unique_id=1941687763]
+[node name="Background" type="ColorRect" parent="." unique_id=145733284]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -20,17 +20,48 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.03, 0.03, 0.03, 1)
 
-[node name="MarginContainer" type="MarginContainer" parent="." unique_id=94890314]
+[node name="Layout" type="MarginContainer" parent="." unique_id=85685217]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -44.0
-offset_top = -50.0
-offset_right = 44.0
-offset_bottom = 50.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBox" type="VBoxContainer" parent="Layout" unique_id=739707605]
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="Title" type="Label" parent="Layout/VBox" unique_id=1813569418]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 6
+text = "SELECIONAR PONTO DE ENTRADA"
+horizontal_alignment = 1
+
+[node name="Separator" type="HSeparator" parent="Layout/VBox" unique_id=208418965]
+layout_mode = 2
+
+[node name="AreasRow" type="HBoxContainer" parent="Layout/VBox" unique_id=436813318]
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="AreaCard_0" type="Panel" parent="Layout/VBox/AreasRow" unique_id=1143461095]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 95)
+layout_mode = 2
+
+[node name="Content" type="MarginContainer" parent="Layout/VBox/AreasRow/AreaCard_0" unique_id=812074336]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 4
@@ -38,31 +69,324 @@ theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 4
 theme_override_constants/margin_bottom = 4
 
-[node name="VBox" type="VBoxContainer" parent="MarginContainer" unique_id=1150208152]
+[node name="ContentVBox" type="VBoxContainer" parent="Layout/VBox/AreasRow/AreaCard_0/Content" unique_id=730384404]
 layout_mode = 2
-theme_override_constants/separation = 4
+theme_override_constants/separation = 3
+alignment = 1
 
-[node name="Title" type="Label" parent="MarginContainer/VBox" unique_id=1026497029]
-layout_mode = 2
-theme_override_font_sizes/font_size = 6
-text = "PONTO DE ENTRADA"
-horizontal_alignment = 1
-
-[node name="Separator" type="HSeparator" parent="MarginContainer/VBox" unique_id=717155601]
+[node name="Header" type="HBoxContainer" parent="Layout/VBox/AreasRow/AreaCard_0/Content/ContentVBox" unique_id=1305426096]
 layout_mode = 2
 
-[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBox" unique_id=221847532]
-custom_minimum_size = Vector2(0, 72)
-layout_mode = 2
-size_flags_vertical = 3
-horizontal_scroll_mode = 0
-
-[node name="PointsContainer" type="VBoxContainer" parent="MarginContainer/VBox/ScrollContainer" unique_id=813266791]
+[node name="AreaTitle" type="Label" parent="Layout/VBox/AreasRow/AreaCard_0/Content/ContentVBox/Header" unique_id=2106146809]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 7
+text = "ÁREA 01"
+
+[node name="Divider" type="HSeparator" parent="Layout/VBox/AreasRow/AreaCard_0/Content/ContentVBox" unique_id=1766941285]
+layout_mode = 2
+
+[node name="ExtLegend" type="Label" parent="Layout/VBox/AreasRow/AreaCard_0/Content/ContentVBox" unique_id=100000001]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.38, 0.38, 0.38, 1)
+theme_override_font_sizes/font_size = 5
+text = "EXTRAÇÕES"
+
+[node name="DotsGrid" type="GridContainer" parent="Layout/VBox/AreasRow/AreaCard_0/Content/ContentVBox" unique_id=100000002]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/h_separation = 3
+theme_override_constants/v_separation = 3
+columns = 3
+
+[node name="Spacer" type="Control" parent="Layout/VBox/AreasRow/AreaCard_0/Content/ContentVBox" unique_id=1556714426]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="BossRow" type="HBoxContainer" parent="Layout/VBox/AreasRow/AreaCard_0/Content/ContentVBox" unique_id=776651643]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 3
+
+[node name="BossMarker" type="ColorRect" parent="Layout/VBox/AreasRow/AreaCard_0/Content/ContentVBox/BossRow" unique_id=160727799]
+custom_minimum_size = Vector2(5, 5)
+layout_mode = 2
+color = Color(0.65, 0.15, 0.15, 1)
+
+[node name="BossLabel" type="Label" parent="Layout/VBox/AreasRow/AreaCard_0/Content/ContentVBox/BossRow" unique_id=372271358]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.65, 0.2, 0.2, 1)
+theme_override_font_sizes/font_size = 5
+text = "BOSS"
+vertical_alignment = 1
+
+[node name="SelectionInfo" type="VBoxContainer" parent="Layout/VBox/AreasRow/AreaCard_0/Content/ContentVBox" unique_id=100000003]
+layout_mode = 2
 theme_override_constants/separation = 2
 
-[node name="BackButton" type="Button" parent="MarginContainer/VBox" unique_id=455924116]
+[node name="SelectedPointLabel" type="Label" parent="Layout/VBox/AreasRow/AreaCard_0/Content/ContentVBox/SelectionInfo" unique_id=100000004]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.35, 0.35, 0.35, 1)
+theme_override_font_sizes/font_size = 5
+text = "—"
+horizontal_alignment = 1
+
+[node name="EnterButton" type="Button" parent="Layout/VBox/AreasRow/AreaCard_0/Content/ContentVBox/SelectionInfo" unique_id=100000005]
+custom_minimum_size = Vector2(0, 14)
+layout_mode = 2
+text = "▶ ENTRAR"
+
+[node name="LockOverlay_0" type="ColorRect" parent="Layout/VBox/AreasRow/AreaCard_0" unique_id=1116505725]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.72)
+
+[node name="LockedLabel" type="Label" parent="Layout/VBox/AreasRow/AreaCard_0/LockOverlay_0" unique_id=553308364]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.5, 0.5, 0.5, 1)
+theme_override_font_sizes/font_size = 5
+text = "BLOQUEADO"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Connector_0" type="Label" parent="Layout/VBox/AreasRow" unique_id=1590810776]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.28, 0.28, 0.28, 1)
+theme_override_font_sizes/font_size = 8
+text = "▶"
+vertical_alignment = 1
+
+[node name="AreaCard_1" type="Panel" parent="Layout/VBox/AreasRow" unique_id=1619802632]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 95)
+layout_mode = 2
+
+[node name="Content" type="MarginContainer" parent="Layout/VBox/AreasRow/AreaCard_1" unique_id=1011294508]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="ContentVBox" type="VBoxContainer" parent="Layout/VBox/AreasRow/AreaCard_1/Content" unique_id=358961469]
+layout_mode = 2
+theme_override_constants/separation = 3
+
+[node name="Header" type="HBoxContainer" parent="Layout/VBox/AreasRow/AreaCard_1/Content/ContentVBox" unique_id=885328150]
+layout_mode = 2
+
+[node name="AreaTitle" type="Label" parent="Layout/VBox/AreasRow/AreaCard_1/Content/ContentVBox/Header" unique_id=1437103335]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 7
+text = "ÁREA 02"
+
+[node name="Divider" type="HSeparator" parent="Layout/VBox/AreasRow/AreaCard_1/Content/ContentVBox" unique_id=23879217]
+layout_mode = 2
+
+[node name="ExtLegend" type="Label" parent="Layout/VBox/AreasRow/AreaCard_1/Content/ContentVBox" unique_id=100000006]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.38, 0.38, 0.38, 1)
+theme_override_font_sizes/font_size = 5
+text = "EXTRAÇÕES"
+
+[node name="DotsGrid" type="GridContainer" parent="Layout/VBox/AreasRow/AreaCard_1/Content/ContentVBox" unique_id=100000007]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/h_separation = 3
+theme_override_constants/v_separation = 3
+columns = 3
+
+[node name="Spacer" type="Control" parent="Layout/VBox/AreasRow/AreaCard_1/Content/ContentVBox" unique_id=1429577072]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="BossRow" type="HBoxContainer" parent="Layout/VBox/AreasRow/AreaCard_1/Content/ContentVBox" unique_id=1303704133]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 3
+
+[node name="BossMarker" type="ColorRect" parent="Layout/VBox/AreasRow/AreaCard_1/Content/ContentVBox/BossRow" unique_id=353814771]
+custom_minimum_size = Vector2(5, 5)
+layout_mode = 2
+color = Color(0.65, 0.15, 0.15, 1)
+
+[node name="BossLabel" type="Label" parent="Layout/VBox/AreasRow/AreaCard_1/Content/ContentVBox/BossRow" unique_id=1603678959]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.65, 0.2, 0.2, 1)
+theme_override_font_sizes/font_size = 5
+text = "BOSS"
+vertical_alignment = 1
+
+[node name="SelectionInfo" type="VBoxContainer" parent="Layout/VBox/AreasRow/AreaCard_1/Content/ContentVBox" unique_id=100000008]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="SelectedPointLabel" type="Label" parent="Layout/VBox/AreasRow/AreaCard_1/Content/ContentVBox/SelectionInfo" unique_id=100000009]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.35, 0.35, 0.35, 1)
+theme_override_font_sizes/font_size = 5
+text = "—"
+horizontal_alignment = 1
+
+[node name="EnterButton" type="Button" parent="Layout/VBox/AreasRow/AreaCard_1/Content/ContentVBox/SelectionInfo" unique_id=100000010]
+custom_minimum_size = Vector2(0, 14)
+layout_mode = 2
+text = "▶ ENTRAR"
+
+[node name="LockOverlay_1" type="ColorRect" parent="Layout/VBox/AreasRow/AreaCard_1" unique_id=1048253057]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.72)
+
+[node name="LockedLabel" type="Label" parent="Layout/VBox/AreasRow/AreaCard_1/LockOverlay_1" unique_id=1668642761]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.5, 0.5, 0.5, 1)
+theme_override_font_sizes/font_size = 5
+text = "BLOQUEADO"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Connector_1" type="Label" parent="Layout/VBox/AreasRow" unique_id=2094410614]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.28, 0.28, 0.28, 1)
+theme_override_font_sizes/font_size = 8
+text = "▶"
+vertical_alignment = 1
+
+[node name="AreaCard_2" type="Panel" parent="Layout/VBox/AreasRow" unique_id=2096497077]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 95)
+layout_mode = 2
+
+[node name="Content" type="MarginContainer" parent="Layout/VBox/AreasRow/AreaCard_2" unique_id=1861260088]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="ContentVBox" type="VBoxContainer" parent="Layout/VBox/AreasRow/AreaCard_2/Content" unique_id=226893726]
+layout_mode = 2
+theme_override_constants/separation = 3
+
+[node name="Header" type="HBoxContainer" parent="Layout/VBox/AreasRow/AreaCard_2/Content/ContentVBox" unique_id=103457999]
+layout_mode = 2
+
+[node name="AreaTitle" type="Label" parent="Layout/VBox/AreasRow/AreaCard_2/Content/ContentVBox/Header" unique_id=15564389]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 7
+text = "ÁREA 03"
+
+[node name="Divider" type="HSeparator" parent="Layout/VBox/AreasRow/AreaCard_2/Content/ContentVBox" unique_id=1267080893]
+layout_mode = 2
+
+[node name="ExtLegend" type="Label" parent="Layout/VBox/AreasRow/AreaCard_2/Content/ContentVBox" unique_id=100000011]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.38, 0.38, 0.38, 1)
+theme_override_font_sizes/font_size = 5
+text = "EXTRAÇÕES"
+
+[node name="DotsGrid" type="GridContainer" parent="Layout/VBox/AreasRow/AreaCard_2/Content/ContentVBox" unique_id=100000012]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/h_separation = 3
+theme_override_constants/v_separation = 3
+columns = 3
+
+[node name="Spacer" type="Control" parent="Layout/VBox/AreasRow/AreaCard_2/Content/ContentVBox" unique_id=993660184]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="BossRow" type="HBoxContainer" parent="Layout/VBox/AreasRow/AreaCard_2/Content/ContentVBox" unique_id=817272668]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 3
+
+[node name="BossMarker" type="ColorRect" parent="Layout/VBox/AreasRow/AreaCard_2/Content/ContentVBox/BossRow" unique_id=1991733685]
+custom_minimum_size = Vector2(5, 5)
+layout_mode = 2
+color = Color(0.65, 0.15, 0.15, 1)
+
+[node name="BossLabel" type="Label" parent="Layout/VBox/AreasRow/AreaCard_2/Content/ContentVBox/BossRow" unique_id=1739051565]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.65, 0.2, 0.2, 1)
+theme_override_font_sizes/font_size = 5
+text = "BOSS"
+vertical_alignment = 1
+
+[node name="SelectionInfo" type="VBoxContainer" parent="Layout/VBox/AreasRow/AreaCard_2/Content/ContentVBox" unique_id=100000013]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="SelectedPointLabel" type="Label" parent="Layout/VBox/AreasRow/AreaCard_2/Content/ContentVBox/SelectionInfo" unique_id=100000014]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.35, 0.35, 0.35, 1)
+theme_override_font_sizes/font_size = 5
+text = "—"
+horizontal_alignment = 1
+
+[node name="EnterButton" type="Button" parent="Layout/VBox/AreasRow/AreaCard_2/Content/ContentVBox/SelectionInfo" unique_id=100000015]
+custom_minimum_size = Vector2(0, 14)
+layout_mode = 2
+text = "▶ ENTRAR"
+
+[node name="LockOverlay_2" type="ColorRect" parent="Layout/VBox/AreasRow/AreaCard_2" unique_id=462810065]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.72)
+
+[node name="LockedLabel" type="Label" parent="Layout/VBox/AreasRow/AreaCard_2/LockOverlay_2" unique_id=581236132]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.5, 0.5, 0.5, 1)
+theme_override_font_sizes/font_size = 5
+text = "BLOQUEADO"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BackButton" type="Button" parent="Layout/VBox" unique_id=994913184]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 16)
 layout_mode = 2
 text = "← VOLTAR"

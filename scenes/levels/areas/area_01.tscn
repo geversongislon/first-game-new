@@ -22,6 +22,7 @@
 [ext_resource type="PackedScene" uid="uid://dbu3d7vvdpmaq" path="res://scenes/hazards/spikes.tscn" id="16_ict8v"]
 [ext_resource type="PackedScene" uid="uid://7d2s5g1cxjbj" path="res://scenes/props/luminaria.tscn" id="17_h4mon"]
 [ext_resource type="PackedScene" uid="uid://d4jdaftwiufy1" path="res://scenes/actors/enemy_basico_semfollow.tscn" id="20_7f5a8"]
+[ext_resource type="PackedScene" uid="uid://c24726ft66loj" path="res://scenes/actors/enemy_cascudo.tscn" id="25_uhc6a"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_08q2j"]
 texture = ExtResource("3_h4mon")
@@ -2261,3 +2262,6 @@ enemy_scene = ExtResource("6_qlovn")
 spawn_interval = 60.0
 continuous_spawn = false
 loot_level_flags = 2
+
+[node name="Cascudo" parent="." unique_id=1895868584 instance=ExtResource("25_uhc6a")]
+position = Vector2(682, 217)

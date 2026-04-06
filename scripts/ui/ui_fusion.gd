@@ -122,15 +122,17 @@ func _on_fuse_button_pressed() -> void:
 	var result := CardDB.get_random_card("", rarity_filter)
 	if result == null:
 		return
-	GameManager.add_card_to_inventory(result.id)
-	GameManager.save_game()
 
 	# ③ Abre popup de reveal
 	var reveal_scene := preload("res://scenes/ui/ui_fusion_reveal.tscn") as PackedScene
 	var reveal := reveal_scene.instantiate()
 	add_child(reveal)
-	reveal.closed.connect(func(): _on_slot_changed())
 	reveal.play(result)
+	
+	await reveal.closed
+	GameManager.add_card_to_inventory(result.id)
+	GameManager.save_game()
+	_on_slot_changed()
 
 func _on_back_button_pressed() -> void:
 	# Devolve ao inventário cartas que ainda estão nos slots de fusão

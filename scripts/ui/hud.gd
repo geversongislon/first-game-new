@@ -424,7 +424,7 @@ func connect_to_weapon_manager(manager: WeaponManager):
 	if _manager.current_weapon_id != "":
 		_on_weapon_equipped(_manager.current_weapon_id, _manager.current_weapon_index)
 
-func _draw_level_pips(panel: Panel, level: int, pip_sz: int = 3) -> void:
+func _draw_level_pips(panel: Panel, level: int, pip_sz: int = 4) -> void:
 	# Remove pips antigos imediatamente da árvore (queue_free sozinho não basta — nó fica visível na mesma frame)
 	for i in range(3):
 		var old := panel.get_node_or_null("_Pip%d" % i)
@@ -502,7 +502,7 @@ func refresh_all_icons():
 		_update_slot_icon(backpack_panels[i], GameManager.run_backpack[i])
 		var bp_id: String = GameManager.run_backpack[i]
 		var bp_level: int = GameManager.run_backpack_levels[i] if i < GameManager.run_backpack_levels.size() else 1
-		_draw_level_pips(backpack_panels[i], bp_level if bp_id != "" else 0, 3)
+		_draw_level_pips(backpack_panels[i], bp_level if bp_id != "" else 0, 4)
 		var bp_card := CardDB.get_card(bp_id)
 		if bp_card and bp_card.type == "Consumable":
 			var ch: int = GameManager.run_backpack_charges[i] if i < GameManager.run_backpack_charges.size() else 0

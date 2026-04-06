@@ -13,7 +13,7 @@ projectile_speed = 160.0
 metadata/_custom_type_script = "uid://c43w7npygftgi"
 
 [node name="Enemy_Basico" unique_id=123456789 instance=ExtResource("1_yj7ni")]
-max_health = 20
+max_health = 15
 speed = 50.0
 follow_on_detect = true
 detection_range = 200.0
