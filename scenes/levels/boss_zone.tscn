@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://dkkq2jkq6wcc3"]
+
+[ext_resource type="Script" uid="uid://c8n2uhwq6wxmj" path="res://scripts/levels/boss_zone.gd" id="1_bzone"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_default"]
+size = Vector2(400, 240)
+
+[node name="BossZone" type="Area2D" unique_id=1514263627]
+collision_layer = 0
+collision_mask = 6
+script = ExtResource("1_bzone")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1821034528]
+shape = SubResource("RectangleShape2D_default")

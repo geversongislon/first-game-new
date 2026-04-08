@@ -1,3 +1,4 @@
+class_name CameraFollow
 extends Camera2D
 
 ## Offset horizontal em pixels de jogo (viewport 320px → 320/6 ≈ 53)
@@ -29,6 +30,7 @@ var _hitstop_end_ms: int = 0  # wall-clock, imune ao time_scale
 
 var _base_zoom: Vector2 = Vector2.ONE
 var _scope_tween: Tween = null
+var _zone_locked: bool = false
 
 func _ready() -> void:
 	_base_zoom = zoom
@@ -61,25 +63,26 @@ func _process(delta: float) -> void:
 	if not player:
 		return
 
-	var input_x := Input.get_axis("ui_left", "ui_right")
-	if abs(input_x) > 0.1 and abs(player.velocity.x) > 10.0:
-		_walk_timer += delta
-		if _walk_timer >= walk_commit_time:
-			_target_offset_x = thirds_offset if input_x > 0.0 else -thirds_offset
-	else:
-		_walk_timer = 0.0
+	if not _zone_locked:
+		var input_x := Input.get_axis("ui_left", "ui_right")
+		if abs(input_x) > 0.1 and abs(player.velocity.x) > 10.0:
+			_walk_timer += delta
+			if _walk_timer >= walk_commit_time:
+				_target_offset_x = thirds_offset if input_x > 0.0 else -thirds_offset
+		else:
+			_walk_timer = 0.0
 
-	offset.x = lerpf(offset.x, _target_offset_x, transition_speed * delta)
+		offset.x = lerpf(offset.x, _target_offset_x, transition_speed * delta)
 
-	# Look down — câmera desce após segurar S por look_down_delay segundos
-	if Input.is_action_pressed("move_down"):
-		_look_down_timer += delta
-		if _look_down_timer >= look_down_delay:
-			_target_offset_y = look_down_offset
-	else:
-		_look_down_timer = 0.0
-		_target_offset_y = 0.0
-	offset.y = lerpf(offset.y, _target_offset_y, transition_speed * delta)
+		# Look down — câmera desce após segurar S por look_down_delay segundos
+		if Input.is_action_pressed("move_down"):
+			_look_down_timer += delta
+			if _look_down_timer >= look_down_delay:
+				_target_offset_y = look_down_offset
+		else:
+			_look_down_timer = 0.0
+			_target_offset_y = 0.0
+		offset.y = lerpf(offset.y, _target_offset_y, transition_speed * delta)
 
 	# Hitstop — restaura time_scale quando o tempo real passar
 	if _hitstop_end_ms > 0 and Time.get_ticks_msec() >= _hitstop_end_ms:
@@ -93,3 +96,33 @@ func _process(delta: float) -> void:
 	if _shake_duration > 0.0:
 		_shake_duration -= delta
 		offset += Vector2(randf_range(-1.0, 1.0), randf_range(-1.0, 1.0)) * _shake_intensity
+
+func lock_to_zone(rect: Rect2, target_zoom: Vector2, duration: float) -> void:
+	_zone_locked = true
+	offset = Vector2.ZERO
+	_target_offset_x = 0.0
+	_target_offset_y = 0.0
+	limit_smoothed = true
+	limit_left   = int(rect.position.x)
+	limit_top    = int(rect.position.y)
+	limit_right  = int(rect.position.x + rect.size.x)
+	limit_bottom = int(rect.position.y + rect.size.y)
+	_base_zoom = target_zoom
+	if _scope_tween:
+		_scope_tween.kill()
+	_scope_tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
+	_scope_tween.tween_property(self, "zoom", target_zoom, duration)
+
+func unlock_zone(duration: float) -> void:
+	_zone_locked = false
+	limit_smoothed = false
+	limit_left   = -10000000
+	limit_top    = -10000000
+	limit_right  =  10000000
+	limit_bottom =  10000000
+	var restore_zoom := Vector2(0.68, 0.68)
+	_base_zoom = restore_zoom
+	if _scope_tween:
+		_scope_tween.kill()
+	_scope_tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
+	_scope_tween.tween_property(self, "zoom", restore_zoom, duration)

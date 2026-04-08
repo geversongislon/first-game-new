@@ -9,7 +9,6 @@
 [ext_resource type="PackedScene" uid="uid://dm13g34p7c5se" path="res://scenes/props/barra de luz.tscn" id="6_7f5a8"]
 [ext_resource type="PackedScene" uid="uid://bb5t2fs0xjsdl" path="res://scenes/props/luznatural.tscn" id="6_08q2j"]
 [ext_resource type="PackedScene" uid="uid://wxx2teed8k84" path="res://scenes/actors/enemy_basico.tscn" id="6_fapty"]
-[ext_resource type="PackedScene" uid="uid://cmapa350odhdk" path="res://scenes/actors/enemy_carlos.tscn" id="6_qlovn"]
 [ext_resource type="PackedScene" uid="uid://b8y2r6p1n4g7k" path="res://scenes/pickups/master_pickup_weapon.tscn" id="7_2yp2t"]
 [ext_resource type="PackedScene" uid="uid://da4cct5avoodi" path="res://scenes/props/light_post.tscn" id="7_qlovn"]
 [ext_resource type="Script" uid="uid://dbi4f80qe7crl" path="res://scripts/levels/tilemap_flicker_lights.gd" id="8_mkc62"]
@@ -21,7 +20,7 @@
 [ext_resource type="PackedScene" uid="uid://c6r6u3cgonk22" path="res://scenes/interactables/loot_box.tscn" id="15_ldwab"]
 [ext_resource type="PackedScene" uid="uid://dbu3d7vvdpmaq" path="res://scenes/hazards/spikes.tscn" id="16_ict8v"]
 [ext_resource type="PackedScene" uid="uid://7d2s5g1cxjbj" path="res://scenes/props/luminaria.tscn" id="17_h4mon"]
-[ext_resource type="PackedScene" uid="uid://d4jdaftwiufy1" path="res://scenes/actors/enemy_basico_semfollow.tscn" id="20_7f5a8"]
+[ext_resource type="PackedScene" uid="uid://dkkq2jkq6wcc3" path="res://scenes/levels/boss_zone.tscn" id="22_5cqj5"]
 [ext_resource type="PackedScene" uid="uid://c24726ft66loj" path="res://scenes/actors/enemy_cascudo.tscn" id="25_uhc6a"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_08q2j"]
@@ -2012,7 +2011,7 @@ tile_map_data = PackedByteArray("AAD5/wMAAAAdAAEAAAD5/wQAAAAdAAEAAAD5/wUAAAAdAAE
 tile_set = SubResource("TileSet_kpdi4")
 
 [node name="Lights" type="TileMapLayer" parent="." unique_id=1540371474]
-tile_map_data = PackedByteArray("AAD8/xAAAQAAAAAAAQALABAAAQAAAAAAAQASABAAAQAAAAAAAQAnABAAAQAAAAAAAQA7AA0AAQAAAAAAAQAAAAgAAQAAAAAAAwAiAAgAAQAAAAAAAwAyAAoAAQAAAAAAAwAHAAgAAQAAAAAAAwAOAAgAAQAAAAAAAwBMABEAAQAAAAAAAQBaABEAAQAAAAAAAQBxAAcAAQAAAAAAAQBwAP//AQAAAAAAAwB5AP//AQAAAAAAAwCSAAMAAQAAAAAAAwCKAAMAAQAAAAAAAwBUAAEAAQAAAAAAAwBUAAcAAQAAAAAAAwCRAPH/AQAAAAAAAQCBAPH/AQAAAAAAAQBtAPj/AQAAAAAAAQBeAPj/AQAAAAAAAQBVAPj/AQAAAAAAAQBlAPP/AQAAAAAAAwB8APP/AQAAAAAAAwBkAO7/AQAAAAAAAQBUAOz/AQAAAAAAAQB9AAIAAQAAAAAAAQCFAAIAAQAAAAAAAQBnAP7/AQAAAAAAAgCMAPv/AQAAAAAAAgBxAPT/AQAAAAAAAgBnAPD/AQAAAAAAAgBYAO7/AQAAAAAAAgB8AOv/AQAAAAAAAwCLAOv/AQAAAAAAAwBtAOv/AQAAAAAAAwCRAPX/AQAAAAAAAwCRAPz/AQAAAAAAAwBmAAYAAQAAAAAAAQA=")
+tile_map_data = PackedByteArray("AAD8/xAAAQAAAAAAAQALABAAAQAAAAAAAQASABAAAQAAAAAAAQAnABAAAQAAAAAAAQA7AA0AAQAAAAAAAQAAAAgAAQAAAAAAAwAiAAgAAQAAAAAAAwAyAAoAAQAAAAAAAwAHAAgAAQAAAAAAAwAOAAgAAQAAAAAAAwBMABEAAQAAAAAAAQBaABEAAQAAAAAAAQBxAAcAAQAAAAAAAQBwAP//AQAAAAAAAwB5AP//AQAAAAAAAwCSAAMAAQAAAAAAAwCKAAMAAQAAAAAAAwBUAAEAAQAAAAAAAwBUAAcAAQAAAAAAAwCRAPH/AQAAAAAAAQCBAPH/AQAAAAAAAQBtAPj/AQAAAAAAAQBeAPj/AQAAAAAAAQBVAPj/AQAAAAAAAQBlAPP/AQAAAAAAAwB8APP/AQAAAAAAAwBkAO7/AQAAAAAAAQBUAOz/AQAAAAAAAQB9AAIAAQAAAAAAAQCFAAIAAQAAAAAAAQBnAP7/AQAAAAAAAgCMAPv/AQAAAAAAAgBxAPT/AQAAAAAAAgBnAPD/AQAAAAAAAgBYAO7/AQAAAAAAAgB8AOv/AQAAAAAAAwCLAOv/AQAAAAAAAwBtAOv/AQAAAAAAAwCRAPX/AQAAAAAAAwCRAPz/AQAAAAAAAwBmAAYAAQAAAAAAAQBwAOf/AQAAAAAAAQB8AOf/AQAAAAAAAQCOAOf/AQAAAAAAAQB1AOL/AQAAAAAAAwCAAOL/AQAAAAAAAwCJAOL/AQAAAAAAAwCUAOL/AQAAAAAAAwCaAOL/AQAAAAAAAwCeAOL/AQAAAAAAAwCXAOf/AQAAAAAAAQA=")
 tile_set = SubResource("TileSet_h4mon")
 script = ExtResource("8_mkc62")
 flicker_chance = 0.01
@@ -2037,12 +2036,67 @@ position = Vector2(-80, 222)
 
 [node name="Enemys" type="Node2D" parent="." unique_id=358106299]
 
-[node name="SpawnPoints" type="Node2D" parent="." unique_id=1271072628]
+[node name="SpawnPoint" parent="Enemys" unique_id=1428988180 instance=ExtResource("5_ws0o2")]
+position = Vector2(1545, 177)
+enemy_scene = ExtResource("25_uhc6a")
+spawn_interval = 60.0
+continuous_spawn = false
 
-[node name="Enemy_rat" parent="SpawnPoints" unique_id=123456789 instance=ExtResource("8_tnqtc")]
+[node name="SpawnPoint2" parent="Enemys" unique_id=1801895072 instance=ExtResource("5_ws0o2")]
+position = Vector2(2071, 34)
+enemy_scene = ExtResource("25_uhc6a")
+spawn_interval = 60.0
+continuous_spawn = false
+
+[node name="SpawnPoint3" parent="Enemys" unique_id=892137981 instance=ExtResource("5_ws0o2")]
+position = Vector2(1573, -127)
+enemy_scene = ExtResource("6_fapty")
+spawn_interval = 60.0
+continuous_spawn = false
+
+[node name="SpawnPoint4" parent="Enemys" unique_id=1464892311 instance=ExtResource("5_ws0o2")]
+position = Vector2(1077, -239)
+enemy_scene = ExtResource("6_fapty")
+spawn_interval = 60.0
+continuous_spawn = false
+
+[node name="SpawnPoint5" parent="Enemys" unique_id=379537627 instance=ExtResource("5_ws0o2")]
+position = Vector2(879, 210)
+enemy_scene = ExtResource("25_uhc6a")
+spawn_interval = 60.0
+continuous_spawn = false
+
+[node name="SpawnPoint7" parent="Enemys" unique_id=2141024180 instance=ExtResource("5_ws0o2")]
+position = Vector2(2112, -239)
+enemy_scene = ExtResource("25_uhc6a")
+spawn_interval = 60.0
+continuous_spawn = false
+
+[node name="SpawnPoint8" parent="Enemys" unique_id=1786650700 instance=ExtResource("5_ws0o2")]
+position = Vector2(1864, -225)
+enemy_scene = ExtResource("25_uhc6a")
+spawn_interval = 60.0
+continuous_spawn = false
+
+[node name="SpawnPoint9" parent="Enemys" unique_id=925965813 instance=ExtResource("5_ws0o2")]
+position = Vector2(1332, -527)
+enemy_scene = ExtResource("6_fapty")
+spawn_interval = 60.0
+continuous_spawn = false
+
+[node name="SpawnPoint10" parent="Enemys" unique_id=1622092930 instance=ExtResource("5_ws0o2")]
+position = Vector2(1321, 194)
+enemy_scene = ExtResource("9_tnqtc")
+spawn_interval = 60.0
+continuous_spawn = false
+loot_rarity_flags = 1
+
+[node name="Enemy_rat" parent="Enemys" unique_id=123456789 instance=ExtResource("8_tnqtc")]
 position = Vector2(573.00006, 251)
 can_climb_walls = false
 max_climb_height = 0.0
+
+[node name="SpawnPoints" type="Node2D" parent="." unique_id=1271072628]
 
 [node name="Extraction" type="Node2D" parent="." unique_id=167936456]
 
@@ -2195,73 +2249,6 @@ position = Vector2(1918, 832)
 [node name="MasterPickupWeapon" parent="." unique_id=894837998 instance=ExtResource("7_2yp2t")]
 position = Vector2(2120, 111)
 
-[node name="SpawnPoint" parent="." unique_id=1428988180 instance=ExtResource("5_ws0o2")]
-position = Vector2(1545, 177)
-enemy_scene = ExtResource("20_7f5a8")
-spawn_interval = 60.0
-continuous_spawn = false
-
-[node name="SpawnPoint2" parent="." unique_id=1801895072 instance=ExtResource("5_ws0o2")]
-position = Vector2(2071, 34)
-enemy_scene = ExtResource("20_7f5a8")
-spawn_interval = 60.0
-continuous_spawn = false
-
-[node name="SpawnPoint3" parent="." unique_id=892137981 instance=ExtResource("5_ws0o2")]
-position = Vector2(1573, -127)
-enemy_scene = ExtResource("6_fapty")
-spawn_interval = 60.0
-continuous_spawn = false
-
-[node name="SpawnPoint4" parent="." unique_id=1464892311 instance=ExtResource("5_ws0o2")]
-position = Vector2(1077, -239)
-enemy_scene = ExtResource("6_fapty")
-spawn_interval = 60.0
-continuous_spawn = false
-
-[node name="SpawnPoint5" parent="." unique_id=379537627 instance=ExtResource("5_ws0o2")]
-position = Vector2(879, 210)
-enemy_scene = ExtResource("20_7f5a8")
-spawn_interval = 60.0
-continuous_spawn = false
-
-[node name="SpawnPoint6" parent="." unique_id=696701289 instance=ExtResource("5_ws0o2")]
-position = Vector2(2139, -126)
-enemy_scene = ExtResource("6_fapty")
-spawn_interval = 60.0
-continuous_spawn = false
-
-[node name="SpawnPoint7" parent="." unique_id=2141024180 instance=ExtResource("5_ws0o2")]
-position = Vector2(2112, -239)
-enemy_scene = ExtResource("6_fapty")
-spawn_interval = 60.0
-continuous_spawn = false
-
-[node name="SpawnPoint8" parent="." unique_id=1786650700 instance=ExtResource("5_ws0o2")]
-position = Vector2(1864, -225)
-enemy_scene = ExtResource("6_fapty")
-spawn_interval = 60.0
-continuous_spawn = false
-
-[node name="SpawnPoint9" parent="." unique_id=925965813 instance=ExtResource("5_ws0o2")]
-position = Vector2(1332, -527)
-enemy_scene = ExtResource("6_fapty")
-spawn_interval = 60.0
-continuous_spawn = false
-
-[node name="SpawnPoint10" parent="." unique_id=1622092930 instance=ExtResource("5_ws0o2")]
-position = Vector2(1321, 194)
-enemy_scene = ExtResource("9_tnqtc")
-spawn_interval = 60.0
-continuous_spawn = false
-loot_rarity_flags = 1
-
-[node name="SpawnPoint11" parent="." unique_id=1037945441 instance=ExtResource("5_ws0o2")]
-position = Vector2(418, 144)
-enemy_scene = ExtResource("6_qlovn")
-spawn_interval = 60.0
-continuous_spawn = false
-loot_level_flags = 2
-
-[node name="Cascudo" parent="." unique_id=1895868584 instance=ExtResource("25_uhc6a")]
-position = Vector2(682, 217)
+[node name="BossZone" parent="." unique_id=1514263627 instance=ExtResource("22_5cqj5")]
+position = Vector2(1315, 1016)
+collision_mask = 4
